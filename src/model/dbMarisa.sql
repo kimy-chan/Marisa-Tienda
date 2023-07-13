@@ -11,7 +11,7 @@ motherLastName varchar(50) not null,
 cell varchar(15) null,
 city varchar(20) null,
 address varchar(100)null,
-dateRegister date
+dateRegister datetime not null
 );
 
 create table User( #usuarios
@@ -39,7 +39,7 @@ foreign key (idPerson) references Person(idPerson)
 create table Orderr( #pedido
 idOrder int auto_increment primary key not null,
 state tinyint not null default 0,
-dateOrderHour  date,
+dateOrderHour  datetime,
 idCustumer int not null,
 foreign key (idCustumer) references Customer(idCustumer)
 );
@@ -58,7 +58,9 @@ description varchar(255)not null,
 image varchar(255) not null,
 amount int check(amount > 0),
 price decimal not null,
-date date not null,
+date datetime not null,
+size varchar(10)null,
+color varchar(20)null,
 outstanding tinyint not null default 0,
 idCategory int not null,
 foreign key(idCategory) references Category(idCategory)
@@ -74,13 +76,7 @@ foreign key (idOrder) references Orderr(idOrder),
 foreign key (idProduct) references Product(idProduct)
 );
 
-create table InfoProduct(
-idInfoProduc int auto_increment primary key not null,
-idproduct int not null,
-size varchar(10)not null,
-color varchar(20) null,
-foreign key (idProduct) references Product(idProduct) on delete cascade
-);
+
 
 create table InformationCompany(
 idInformationCompany int not null auto_increment primary key,
@@ -106,6 +102,4 @@ delimiter ;
 
 #vistas
 create view VerifyUser as select Person.idPerson,Person.name, Person.motherLastName,User.email, User.password, Rol.nameRol from Person inner join User on Person.idPerson=User.idPerson inner join Rol on User.idUser=Rol.idUser;
-
-
-
+create view FeaturedProduct as select * from Product where outstanding = 1;

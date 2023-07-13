@@ -6,6 +6,7 @@ const routerUser = require("./router/user.router")
 const cookieParser= require("cookie-parser")
 const getConecction = require("../src/model/db");
 const routerProduct= require("./router/product.router")
+const session= require("express-session")
 require("dotenv").config();
 
 class Server{
@@ -20,8 +21,14 @@ class Server{
     middleware(){
         this.app.use(morgan('dev'));
         this.app.use(cookieParser())
-        this.app.use(express.urlencoded({extended:true}))
         this.app.use(express.json())
+        this.app.use(express.urlencoded({extended:false}))
+        this.app.use(session({
+            secret:process.env.SESSION_SECRET,
+            resave:false,
+            saveUninitialized:true,
+            cookie:({secure:false})//cambiar eb produccion a true por la seguridad https
+        }))
 
     }
 

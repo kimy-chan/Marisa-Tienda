@@ -25,15 +25,9 @@ const  getConecction=  require("../model/db")
                 
                 const token = jwt.sign({idUser:result[0].idUser},process.env.JWT_SECRET)
                 return res.send(token)
-
             }else{
                 return res.send("contraseña incorrecat")
-               
             }
-           
-            
-           
-            
         } catch (error) {
             console.log(error);
             
