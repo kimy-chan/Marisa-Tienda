@@ -4,7 +4,7 @@ const getConecction= require("../model/db")
 const cloudinary= require("cloudinary")
 const path= require("path")
 const fs= require("fs");
-class ProductoController{
+class ProductController{
 
     constructor(){
       cloudinary.config({
@@ -30,6 +30,7 @@ class ProductoController{
           conn = await getConecction()
           const {nameProduct,modelProduct,description,amount,price,color,size,outstanding,category}=req.body;
           const imgCloud = await cloudinary.v2.uploader.upload(img.path)
+          console.log(imgCloud.public_id);
           const sqlProduct="insert into Product(nameProduct,modelProduct,description,image,amount,price,date,size,color,outstanding,idCategory)values(?,?,?,?,?,?,now(),?,?,?,?)"
           await conn.query(sqlProduct,[nameProduct,modelProduct,description,imgCloud.secure_url,amount,price,size,color,outstanding,category]) 
           const ruta = path.join(__dirname,`../public/upload/${img.filename}`)
@@ -104,12 +105,31 @@ class ProductoController{
 
     }
 
-   async  deleteProduct(){
-
+   async  deleteProduct(req,res){
+    const {idProduct,idPhoto}=req.params;
+    let conn;
+    try {
+      conn =await  getConecction()
+      const sqlQuery = "DELETE FROM Product where idProduct=?"
+      const productDelete = await conn.query(sqlQuery,[idProduct])
+      if(productDelete[0].affectedRows ===1){
+         await cloudinary.v2.uploader.destroy(idPhoto)     
+      }
+      return res.send("borrado")
+    } catch (error) {
+      console.log(error)
+      
+    }finally{
+      if(conn){
+        await conn.release()
+      }
+    }
+   
+    
     }
   
 
 }
 
-const productoController = new ProductoController()
-module.exports=productoController
+const productController = new ProductController()
+module.exports=productController

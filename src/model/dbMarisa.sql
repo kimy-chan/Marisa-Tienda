@@ -2,104 +2,134 @@ drop database dbmarisa;
 create database dbMarisa;
 
 use dbMarisa;
-
-create table Person( #persona
-idPerson int auto_increment primary key not null,
-name varchar(50) not null,
-lastName varchar(50) not null,
-motherLastName varchar(50) not null,
-cell varchar(15) null,
-city varchar(20) null,
-address varchar(100)null,
-dateRegister datetime not null
+CREATE TABLE Person (
+  idPerson INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  firstName VARCHAR(50) NOT NULL,
+  lastName VARCHAR(50) NOT NULL,
+  motherLastName VARCHAR(50) NOT NULL,
+  dateRegister DATETIME NOT NULL
 );
 
-create table User( #usuarios
-idUser  int auto_increment primary key not null,
-email varchar(50) not null unique,
-password varchar(255)not null,
-idPerson int not null,
-foreign key (idPerson) references Person(idPerson) on delete cascade
-
+-- Tabla para la información de contacto de las personas
+CREATE TABLE Contact (
+  idContact INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  cell VARCHAR(15) NULL,
+  city VARCHAR(20) NULL,
+  address VARCHAR(100) NULL,
+  idPerson INT NOT NULL,
+  FOREIGN KEY (idPerson) REFERENCES Person(idPerson) ON DELETE CASCADE
 );
 
-
-create table Rol( #roles
-idRol int auto_increment primary key not null,
-nameRol varchar(20) not null default 'Cliente',
-idUser int not null,
-foreign key (idUser) references User(idUser) on delete cascade
-);
-create table Customer( #cliente
-idCustumer int auto_increment primary key not null,
-idPerson int not null,
-foreign key (idPerson) references Person(idPerson)
+-- Tabla para los usuarios
+CREATE TABLE User (
+  idUser INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  email VARCHAR(50) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  idPerson INT NOT NULL,
+  FOREIGN KEY (idPerson) REFERENCES Person(idPerson) ON DELETE CASCADE
 );
 
-create table Orderr( #pedido
-idOrder int auto_increment primary key not null,
-state tinyint not null default 0,
-dateOrderHour  datetime,
-idCustumer int not null,
-foreign key (idCustumer) references Customer(idCustumer)
+-- Tabla para los roles de los usuarios
+CREATE TABLE Role (
+  idRole INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  nameRole VARCHAR(20) NOT NULL DEFAULT 'Cliente',
+  idUser INT NOT NULL,
+  FOREIGN KEY (idUser) REFERENCES User(idUser) ON DELETE CASCADE
 );
 
-
-
-create table Category(
-idCategory int auto_increment primary key not null,
-nameCategory varchar(50)
-);
-create table Product(
-idProduct int auto_increment primary key not null,
-nameProduct varchar(100) not null,
-modelProduct varchar(100) not null,
-description varchar(255)not null,
-image varchar(255) not null,
-amount int check(amount > 0),
-price decimal not null,
-date datetime not null,
-size varchar(10)null,
-color varchar(20)null,
-outstanding tinyint not null default 0,
-idCategory int not null,
-foreign key(idCategory) references Category(idCategory)
+-- Tabla para los pedidos de los clientes
+CREATE TABLE OrderCustomer (
+  idOrder INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  state TINYINT NOT NULL DEFAULT 0, -- estado si esta vendio o no
+  dateOrderHour DATETIME,
+  idPerson INT NOT NULL,
+  FOREIGN KEY (idPerson) REFERENCES Person(idPerson)
 );
 
-create table ProductDetail(
-idProductDetail int auto_increment primary key not null,
-idProduct int not null,
-idOrder int not null,
-amount  int not null,
-total decimal not null,
-foreign key (idOrder) references Orderr(idOrder),
-foreign key (idProduct) references Product(idProduct)
+-- Tabla para las categorías
+CREATE TABLE Category (
+  idCategory INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  nameCategory VARCHAR(50)
 );
 
-
-
-create table InformationCompany(
-idInformationCompany int not null auto_increment primary key,
-mission varchar(255) null,
-vision varchar(255) null
-
+-- Tabla para los productos
+CREATE TABLE Product (
+  idProduct INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  nameProduct VARCHAR(100) NOT NULL,
+  modelProduct VARCHAR(100) NOT NULL,
+  description VARCHAR(255) NOT NULL,
+  image VARCHAR(255) NOT NULL,
+  amount INT CHECK (amount >= 0),
+  price DECIMAL(10, 2) NOT NULL,
+  date DATETIME NOT NULL,
+  size VARCHAR(10) NULL,
+  color VARCHAR(20) NULL,
+  outstanding TINYINT NOT NULL DEFAULT 0,
+  idCategory INT NOT NULL,
+  FOREIGN KEY (idCategory) REFERENCES Category(idCategory) ON DELETE CASCADE
 );
 
-//triggerss
+-- Tabla para los detalles de los productos en los pedidos
+CREATE TABLE ProductDetail (
+  idProductDetail INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  idProduct INT NOT NULL,
+  idOrder INT NOT NULL,
+  amount INT NOT NULL,
+  total DECIMAL(10, 2) NOT NULL,
+  FOREIGN KEY (idOrder) REFERENCES OrderCustomer(idOrder),
+  FOREIGN KEY (idProduct) REFERENCES Product(idProduct)
+);
 
- delimiter //
-CREATE TRIGGER ActualizarDetalleVenta AFTER INSERT ON productdetail
+-- Tabla para la información de la empresa
+CREATE TABLE InformationCompany (
+  idInformationCompany INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  mission VARCHAR(255) NULL,
+  vision VARCHAR(255) NULL
+);
+
+-- Trigger para actualizar el detalle de ventas
+DELIMITER //
+
+CREATE TRIGGER UpdateProductDetail AFTER INSERT ON ProductDetail
 FOR EACH ROW
-begin
-	set @cantidad = new.amount;
-    set @idProdcuto=new.idProduct;
-    UPDATE product SET amount = amount - @cantidad
-    WHERE idProduct =  @idProdcuto;
+BEGIN
+  DECLARE cantidad INT;
+  DECLARE idProducto INT;
+  DECLARE cantidadActual INT;
+SET cantidad = NEW.amount;
+SET idProducto = NEW.idProduct;
 
-end; //
-delimiter ;
+SELECT amount INTO cantidadActual
+FROM Product
+  WHERE idProduct = idProducto;
 
+  IF cantidad > cantidadActual THEN --
+    SIGNAL  SQLSTATE '45000'
+	SET MESSAGE_TEXT = 'La cantidad solicitada es mayor que la cantidad actual en la tabla Product.';
+ELSE
+UPDATE Product SET amount = amount - cantidad
+WHERE idProduct = idProducto;
+  END IF;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER PreventCategoryDeletion BEFORE DELETE ON Category -- verfica si la catrgoria tiene datos asociados
+FOR EACH ROW
+BEGIN
+    DECLARE productCount INT;
+    
+    SELECT COUNT(*) INTO productCount
+    FROM Product
+    WHERE idCategory = OLD.idCategory;
+    
+    IF productCount > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se puede eliminar la categoría. Hay productos asociados a ella.';
+    END IF;
+END //
+DELIMITER ;
 
 #vistas
-create view VerifyUser as select Person.idPerson,Person.name, Person.motherLastName,User.email, User.password, Rol.nameRol from Person inner join User on Person.idPerson=User.idPerson inner join Rol on User.idUser=Rol.idUser;
-create view FeaturedProduct as select * from Product where outstanding = 1;
+create view VerifyUser as select Person.idPerson,Person.firstName, Person.lastName,Person.motherLastName,User.email, User.password, Role.nameRole from Person inner join User on Person.idPerson=User.idPerson inner join Role on User.idUser=Role.idUser;
+create view FeaturedProduct as select * from Product where outstanding = 1;#productos destacados

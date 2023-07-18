@@ -16,7 +16,7 @@ const upload =multer({
     fileFilter:(req,file,cb)=>{
         const extensions= path.extname(file.originalname)
         if(extensions === '.png' || extensions ==='.jpg' || extensions === 'jpeg'){
-        return cb(null,true)
+            return cb(null,true)
         }
          //falta validar las extenciones
         return cb(null,false)

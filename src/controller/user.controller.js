@@ -8,6 +8,7 @@ class UserController{
         console.log(pass);
 
     }
+    
 
 }
 

@@ -8,11 +8,11 @@ function productValidator(){
             if(!req.file){
                 throw new Error("Archivo invalido")
             }
-            const allExtension = ['.png', '.jpg', '.jpeg']
+            /*const allExtension = ['.png', '.jpg', '.jpeg']
             const fileExtension = req.file.originalname.substring(req.file.originalname.lastIndexOf('.')).toLowerCase(); //sacamos la extesion png. jpg
             if(!allExtension.includes(fileExtension)){
                 throw new Error("solo se permiten png o jpg")
-            }
+            }*/
             return true
         }),
         body("amount").notEmpty().isNumeric(),
