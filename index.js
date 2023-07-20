@@ -1,6 +1,10 @@
 const Server = require("./src/app");
 
-const app = new Server(process.env.PORT);
-app.start();
 
+async function init(){   
+const app = new Server(process.env.PORT); 
+ await app.start();
 
+}
+
+init()

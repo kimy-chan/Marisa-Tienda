@@ -3,8 +3,8 @@ const {body}= require("express-validator");
 
 function loginValidator(){
     return [
-        body("email").notEmpty().isEmail(),
-        body("password").notEmpty()
+        body("email","Email invalido").notEmpty().isEmail(),
+        body("password","contraseña invalida").notEmpty()
     ]
 
 }

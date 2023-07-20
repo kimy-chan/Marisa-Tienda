@@ -12,9 +12,7 @@ const  getConecction=  require("../model/db")
     async login(req,res){
         const result = validationResult(req)
         if(!result.isEmpty()){
-            
-            return res.send(result.array())
-               
+            return res.render("login",{error:result.array()})
         }
         const {email,password}=req.body;
         try {
@@ -34,18 +32,17 @@ const  getConecction=  require("../model/db")
         }finally{
             
         }
-        
+    }
+    
+    formLogin(req,res){
 
-
-
-        
-
-
-     
-
-
+        return res.render("login",{error:{}})
 
     }
+
+    
+
+    
    
     
 }

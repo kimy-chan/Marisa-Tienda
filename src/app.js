@@ -20,6 +20,7 @@ class Server{
     }
     middleware(){
         this.app.use(morgan('dev'));
+        this.app.use(express.static(path.join(__dirname + '/public')))
         this.app.use(cookieParser())
         this.app.use(express.json())
         this.app.use(express.urlencoded({extended:false}))
@@ -35,6 +36,7 @@ class Server{
     settings(){
         this.app.set('view engine', 'ejs');
         this.app.set('views',path.join(__dirname,'views'));
+      
 
     }
 
