@@ -6,7 +6,7 @@ CREATE TABLE Person (
   idPerson INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   firstName VARCHAR(50) NOT NULL,
   lastName VARCHAR(50) NOT NULL,
-  motherLastName VARCHAR(50) NOT NULL,
+  motherLastName VARCHAR(50)  NULL,
   dateRegister DATETIME NOT NULL
 );
 

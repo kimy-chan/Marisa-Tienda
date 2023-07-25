@@ -6,6 +6,7 @@ const routerUser = require("./router/user.router")
 const cookieParser= require("cookie-parser")
 const getConecction = require("../src/model/db");
 const routerProduct= require("./router/product.router")
+const routerCategory =require("./router/category.router")
 const session= require("express-session")
 require("dotenv").config();
 
@@ -44,6 +45,8 @@ class Server{
        this.app.use(routerAuth)
        this.app.use(routerUser)
        this.app.use(routerProduct)
+       this.app.use(routerUser)
+       this.app.use(routerCategory)
     }
     
     start(){

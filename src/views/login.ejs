@@ -16,35 +16,35 @@
          Back</a>
     </div>
     <div class="logo">
-        <img src="./imagenes/img-login/icono dorado.svg" alt="">
+        <img src="./img/dorado.svg" alt="">
     </div>
     <div class="container-fluid mb-6">
         <h2 class="text-center mb-6">Inicio de sesión</h2>
         <p>¡Accede al estado e historial de tu pedido!</p>
         <form action="/login" method="POST">
             <% if(typeof error != 'undefined') { %>
-        
-
                 <div class="mb-3 col-12 col-md-6">
                     <label for="email" class="form-label"><i class="ri-mail-fill"></i></label>
                     <p> </p>
                     <input type="email" class="form-control" name="email" placeholder="Ingresa tu email">
                 </div>
-                <p><%= error[0] ? error[0].msg : '' %></p>
-                
-              
+             
                 <div class="mb-3 col-12 col-md-6">
                     <label for="password" class="form-label"><i class="ri-lock-2-fill"></i></label>
                     <input type="password" class="form-control" name="password" placeholder="Ingresa tu contraseña">
                 </div>
-                <p><%= error[2] ? error[2].msg : '' %></p>
-                <% } %>
-
+               
+                  <% if(alertMsg){ %>
+                    <span class="validation" ><%= alertMsg%></span>
+                  <% } else{%>
+                    <span  class="validation" > <%= error[0] ? error[0].msg : '' %> | <%=error[1] ? error[1].msg : ''  %></span>
+                    <% } %>
+                  <%
+                  }
+                    %>
             <button type="submit">Iniciar sesión</button>
-            
-
             <p>¿Aún no tienes una cuenta?
-                <a href="" class="btn btn-link">Regístrate</a>
+                <a href="">Regístrate</a>
             </p>
         </form>
     </div>

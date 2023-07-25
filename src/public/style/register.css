@@ -5,12 +5,6 @@
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
 }
-
-
-.validation{
-    font-size:smaller;
-}
-   
 :root
 {
     --fondo-blanco:#fff;
@@ -24,11 +18,14 @@ body
 {
     width: 100%;
     height: 100vh;
-    background-color: var(--fondo-negro);
-    background-image: url(../img/portada.jpg.png);
-    background-repeat: no-repeat;
-    background-position: center center;
+    background-image: url(./../img/portada.jpg.png);
+    background-repeat: repeat;
     background-size: cover;
+}
+.linea
+{
+    width:100%;
+    height: 80px;
 }
 .back
 {
@@ -42,6 +39,9 @@ body
     cursor: pointer;
     animation: fundido 2s linear forwards, movimiento 6s linear infinite;
     animation-delay: 1s;
+    position: absolute;
+    top: 0;
+    z-index: 1;
 }
 .back a
 {
@@ -62,19 +62,16 @@ body
     transition: 0.2s;
 }
 
-
 .logo
 {
     width: 100%;
-    height: 160px;
-    position: relative;
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: -20px;
     animation: fundido 2s linear forwards, movimiento 6s linear infinite;
     animation-delay: 1s;
-    z-index: -1;
+    z-index: 1;
 }
 .logo img
 {
@@ -98,74 +95,82 @@ body
   }
 }
 
-.container-fluid 
+.container 
 {
     width: 100%;
-    height: 260px;
-    margin-top: -10px;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 12px 10px;
     animation: fundido 2s linear forwards, movimiento 6s linear infinite;
     animation-delay: 1s;
-    position:absolute;
-    color: var(--fondo-blanco);
 }
 
-.container-fluid form h2
+.container h1
 {
     font-size: 1.6em;
     font-weight: bold;
+    color: var(--fondo-blanco);
 }
-.container-fluid form p
+.container p
 {
-    font-size: 0.8em;
+    font-size: 0.9em;
+    font-weight:lighter;
+    color: var(--fondo-blanco);
 }
-.container-fluid form
+
+.container form
 {
+    width: auto;
+    height: auto;
     display: flex;
     align-items: center;
     flex-direction: column;
     font-weight:500;
     gap: 18px 18px;
     cursor: pointer;
+    background-color: var(--fondo-blanco);
+    padding: 16px 6px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    border-radius: 18px;
 }
-.container-fluid form button
+
+.container form button
 {
     background-color: var(--fondo-resaltador);
     border: 0px;
     font-size: 1.2em;
     font-weight: 400;
-    width: 300px;
-    height: 40px;
+    width: 120px;
+    height: 36px;
     padding: 12px 10px;
-    border-radius: 18px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--fondo-blanco);
+    border-radius: 12px;
 }
-.container-fluid form .mb-3
+.container form .form-group
 {
-    background-color: var(--fondo-blanco);
-    border-radius: 18px;
-    width: 300px;
+    width: 350px;
     height: 40px;
     padding: 14px 14px;
     color: var(--fondo-negro);
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     font-size: 1em;
     display: flex;
     align-items: center;
     gap: 0px 12px;
 }
-.container-fluid form .mb-3 i
+.container form .form-group label
 {
-    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 120px;
+    height: 30px;
 }
-.container-fluid form .mb-3 input
+.container form .form-group input
 {
     list-style: none;
     border: none;
@@ -173,14 +178,17 @@ body
     width: 280px;
     height: 30px;
     padding: 0px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
 }
-.container-fluid form button:hover
+.container form button:hover
 {
     border: 2px solid var(--fondo-resaltador);
     background-color: var(--fondo-rosa);
     color: #0f0f0b;
 }
-.container-fluid form p a
+.container form p a
 {
     color: var(--fondo-resaltador)
 }

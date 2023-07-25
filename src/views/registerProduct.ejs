@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Añadir Producto</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>Añadir Producto</h2>
+    <form action="/add-product" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="nombre">Nombre del Producto:</label>
+            <input type="text" class="form-control" name="nameProduct" placeholder="Ingrese el nombre del producto">
+        </div>
+        <div class="form-group">
+            <label for="modelo">Modelo del Producto:</label>
+            <input type="text" class="form-control" name="modelProduct" placeholder="Ingrese el modelo del producto">
+        </div>
+        <div class="form-group">
+            <label for="descripcion">Descripción:</label>
+            <textarea class="form-control" name="description" placeholder="Ingrese la descripción del producto"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="imagen">Imagen:</label>
+            <input type="file" name="image">
+        </div>
+        <div class="form-group">
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" name="amount" class="form-control"  placeholder="Ingrese la cantidad disponible">
+        </div>
+        <div class="form-group">
+            <label for="precio">Precio:</label>
+            <input type="number" name="price"  step="0.01" class="form-control"  placeholder="Ingrese el precio del producto">
+        </div>
+        <div class="form-group">
+            <label  for="destacado">¿Es Destacado?</label>
+            <select  name="outstanding" class="form-control" id="destacado">
+                <option value="0">No</option>
+                <option value="1">Sí</option>
+                  
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="destacado">Categoria</label>
+            <select  name="category" class="form-control" name="category" >
+                <option value="0">No</option>
+                <option value="1">Blusas</option>
+                  
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="tallas">Tallas:</label>
+            <input type="text" name="size" class="form-control"placeholder="Ingrese las tallas disponibles">
+        </div>
+        <div class="form-group">
+            <label for="colores">Colores:</label>
+            <input type="text" name="color" class="form-control"placeholder="Ingrese los colores disponibles">
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar Producto</button>
+    </form>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
