@@ -167,7 +167,7 @@ body
     display: flex;
     justify-content: center;
 }
-.container-fluid .row .card .card-body .boton button
+.container-fluid .row .card .card-body .boton a
 {
     background-color: var(--fondo-resaltador);
     color: var(--fondo-blanco);
@@ -178,12 +178,12 @@ body
     padding: 8px 8px;
     cursor: pointer;
 }
-.container-fluid .row .card .card-body .boton button i
+.container-fluid .row .card .card-body .boton a i
 {
     font-size: 1em;
 }
 /*HOVER category-2*/
-.container-fluid .row .card .card-body .boton button:hover
+.container-fluid .row .card .card-body .boton a:hover
 {
     background-color: var(--fondo-blanco);
     color: var(--fondo-resaltador);

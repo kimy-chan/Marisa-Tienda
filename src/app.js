@@ -7,6 +7,7 @@ const cookieParser= require("cookie-parser")
 const getConecction = require("../src/model/db");
 const routerProduct= require("./router/product.router")
 const routerCategory =require("./router/category.router")
+const routerCart=require("./router/cart.router")
 const session= require("express-session")
 require("dotenv").config();
 
@@ -47,6 +48,7 @@ class Server{
        this.app.use(routerProduct)
        this.app.use(routerUser)
        this.app.use(routerCategory)
+       this.app.use(routerCart)
     }
     
     start(){
