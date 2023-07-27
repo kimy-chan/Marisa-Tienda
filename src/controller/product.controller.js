@@ -4,7 +4,6 @@ const getConecction= require("../model/db")
 const cloudinary= require("cloudinary")
 const path= require("path")
 const fs= require("fs");
-const { log } = require("console");
 class ProductController{
 
     constructor(){

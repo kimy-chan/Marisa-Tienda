@@ -11,5 +11,3 @@ router.get("/accesorios",categoryController.showProductAccesorios)
 
 
 module.exports= router;
-
-
