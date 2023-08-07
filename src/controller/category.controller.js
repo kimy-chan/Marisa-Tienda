@@ -13,7 +13,7 @@ class CategoryController{
 
    
         let conn;
-        const sqlQueryBlusa = 'select * from Product where idCategory=1;'
+        const sqlQueryBlusa = 'select * from Product where idCategory=1 && amount > 0;'
         try {
             conn = await getConecction()
             const [blusa]= await conn.query(sqlQueryBlusa)            
@@ -30,7 +30,7 @@ class CategoryController{
     }
     async showProductVestidos(req,res){
         let conn;
-        const sqlQueryVestidos = 'select * from Product where idCategory=2;'
+        const sqlQueryVestidos = 'select * from Product where idCategory=2 && amount > 0;'
         try {
             conn = await getConecction()
             const [vetidos]= await conn.query(sqlQueryVestidos)
@@ -53,7 +53,7 @@ class CategoryController{
 
     async showProductAccesorios(req,res){
         let conn;
-        const sqlQueryAccesorios = 'select * from Product where idCategory=3;'
+        const sqlQueryAccesorios = 'select * from Product where idCategory=3 && amount > 0;'
         try {
             conn = await getConecction()
             const [accesorios]= await conn.query(sqlQueryAccesorios)

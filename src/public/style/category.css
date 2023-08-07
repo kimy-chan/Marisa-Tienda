@@ -111,9 +111,9 @@ body
 .container-fluid .row .card
 {
     background-color: var(--fondo-blanco);
-    border-radius: 18px;
+    border-radius: 10px;
     width: 300px;
-    height: 380px;
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -190,7 +190,3 @@ body
     border: 2px solid var(--fondo-resaltador);
     transition: 0.4s;
 }
-
-
-
-
