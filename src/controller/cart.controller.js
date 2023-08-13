@@ -4,18 +4,12 @@ class CartController{
 
     addCart(req,res){
         const {idCart} = req.params
-        const {idCategory} =req.params
         if(!req.session.idProduct){
             req.session.idProduct = []
         }
+        console.log(idCart);
         req.session.idProduct.push(idCart)
-    
-        switch(idCategory){
-            case '1': return res.redirect("/blusas")
-            case '2': return res.redirect("/vestidos")
-            case '3': return res.redirect("/accesorios")
-            default: return res.redirect("/blusas") 
-        }
+      return res.redirect("/")
     }
 
     async cart(req,res){
@@ -23,7 +17,7 @@ class CartController{
         let totaPrice=0
         let cantidad=1
         let conn;        
-        const sqlQueryProduct="SELECT idProduct,nameProduct,image,price  FROM Product where idProduct=?"
+        const sqlQueryProduct="SELECT DISTINCT Product.idProduct,nameProduct,image,price  FROM Product inner join ProductDate on Product.idProduct=ProductDate.idProduct where Product.idProduct=?"
      try {
         conn = await getConecction()
         if(req.session.idProduct){
@@ -72,6 +66,8 @@ class CartController{
 
 
     }
+  
+    
 
 
 

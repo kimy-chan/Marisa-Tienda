@@ -85,6 +85,28 @@ class ProductController{
    
     
     }
+
+   async descriptionProduct(req,res){
+      let conn 
+
+      try {
+        conn = await getConecction()
+        const {idProduduct}= req.params
+        console.log(idProduduct);
+        const sqlQuery = 'select * from Product inner join ProductDate on Product.idProduct = ProductDate.idProduct where Product.idProduct=?'
+        const [product] = await conn.query(sqlQuery,[idProduduct])
+        console.log(product);
+        return res.render("descriptionProduct",{product:product}) 
+      } catch (error) {
+        console.log(error);
+    
+      }finally{
+        if(conn){
+          conn.release()
+        }
+      }
+
+  }
   
 
 }

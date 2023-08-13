@@ -6,7 +6,7 @@ CREATE TABLE Person (
   idPerson INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   firstName VARCHAR(50) NOT NULL,
   lastName VARCHAR(50) NOT NULL,
-  motherLastName VARCHAR(50)  NULL,
+  motherLastName VARCHAR(50)NULL,
   dateRegister DATETIME NOT NULL
 );
 
@@ -37,6 +37,8 @@ CREATE TABLE Role (
   FOREIGN KEY (idUser) REFERENCES User(idUser) ON DELETE CASCADE
 );
 
+
+
 -- Tabla para los pedidos de los clientes
 CREATE TABLE OrderCustomer (
   idOrder INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -58,15 +60,23 @@ CREATE TABLE Product (
   nameProduct VARCHAR(100) NOT NULL,
   modelProduct VARCHAR(100) NOT NULL,
   description VARCHAR(255) NOT NULL,
-  image VARCHAR(255) NOT NULL,
   amount INT CHECK (amount >= 0),
   price DECIMAL(10, 2) NOT NULL,
   date DATETIME NOT NULL,
-  size VARCHAR(10) NULL,
   color VARCHAR(20) NULL,
+   size VARCHAR(10) NULL,
   outstanding TINYINT NOT NULL DEFAULT 0,
   idCategory INT NOT NULL,
   FOREIGN KEY (idCategory) REFERENCES Category(idCategory) ON DELETE CASCADE
+);
+CREATE TABLE ProductDate(
+ idProductDate  INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+image VARCHAR(255) NOT NULL,
+  idProduct INT NOT NULL,
+  FOREIGN KEY (idProduct) REFERENCES Product(idProduct) ON DELETE CASCADE
+ 
+ 
+
 );
 
 -- Tabla para los detalles de los productos en los pedidos
@@ -86,6 +96,7 @@ CREATE TABLE InformationCompany (
   mission VARCHAR(255) NULL,
   vision VARCHAR(255) NULL
 );
+insert into category(nameCategory) values('Blusas'),('Vestidos'),('Accesorios'); 
 
 -- Trigger para actualizar el detalle de ventas
 DELIMITER //
@@ -103,7 +114,7 @@ SELECT amount INTO cantidadActual
 FROM Product
   WHERE idProduct = idProducto;
 
-  IF cantidad > cantidadActual THEN --
+  IF cantidad > cantidadActual THEN
     SIGNAL  SQLSTATE '45000'
 	SET MESSAGE_TEXT = 'La cantidad solicitada es mayor que la cantidad actual en la tabla Product.';
 ELSE
@@ -113,6 +124,11 @@ WHERE idProduct = idProducto;
 END //
 
 DELIMITER ;
+
+
+
+
+
 
 DELIMITER //
 CREATE TRIGGER PreventCategoryDeletion BEFORE DELETE ON Category -- verfica si la catrgoria tiene datos asociados
@@ -132,4 +148,12 @@ DELIMITER ;
 
 #vistas
 create view VerifyUser as select Person.idPerson,Person.firstName, Person.lastName,Person.motherLastName,User.email, User.password, Role.nameRole from Person inner join User on Person.idPerson=User.idPerson inner join Role on User.idUser=Role.idUser;
-create view FeaturedProduct as select * from Product where outstanding = 1;#productos destacados
+
+
+create view ViewsPorduct as SELECT DISTINCT Product.idProduct, Product.nameProduct, Category.nameCategory , Product.description, Product.amount, Product.price, Product.color, Product.idCategory, ProductDate.image
+FROM Category inner join 
+Product  on Category.idCategory = Product.idCategory
+INNER JOIN ProductDate  ON ProductDate.idProduct = ProductDate.idProduct;
+ 
+CREATE VIEW  Outstanding  as SELECT DISTINCT Product.idProduct, Product.nameProduct, Product.amount, Product.color, Product.price,ProductDate.image  FROM Product inner join ProductDate  ON Product.idProduct = ProductDate.idProduct   where outstanding = 1
+

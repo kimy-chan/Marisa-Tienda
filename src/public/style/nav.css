@@ -20,7 +20,7 @@ body
     background-color: var(--fondo-rosa);
 }
 
-.social_media
+.socialmedia
 {
     display: flex;
     height: 30px;
@@ -30,7 +30,7 @@ body
     padding: 0px 22px;
     top: 0;
 }
-.social_media .left
+.socialmedia .left
 {
     display: flex;
     align-items: center;
@@ -40,13 +40,13 @@ body
     font-weight:550;
     color: var(--fondo-resaltador);
 }
-.social_media .right
+.socialmedia .right
 {
     width: 20%;
     height: 46px;
     margin-top: 1.5%;
 }
-.social_media .right ul
+.socialmedia .right ul
 {
     list-style: none;
     display: flex;
@@ -54,7 +54,7 @@ body
     align-items: center;
     gap: 12px;
 }
-.social_media .right ul li i
+.socialmedia .right ul li i
 {
     font-size: 1.2em;
     color: var(--fondo-resaltador);
@@ -210,4 +210,14 @@ nav .collapse .nav-items .nav-item li i:hover
     transition: 0.5s;
     background-color: var(--fondo-resaltador);
     color: var(--fondo-blanco);
+}
+
+.nav-items ul .cantidad{
+    margin-top: -20%;
+    float:inline-start;
+    background-color: skyblue;
+
+    color: red;
+
+
 }

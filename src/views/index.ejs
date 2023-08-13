@@ -1,4 +1,6 @@
-<%-include('./header/header') %>
+
+
+<%-include('./partials/header') %>
     <!-- Carrusel de imágenes -->
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
@@ -29,14 +31,14 @@
         <% product.forEach(item=>{%>
           <div class="col-sm-6 col-md-4">
             <div class="card">
-              <img  src="<%=item.image  %>" alt="Imagen 1">
+         <a href="/decription/<%=item.idProduct  %>"> <img   src="<%=item.image  %>" alt="Imagen 1"></a>
               <div class="card-body">
                 <div class="text">
                 <h5 ><%= item.nameProduct%> <%= item.color  %></h5>
                 <p class="card-text">BS.<%=parseFloat(item.price)%></p>
                 </div>
                 <div class="carrito">
-                  <a role="button" onclick="addCart(this,'<%=item.idProduct%>','<%=item.idCategory%>')">
+                  <a role="button" onclick="addCart(this,'<%=item.idProduct%>')">
                       <i class="ri-shopping-cart-fill"></i>
                   </a>
               </div>
@@ -108,8 +110,8 @@
       </div>
     </div>
     <br><br>
-    <!--fooder-->
+
   
 
 
-      <%- include('./footer/footer') %>
+      <%- include('./partials/footer') %>

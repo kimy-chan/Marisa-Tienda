@@ -1,26 +1,21 @@
 
 document.addEventListener('DOMContentLoaded',()=>{
     var cantidadCarrito = document.getElementById('cantidadCarrito');
-    
     function updateCart(cantidad){
         console.log(cantidad);
         cantidadCarrito.textContent= cantidad.length
     }
     getCartCant()
-  
-    function getCartCant() {
-        axios.get('/cant-cart')
-          .then(function(response) {
-            if (response) {
-                updateCart(response.data.cantidaCart);
-            }
-          })
-          .catch(function(error) {
-            console.error('Error al obtener la cantidad del carrito:', error);
-          });
+   async function getCartCant() {
+       try {
+            let data = await axios.get('/cant-cart')
+            updateCart(data.data.cantidaCart);
+       } catch (error) {
+        console.log(error);
+        
+       }
       }
       setInterval(getCartCant, 2000)
-
- 
+    
 
 })

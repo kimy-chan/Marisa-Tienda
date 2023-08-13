@@ -5,9 +5,11 @@ class IndexController{
         let conn       
         try {
         conn = await getConecction()
-            const sqlQuery = "SELECT * FROM Product where outstanding = 1 && amount > 0"
+            const sqlQuery = "SELECT * FROM Outstanding where amount > 0"
+
         
             const [product]= await conn.query(sqlQuery)
+            console.log(product);
             return res.render("index",{product:product})
             
         } catch (error) {
