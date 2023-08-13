@@ -4,7 +4,7 @@ class CategoryController{
 
     async showProductBlusa(req,res){
         
-        let {nameProduct} = req.params|| "blusas"
+        let {nameProduct} = req.params
         console.log(nameProduct);
     
         let conn;
