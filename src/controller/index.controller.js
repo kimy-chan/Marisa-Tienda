@@ -1,4 +1,4 @@
-const getConecction = require("../model/db")
+const getConecction = require("../model/db/db")
 class IndexController{
 
    async index(req,res){

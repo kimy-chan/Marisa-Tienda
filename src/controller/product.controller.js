@@ -1,6 +1,8 @@
 
 const {validationResult}= require("express-validator"); 
-const getConecction= require("../model/db")
+
+const getConecction= require("../model/db/db")
+const ModelProduct= require("../model/model.products")
 const cloudinary= require("cloudinary")
 const path= require("path")
 const fs= require("fs");
@@ -86,26 +88,16 @@ class ProductController{
     
     }
 
-   async descriptionProduct(req,res){
-      let conn 
-
-      try {
-        conn = await getConecction()
-        const {idProduduct}= req.params
-        console.log(idProduduct);
-        const sqlQuery = 'select * from Product inner join ProductDate on Product.idProduct = ProductDate.idProduct where Product.idProduct=?'
-        const [product] = await conn.query(sqlQuery,[idProduduct])
-        console.log(product);
-        return res.render("descriptionProduct",{product:product}) 
-      } catch (error) {
-        console.log(error);
-    
-      }finally{
-        if(conn){
-          conn.release()
-        }
-      }
-
+    async descriptionProduct(req,res){
+    try {
+    const {idProduduct}= req.params
+    const product= await  ModelProduct.descriptionProduct({idProduduct})
+    console.log(product);
+      return res.render("descriptionProduct",{product:product}) 
+    } catch (error) {
+      console.log(error);
+      
+    }
   }
   
 
