@@ -1,10 +1,15 @@
+const ModelCategory = require("../model/model.category");
+const ModelProduct = require("../model/model.products");
 const ProductModel = require("../model/model.products");
 
 class IndexController {
   async index(req, res) {
     try {
       const product = await ProductModel.productDestacado();
-      return res.render("index", { product: product });
+      const categories = await ModelCategory.showCategory();
+      console.log(categories);
+
+      return res.render("index", { product: product,categories:categories });
     } catch (error) {
       console.log(error);
     }

@@ -62,33 +62,32 @@
     <div class="container-fluid">
       <div class="subtitle"><h2>Categorias</h2></div>
       <div class="row">
-        <div class="col-sm-6 col-md-4">
-          <div class="card2">
-            <img src="./img/image P2 (1).svg" alt="Imagen 1">
-            <div class="card-body2">
-             <a href="/vestidos"> <button>VER MAS</button></a>
+        <%if(categories.length > 0) {%>
+
+          <%categories.forEach(item=>{%>
+            <div class="col-sm-6 col-md-4">
+            <div class="card2">
+              <img src="<%=item.image  %>" alt="Imagen 1">
+              <div class="card-body2">
+               <a href="/vestidos"> <button>VER MAS</button></a>
+              </div>
             </div>
+            <div class="subtitle2"><p><%=item.nameCategory  %></p></div>
           </div>
-          <div class="subtitle2"><p>VESTIDOS</p></div>
-        </div>
-        <div class="col-sm-6 col-md-4">
-          <div class="card2">
-            <img src="./img/image P2 (2).svg" alt="Imagen 2">
-            <div class="card-body2">
-             <a href="/blusas"> <button>VER MAS</button></a>
-            </div>
+          
+          
+          <%
+
+          })  %>
+          
+        <%}else{%>
+          <div class="alert alert-warning" role="alert">
+            Categorias no disponibles
           </div>
-        <div class="subtitle2"><p>BLUSAS</p></div> 
-        </div>
-        <div class="col-sm-6 col-md-4">
-          <div class="card2">
-            <img  src="./img/image P2 (1).svg" alt="Imagen 3">
-            <div class="card-body2">
-             <a href="/accesorios"><button>VER MAS</button></a>
-            </div>
-          </div>
-          <div class="subtitle2"><p>ACCESORIOS</p></div>
-        </div>
+        
+        <%
+        } %>
+
        </div>
     </div>
 
