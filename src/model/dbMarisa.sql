@@ -59,14 +59,13 @@ CREATE TABLE Category (
 CREATE TABLE Product (
   idProduct INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   nameProduct VARCHAR(100) NOT NULL,
-  modelProduct VARCHAR(100) NOT NULL,
   description VARCHAR(255) NOT NULL,
   amount INT CHECK (amount >= 0),
   price DECIMAL(10, 2) NOT NULL,
   date DATETIME NOT NULL,
   color VARCHAR(20) NULL,
    size VARCHAR(10) NULL,
-  outstanding TINYINT NOT NULL DEFAULT 0,
+  outstanding TINYINT DEFAULT 0,
   idCategory INT NOT NULL,
   FOREIGN KEY (idCategory) REFERENCES Category(idCategory) ON DELETE CASCADE
 );
@@ -97,7 +96,7 @@ CREATE TABLE InformationCompany (
   mission VARCHAR(255) NULL,
   vision VARCHAR(255) NULL
 );
-insert into category(nameCategory) values('Blusas'),('Vestidos'),('Accesorios'); 
+
 
 -- Trigger para actualizar el detalle de ventas
 DELIMITER //
@@ -149,9 +148,41 @@ DELIMITER ;
 
 #vistas
 create view VerifyUser as select Person.idPerson,Person.firstName, Person.lastName,Person.motherLastName,User.email, User.password, Role.nameRole from Person inner join User on Person.idPerson=User.idPerson inner join Role on User.idUser=Role.idUser;
-create view ViewsPorduct as SELECT DISTINCT Product.idProduct, Product.nameProduct, Category.nameCategory , Product.description, Product.amount, Product.price, Product.color, Product.idCategory, ProductDate.image
-FROM Category inner join 
-Product  on Category.idCategory = Product.idCategory
-INNER JOIN ProductDate  ON ProductDate.idProduct = ProductDate.idProduct; 
-CREATE VIEW  Outstanding  as SELECT DISTINCT Product.idProduct, Product.nameProduct, Product.amount, Product.color, Product.price,ProductDate.image  FROM Product inner join ProductDate  ON Product.idProduct = ProductDate.idProduct   where outstanding = 1
+CREATE VIEW ViewsProduct AS
+SELECT
+    P.idProduct,
+    P.nameProduct,
+    C.nameCategory,
+    P.description,
+    P.amount,
+    P.price,
+    P.color,
+    (
+        SELECT PD.image
+        FROM ProductDate AS PD
+        WHERE PD.idProduct = P.idProduct
+        LIMIT 1
+    ) AS image
+FROM
+    Product AS P
+INNER JOIN
+    Category AS C ON P.idCategory = C.idCategory;
 
+
+CREATE VIEW Outstanding AS
+SELECT
+    P.idProduct,
+    P.nameProduct,
+    P.amount,
+    P.color,
+    P.price,
+    (
+        SELECT PD.image
+        FROM ProductDate AS PD
+        WHERE PD.idProduct = P.idProduct
+        LIMIT 1
+    ) AS image
+FROM
+    Product AS P
+WHERE
+    P.outstanding = 1;
