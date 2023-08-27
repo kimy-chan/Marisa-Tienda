@@ -17,7 +17,7 @@ class CartController{
         let totaPrice=0
         let cantidad=1
         let conn;        
-        const sqlQueryProduct="SELECT DISTINCT Product.idProduct,nameProduct,image,price  FROM Product inner join ProductDate on Product.idProduct=ProductDate.idProduct where Product.idProduct=?"
+        const sqlQueryProduct=" SELECT * FROM ViewsProduct WHERE idProduct = ?"
      try {
         conn = await getConecction()
         if(req.session.idProduct){

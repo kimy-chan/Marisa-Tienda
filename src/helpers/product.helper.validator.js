@@ -1,25 +1,19 @@
 const {body}= require("express-validator");
 function productValidator(){
     return [
-        body("nameProduct").notEmpty(),
-        body("modelProduct").notEmpty(),
-        body("description").notEmpty(),
-        body("image").custom((value,{req})=>{
-            if(!req.file){
+        body("nombre").matches(/^[a-zA-Z\s]+$/),
+        body("descripcion").matches(/^[a-zA-Z\s]+$/),
+        body("imagenes").custom((value,{req})=>{
+            if(!req.files || req.files.length === 0){
                 throw new Error("Archivo invalido")
             }
-            /*const allExtension = ['.png', '.jpg', '.jpeg']
-            const fileExtension = req.file.originalname.substring(req.file.originalname.lastIndexOf('.')).toLowerCase(); //sacamos la extesion png. jpg
-            if(!allExtension.includes(fileExtension)){
-                throw new Error("solo se permiten png o jpg")
-            }*/
+        
             return true
         }),
-        body("amount").notEmpty().isNumeric(),
-        body("price").notEmpty().isNumeric(),
-        body("size").notEmpty(),
-        body("outstanding").notEmpty().isNumeric(),
-        body("color").notEmpty()
+        body("cantidad").isNumeric(),
+        body("precio").notEmpty().isNumeric(),
+        body("tallas").matches(/^(?:[a-zA-Z\s]*)$/),
+        body("colores").matches(/^[a-zA-Z\s]+$/)
     ]
 }
 module.exports=productValidator;

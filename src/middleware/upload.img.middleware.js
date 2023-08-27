@@ -15,7 +15,7 @@ const upload =multer({
     dest:path.join(__dirname,'../public/upload'),
     fileFilter:(req,file,cb)=>{
         const extensions= path.extname(file.originalname)
-        if(extensions == '.png' || extensions =='.jpg' || extensions =='jpeg'){
+        if(extensions == '.png' || extensions =='.jpg' || extensions =='.jpeg'){
             return cb(null,true)
         }
         return cb(null,false)

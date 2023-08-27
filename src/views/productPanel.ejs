@@ -1,0 +1,183 @@
+<%- include('./partials/headerPanel') %>
+
+<div class="modal" id="miModal">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Formulario en Modal</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">x</button>
+          </div>
+          <div class="modal-body">
+              <form action="/add-product" method="POST" enctype="multipart/form-data">
+                <div class="row">
+                  <div class="col-md-6">
+                      <div class="mb-3">
+                          <label for="nombre" class="form-label">Nombre del Producto:</label>
+                          <input type="text" class="form-control" value="<%=values.nombre  %>" id="nombre" name="nombre" required>
+                          <% error.forEach(err => { %>
+                            <% if (err.path === 'nombre') { %>
+                              <span><%= err.msg %></span>
+                            <% } %>
+                          <% }); %>
+                      </div>
+                      
+                      <div class="mb-3">
+                          <label for="cantidad" class="form-label">Cantidad:</label>
+                          <input type="number" class="form-control" value="<%=values.cantidad  %>" id="cantidad" name="cantidad" required>
+                          <% error.forEach(err => { %>
+                            <% if (err.path === 'cantidad') { %>
+                              <span><%= err.msg %></span>
+                            <% } %>
+                          <% }); %>
+                      </div>
+                      
+                      <div class="mb-3">
+                          <label for="colores" class="form-label">Colores disponibles:</label>
+                          <input type="text" class="form-control" value="<%=values.colores  %>" id="colores" name="colores">
+                   
+                          <% error.forEach(err => { %>
+                            <% if (err.path === 'colores') { %>
+                              <span><%= err.msg %></span>
+                            <% } %>
+                          <% }); %>
+                      </div>
+                  </div>
+                  
+                  <div class="col-md-6">
+                      <div class="mb-3">
+                          <label for="descripcion" class="form-label">Descripción:</label>
+                          <textarea class="form-control" id="descripcion" name="descripcion" required><%=values.descripcion%></textarea>
+                          <% error.forEach(err => { %>
+                            <% if (err.path === 'descripcion') { %>
+                              <span><%= err.msg %></span>
+                            <% } %>
+                          <% }); %>
+                      </div>
+                      
+                      <div class="mb-3">
+                          <label for="precio" class="form-label">Precio:</label>
+                          <input type="number" step="0.01" value="<%=values.precio  %>" class="form-control" id="precio" name="precio" required>
+                          <% error.forEach(err => { %>
+                            <% if (err.path === 'precio') { %>
+                              <span><%= err.msg %></span>
+                            <% } %>
+                          <% }); %>
+                      </div>
+                      
+                      <div class="mb-3">
+                          <label for="tallas" class="form-label">Tallas disponibles:</label>
+                          <input type="text" class="form-control" id="tallas" value="<%=values.tallas  %>" name="tallas">
+                          <% error.forEach(err => { %>
+                            <% if (err.path === 'tallas') { %>
+                              <span><%= err.msg %></span>
+                            <% } %>
+                          <% }); %>
+                      </div>
+                    
+                  </div>
+                  <div class="mb-6">
+                    <label for="imagenes">Selecciona una o varias imágenes:</label>
+                    <input type="file" id="imagenes" name="imagenes" multiple>
+                    <% error.forEach(err => { %>
+                      <% if (err.path === 'imagenes') { %>
+                        <span><%= err.msg %></span>
+                      <% } %>
+                    <% }); %>
+                </div>
+                <br>
+              </div>
+        
+              <div class="mb-3 form-check">
+                  <input type="checkbox" class="form-check-input"  value="1" name="destacado">
+                  <label class="form-check-label" for="destacado">Destacado</label>
+              </div>
+              
+              <div class="mb-3">
+                  <label for="categorias" class="form-label">Categorías:</label>
+                  <select class="form-select" id="categorias" name="categorias" required>
+
+                    <% if(categories.length > 0){%>
+                      <%categories.forEach(item=>{%>
+                        <option value="<%= item.idCategory %>"><%=item.nameCategory  %></option>
+                    
+                        <%})  %>
+                     
+                     <%}else{%>
+                      <option value="electronica">categorias vacia</option>
+                     <%}
+                     %>
+             
+                  </select>
+              </div>
+              
+              <button type="submit" class="btn btn-primary">Añadir Producto</button>
+                   
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              </form>
+          </div>
+        
+      </div>
+  </div>
+</div>
+
+
+  <div class="container mt-5">
+    <div class="d-flex justify-content-end mb-3">
+      <button id="abrirModalBtn" type="button" 
+      class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModal"><i class="fas fa-plus"></i> Agregar Nuevo Producto</button>
+  </div>
+    <table id="productosTable" class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+          <th>Color</th>
+          <th>Talla</th>
+          <th>Imagen</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Aquí se cargarán los datos dinámicamente -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Agrega los scripts de jQuery, Bootstrap y DataTables -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+  <script>
+    $(document).ready(function() {
+      // Inicializar DataTables con configuración básica y estilo de Bootstrap
+      $('#productosTable').DataTable({
+        // Aquí puedes personalizar la configuración según tus necesidades
+        language: {
+          url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/Spanish.json' // Agrega el archivo de idioma deseado
+        }
+      });
+
+    
+    });
+  
+    </script>
+    <% if (showModal) { %>
+    <script>
+
+            $(document).ready(function() {
+            var modal = new bootstrap.Modal(document.getElementById("miModal"));
+            modal.show();
+            })
+  </script>
+  <% } %>
+</body>
+</html>

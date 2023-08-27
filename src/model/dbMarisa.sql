@@ -51,7 +51,8 @@ CREATE TABLE OrderCustomer (
 -- Tabla para las categorías
 CREATE TABLE Category (
   idCategory INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  nameCategory VARCHAR(50)
+  nameCategory VARCHAR(50),
+ image VARCHAR(255)
 );
 
 -- Tabla para los productos
@@ -148,12 +149,9 @@ DELIMITER ;
 
 #vistas
 create view VerifyUser as select Person.idPerson,Person.firstName, Person.lastName,Person.motherLastName,User.email, User.password, Role.nameRole from Person inner join User on Person.idPerson=User.idPerson inner join Role on User.idUser=Role.idUser;
-
-
 create view ViewsPorduct as SELECT DISTINCT Product.idProduct, Product.nameProduct, Category.nameCategory , Product.description, Product.amount, Product.price, Product.color, Product.idCategory, ProductDate.image
 FROM Category inner join 
 Product  on Category.idCategory = Product.idCategory
-INNER JOIN ProductDate  ON ProductDate.idProduct = ProductDate.idProduct;
- 
+INNER JOIN ProductDate  ON ProductDate.idProduct = ProductDate.idProduct; 
 CREATE VIEW  Outstanding  as SELECT DISTINCT Product.idProduct, Product.nameProduct, Product.amount, Product.color, Product.price,ProductDate.image  FROM Product inner join ProductDate  ON Product.idProduct = ProductDate.idProduct   where outstanding = 1
 
