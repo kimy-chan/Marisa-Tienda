@@ -1,0 +1,67 @@
+
+
+<%-include('./partials/header') %>
+
+<div class="title">
+<div class="carrito">
+    <i class="ri-shopping-cart-line"></i>
+</div>
+<hr> <hr>
+<h2>LISTA DE CARRITO</h2>
+</div>
+
+<% if(product.length > 0) { %>
+<div class="container mt-6">
+    <div class="listado-container">
+        <div class="listado bg-white rounded p-4 d-flex flex-column overflow-auto">
+            <div class="menu">
+                <ul>
+                    <li>Producto</li>
+                    <li>Descripción</li>
+                    <li>Cantidad</li>
+                    <li>Precio</li>
+                </ul>
+            </div>
+            <% product.forEach(item => { %>
+                <div class="product-card">
+                    <div class="product-details card_detail">
+                        <img src="<%= item.image %>" alt="Producto" class="product-image" style="max-width: 150px; max-height: 150px;">
+                    </div>
+                    <div class="product-details card_detail">
+                        <p><%= item.description %></p>
+                        <p>Talla: <%= item.size %></p>
+                        <p>Color: <%= item.color %></p>
+                        <div class="product-actions">
+                            <a href="#"><i class="ri-edit-fill"></i>Editar</a>
+                            <a href="/cart/<%= item.idProduct %>"><i class="ri-delete-bin-5-fill"></i>Quitar</a>
+                        </div>
+                    </div>
+                    <div class="product-details card_detail">
+                      <input id="cantidadInput" value="1" type="number" class="form-control" />
+                    </div>
+                    <div class="product-details card_detail">
+                        <div id="precioTotal" class="product-price">BS <%= item.price %></div>
+                    </div>
+                </div>
+                <div class="lineaCart"></div>
+            <% }) %>
+            <br>
+            <div class="text-right">
+                <p>Subtotal: <%=totaPrice%></p>
+            </div>
+            <div class="boton">
+              <a href="/pedido" class="btn btn-primary">Comprar</a>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+<% } else { %>
+<h1>carrito basio</h1>
+<% } %>
+
+<div class="linea"></div>
+
+
+
+

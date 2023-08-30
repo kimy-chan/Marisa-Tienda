@@ -11,6 +11,7 @@ const routerCategory = require("./router/category.router");
 const routerCart = require("./router/cart.router");
 const routerIndex = require("./router/index.router");
 const routerPanel = require("./router/panel.router");
+const routerPedidos = require("./router/Pedidos.router");
 const session = require("express-session");
 
 
@@ -53,6 +54,7 @@ class Server {
     this.app.use(routerCart);
     this.app.use(routerIndex);
     this.app.use(routerPanel);
+    this.app.use(routerPedidos)
   }
 
   start() {

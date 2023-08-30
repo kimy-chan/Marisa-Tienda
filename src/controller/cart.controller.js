@@ -1,4 +1,6 @@
+
 const getConecction = require("../model/db/db")
+const CartModel = require("../model/model.cart")
 
 class CartController{
 
@@ -7,7 +9,6 @@ class CartController{
         if(!req.session.idProduct){
             req.session.idProduct = []
         }
-        console.log(idCart);
         req.session.idProduct.push(idCart)
       return res.redirect("/")
     }
@@ -16,14 +17,12 @@ class CartController{
       let cart=[]
         let totaPrice=0
         let cantidad=1
-        let conn;        
-        const sqlQueryProduct=" SELECT * FROM ViewsProduct WHERE idProduct = ?"
+
      try {
-        conn = await getConecction()
         if(req.session.idProduct){
             for(let productId of req.session.idProduct){
-               const [product] =  await conn.query(sqlQueryProduct,[productId])
-               product[0].cantidad=cantidad    
+               const product =  await CartModel.cardProduct({productId})
+               product[0].cantidad=cantidad   
                 cart.push(...product)
                 
             }
@@ -33,28 +32,22 @@ class CartController{
            for (let index = 0; index <cart.length; index++) {
                totaPrice += parseFloat(cart[index].price)
            } 
-            return res.json({cart:cart,total:totaPrice})
+     
+            return res.render("cart",{product:cart,totaPrice:totaPrice})
 
         }
-    
-
-        return res.send("carrito basio")
+      
+        return res.render("cart",{product:cart})
 
      } catch (error) {
         console.log(error);
         
-     }finally{
-        if(conn){
-            conn.release()
-        }
-
      }
     }
 
     deleteCartProduct(req,res){
         const {idProduct}= req.params
         if(req.session.idProduct && req.session.idProduct.length > 0){{
-            console.log(req.session.idProduct);
             const index = req.session.idProduct.findIndex(item => item == idProduct) //BUSCA EL INDICE DE CADA PRODUCTO
             if(index != -1){
                 req.session.idProduct.splice(index,1) //BORRa cada producto

@@ -15,10 +15,7 @@
     --fondo-resaltador:#D09456;
     --fondo-resaltador2:#FADBC8;
 }
-body
-{
-    background-color: var(--fondo-rosa);
-}
+
 
 .socialmedia
 {

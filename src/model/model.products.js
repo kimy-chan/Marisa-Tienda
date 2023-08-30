@@ -76,6 +76,21 @@ class ModelProduct {
 
   }
 
+   static async getAllProduct(){
+    let conn;
+    const sqlQueryPorductAll = "SELECT * FROM ViewsProduct"
+    try {
+      conn = await getConecction()
+      const [product]= await conn.query(sqlQueryPorductAll)
+     return product
+
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
+   }
+
 
 
 }

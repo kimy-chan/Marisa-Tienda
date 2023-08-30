@@ -7,7 +7,7 @@ class IndexController {
     try {
       const product = await ProductModel.productDestacado();
       const categories = await ModelCategory.showCategory();
-      console.log(categories);
+
 
       return res.render("index", { product: product,categories:categories });
     } catch (error) {

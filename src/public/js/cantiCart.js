@@ -2,7 +2,6 @@
 document.addEventListener('DOMContentLoaded',()=>{
     var cantidadCarrito = document.getElementById('cantidadCarrito');
     function updateCart(cantidad){
-        console.log(cantidad);
         cantidadCarrito.textContent= cantidad.length
     }
     getCartCant()

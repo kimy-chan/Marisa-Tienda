@@ -25,8 +25,9 @@ class ProductController{
         const result = validationResult(req)
         if(!result.isEmpty()){
          const values =req.body
+         const product = await ModelProduct.getAllProduct()
          const categories = await ModelCategory.showCategory()
-        return res.render("productPanel",{ showModal:true,error:result.array(),values,categories:categories})
+        return res.render("productPanel",{ showModal:true,error:result.array(),values,categories:categories,product:product})
         }
 
 
@@ -58,7 +59,6 @@ class ProductController{
     try {
     const {idProduduct}= req.params
     const product= await  ModelProduct.descriptionProduct({idProduduct})
-    console.log(product);
       return res.render("descriptionProduct",{product:product}) 
     } catch (error) {
       console.log(error);
@@ -72,7 +72,8 @@ class ProductController{
  try {
   let result = [];
   const categories = await ModelCategory.showCategory()
-  return res.render("productPanel", { showModal:false, error: result,values:'',categories:categories});
+  const product = await ModelProduct.getAllProduct()
+  return res.render("productPanel", { showModal:false, error: result,values:'',categories:categories,product:product});
   
  } catch (error) {
   console.log(error);
