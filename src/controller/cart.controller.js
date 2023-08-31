@@ -1,6 +1,7 @@
 
-const getConecction = require("../model/db/db")
 const CartModel = require("../model/model.cart")
+const {eliminarObjetosRepetidos} = require("./auxiliar.controler")
+
 
 class CartController{
 
@@ -12,17 +13,20 @@ class CartController{
         req.session.idProduct.push(idCart)
       return res.redirect("/")
     }
+    
+
+
 
     async cart(req,res){
-      let cart=[]
+        let cart=[]
         let totaPrice=0
-        let cantidad=1
+        const cantidad = {};
 
      try {
         if(req.session.idProduct){
+            
             for(let productId of req.session.idProduct){
                const product =  await CartModel.cardProduct({productId})
-               product[0].cantidad=cantidad   
                 cart.push(...product)
                 
             }
@@ -31,11 +35,24 @@ class CartController{
         if(cart.length>0){
            for (let index = 0; index <cart.length; index++) {
                totaPrice += parseFloat(cart[index].price)
-           } 
-     
-            return res.render("cart",{product:cart,totaPrice:totaPrice})
+           }
+
+           cart.forEach(objeto => { // cantidad de cada producto
+            const id = objeto.idProduct;
+            cantidad[id] = (cantidad[id] || 0) + 1;
+          })
+
+          let product = eliminarObjetosRepetidos(cart,'idProduct')
+          product.forEach(item => {
+            const idProduct = item.idProduct;
+            item.cantidad = cantidad[idProduct] || 1; 
+          });
+          console.log(product);
+
+            return res.render("cart",{product:product,totaPrice:totaPrice})
 
         }
+
       
         return res.render("cart",{product:cart})
 
@@ -45,6 +62,7 @@ class CartController{
      }
     }
 
+      
     deleteCartProduct(req,res){
         const {idProduct}= req.params
         if(req.session.idProduct && req.session.idProduct.length > 0){{

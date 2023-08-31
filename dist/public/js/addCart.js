@@ -1,0 +1,1 @@
+async function addCart(a,e){try{await axios.get(`/add-cart/${e}`),mensaje(a)}catch(a){console.log(a)}}function mensaje(a){setTimeout((()=>{const e=a.querySelector("i");e.classList.remove("ri-shopping-cart-fill"),e.classList.add("ri-check-line")}),500)}

@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <div class="product-details card_detail">
-                      <input  value="<%=item.cantidad%>" type="number" class="form-control"   oninput="addCart(this,'<%=item.idProduct%>')" />
+                      <input id="cantidadInput" value="1" type="number" class="form-control" />
                     </div>
                     <div class="product-details card_detail">
                         <div id="precioTotal" class="product-price">BS <%= item.price %></div>
@@ -63,6 +63,5 @@
 <div class="linea"></div>
 
 
-<%- include('./partials/footer') %>
 
 
