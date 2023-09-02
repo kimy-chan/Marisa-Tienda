@@ -1,6 +1,6 @@
 
 const CartModel = require("../model/model.cart")
-const {eliminarObjetosRepetidos} = require("./auxiliar.controler")
+const CartAux = require("./auxiliar.controler")
 
 
 class CartController{
@@ -18,43 +18,39 @@ class CartController{
 
 
     async cart(req,res){
-        let cart=[]
-        let totaPrice=0
-        const cantidad = {};
-
+    
+        let product
+   
      try {
         if(req.session.idProduct){
             
-            for(let productId of req.session.idProduct){
-               const product =  await CartModel.cardProduct({productId})
-                cart.push(...product)
-                
-            }
-        }
-
-        if(cart.length>0){
-           for (let index = 0; index <cart.length; index++) {
-               totaPrice += parseFloat(cart[index].price)
-           }
-
-           cart.forEach(objeto => { // cantidad de cada producto
-            const id = objeto.idProduct;
-            cantidad[id] = (cantidad[id] || 0) + 1;
-          })
-
-          let product = eliminarObjetosRepetidos(cart,'idProduct')
-          product.forEach(item => {
-            const idProduct = item.idProduct;
-            item.cantidad = cantidad[idProduct] || 1; 
-          });
-          console.log(product);
-
-            return res.render("cart",{product:product,totaPrice:totaPrice})
+           
+         product = await CartAux.getProdcut(req.session.idProduct)
+        
+        return res.render("cart",{product:product.productUnique,totalPrice:product.totalPrice})
 
         }
+        return res.render("cart",{product:product})
 
       
-        return res.render("cart",{product:cart})
+
+      /*  if(cart.length>0){
+            const allPrice =  CartAux.totalPrice(cart)
+            totalPrice = allPrice
+          let product = CartAux.DeleteObjet(cart,'idProduct') // elimina los obejtos repetidos
+          
+          let cant = CartAux.catidadProduct(cart)
+          cart.forEach(item => {
+            const idProduct = item.idProduct;
+            item.cantidad = cant[idProduct] || 1; // Asignar cantidad o 1 si no existe en cantidad
+          });
+          */
+
+
+         
+
+       
+
 
      } catch (error) {
         console.log(error);

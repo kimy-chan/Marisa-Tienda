@@ -44,6 +44,7 @@ CREATE TABLE OrderCustomer (
   idOrder INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   state TINYINT NOT NULL DEFAULT 0, -- estado si esta vendio o no
   dateOrderHour DATETIME,
+
   idPerson INT NOT NULL,
   FOREIGN KEY (idPerson) REFERENCES Person(idPerson)
 );
@@ -79,13 +80,15 @@ image VARCHAR(255) NOT NULL,
 
 );
 
+
+
 -- Tabla para los detalles de los productos en los pedidos
 CREATE TABLE ProductDetail (
   idProductDetail INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   idProduct INT NOT NULL,
   idOrder INT NOT NULL,
-  amount INT NOT NULL,
-  total DECIMAL(10, 2) NOT NULL,
+  	amount INT NOT NULL,
+  total DECIMAL(10, 2),
   FOREIGN KEY (idOrder) REFERENCES OrderCustomer(idOrder),
   FOREIGN KEY (idProduct) REFERENCES Product(idProduct)
 );
@@ -96,6 +99,8 @@ CREATE TABLE InformationCompany (
   mission VARCHAR(255) NULL,
   vision VARCHAR(255) NULL
 );
+
+
 
 
 -- Trigger para actualizar el detalle de ventas
@@ -127,6 +132,21 @@ DELIMITER ;
 
 
 
+DELIMITER //
+
+CREATE TRIGGER CalculateTotal BEFORE INSERT ON ProductDetail
+FOR EACH ROW
+BEGIN
+    DECLARE productPrice DECIMAL(10, 2);
+    SELECT price INTO productPrice FROM Product WHERE idProduct = NEW.idProduct;
+
+    SET NEW.total = NEW.amount * productPrice;
+END;
+//
+
+DELIMITER ;
+
+
 
 
 
@@ -152,6 +172,7 @@ CREATE VIEW ViewsProduct AS
 SELECT
     P.idProduct,
     P.nameProduct,
+     P.size,
     C.nameCategory,
     P.description,
     P.amount,

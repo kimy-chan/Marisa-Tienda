@@ -10,7 +10,7 @@
 <h2>LISTA DE CARRITO</h2>
 </div>
 
-<% if(product.length > 0) { %>
+<% if(typeof product != 'undefined' && product.length>0) { %>
 <div class="container mt-6">
     <div class="listado-container">
         <div class="listado bg-white rounded p-4 d-flex flex-column overflow-auto">
@@ -47,7 +47,7 @@
             <% }) %>
             <br>
             <div class="text-right">
-                <p>Subtotal: <%=totaPrice%></p>
+                <p>Subtotal: <%=totalPrice%></p>
             </div>
             <div class="boton">
               <a href="/pedido" class="btn btn-primary">Comprar</a>
@@ -62,7 +62,5 @@
 
 <div class="linea"></div>
 
-
-<%- include('./partials/footer') %>
-
+    
 

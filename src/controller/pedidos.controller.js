@@ -1,28 +1,15 @@
-const CartModel = require("../model/model.cart")
+const CartAux = require("./auxiliar.controler");
+
 
 class PedidosController{
 
     static async pedido(req,res){
-        const products= []
-        let totalPrice= 0
         
       try {
         if(req.session.idProduct){
-       
-          for(let productId of  req.session.idProduct){
-            const product = await CartModel.cardProduct({productId}) 
-            products.push(...product)
 
-          }
-
-       for (let index = 0; index < products.length; index++) {
-          totalPrice += parseFloat(products[index].price)
-        
-       }
-       console.log(totalPrice);
-    
-            return res.render("pedidoForm",{products:products,totalPrice:totalPrice})
-
+        let product = await CartAux.getProdcut(req.session.idProduct)
+            return res.render("pedidoForm",{products:product.productUnique, totalPrice:product.totalPrice})
         }
         return res.send("productos vasios")
       } catch (error) {
@@ -30,6 +17,40 @@ class PedidosController{
       }
       
     }
+
+    
+
+    static async pedidoFinal(req,res){
+      console.log(req.body);
+      const {nombre,apellidos,celular,Ciudad,direccion}=req.body
+       try {
+        if(req.session.idProduct){
+
+          let product = await CartAux.getProdcut(req.session.idProduct)
+
+          product.productUnique.forEach(element => {
+            console.log(element.cantidad);
+            
+          });
+
+     
+          return res.send("resivido")
+          
+        }
+
+        return res.send("errror")
+      } catch (error) {
+        
+      }
+          return res.send("resvido")
+      }
+
+ 
+
+    
+
+
+
 
 }
 

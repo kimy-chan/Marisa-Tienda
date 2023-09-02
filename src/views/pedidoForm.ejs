@@ -8,42 +8,43 @@
       <h1>Datos de Compra</h1>
   </div>
 
-<form>
+<form action="/pedido" method="post">
   <div class="form-row forms">
     <div class="form-group col-md-6 form">
       <label for="nombre">Nombre:</label>
-      <input type="text" class="form-control" id="nombre" name="nombre" required>
+      <input type="text" class="form-control" id="nombre" name="nombre" >
     </div>
     <div class="form-group col-md-6 form">
       <label for="apellidos">Apellidos:</label>
-      <input type="text" class="form-control" id="apellidos" name="apellidos" required>
+      <input type="text" class="form-control" id="apellidos" name="apellidos" >
     </div>
   </div>
       <div class="form-row forms">
         <div class="form-group col-md-6 form">
           <label for="celular">Celular:</label>
-          <input type="text" class="form-control" name="celular" required>
+          <input type="text" class="form-control" name="celular" >
         </div>
         <div class="form-group col-md-6 form">
           <label for="apellidos">Ciudad:</label>
-          <input type="text" class="form-control" name="Ciudad" required>
+          <input type="text" class="form-control" name="Ciudad" >
         </div>
       </div> 
   <div class="form-group forms">
     <label for="direccion" class="form">Dirección:</label>
-    <input type="text" class="form-control" id="direccion" name="direccion" required>
+    <input type="text" class="form-control" id="direccion" name="direccion" >
   </div>
 
- <div class="form-group forms">
-    <label for="producto" class="form">Productos:</label>
-    <select name="producto" id="producto" class="form-control">
-       /* <% products.forEach(item => { %>
-            <option value="<%= item.idProduct %>"><%= item.nameProduct %></option>
+  <div class="form-group forms">
+    <label for="productos" class="form">Productos:</label>
+    <select name="productos[]" id="productos" class="form-control" multiple disabled>
+        <% products.forEach(item => { %>
+            <option value="<%= item.idProduct %>"><%= item.nameProduct %> <%= item.cantidad   %> </option>
         <% }) %>
     </select>
-</div>
+  </div>
+
   <div class="sumatoria">
-   <div class="form"><p class="total">TOTAL</p> <%=totalPrice %></div>
+   <div class="form"><p class="total">TOTAL: <%=totalPrice  %></p></div>
   </div>
   <h5 class="total">Envío</h5>
   <div class="form-row forms envios">   
@@ -62,3 +63,10 @@
   
 </form>
 </div>
+
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.5.0/js/bootstrap.min.js"></script>
