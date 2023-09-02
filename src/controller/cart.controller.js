@@ -19,38 +19,14 @@ class CartController{
 
     async cart(req,res){
     
-        let product
+    let product
    
      try {
         if(req.session.idProduct){
-            
-           
          product = await CartAux.getProdcut(req.session.idProduct)
-        
         return res.render("cart",{product:product.productUnique,totalPrice:product.totalPrice})
 
         }
-        return res.render("cart",{product:product})
-
-      
-
-      /*  if(cart.length>0){
-            const allPrice =  CartAux.totalPrice(cart)
-            totalPrice = allPrice
-          let product = CartAux.DeleteObjet(cart,'idProduct') // elimina los obejtos repetidos
-          
-          let cant = CartAux.catidadProduct(cart)
-          cart.forEach(item => {
-            const idProduct = item.idProduct;
-            item.cantidad = cant[idProduct] || 1; // Asignar cantidad o 1 si no existe en cantidad
-          });
-          */
-
-
-         
-
-       
-
 
      } catch (error) {
         console.log(error);

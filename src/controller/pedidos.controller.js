@@ -7,7 +7,6 @@ class PedidosController{
         
       try {
         if(req.session.idProduct){
-
         let product = await CartAux.getProdcut(req.session.idProduct)
             return res.render("pedidoForm",{products:product.productUnique, totalPrice:product.totalPrice})
         }
@@ -28,10 +27,7 @@ class PedidosController{
 
           let product = await CartAux.getProdcut(req.session.idProduct)
 
-          product.productUnique.forEach(element => {
-            console.log(element.cantidad);
-            
-          });
+         
 
      
           return res.send("resivido")
