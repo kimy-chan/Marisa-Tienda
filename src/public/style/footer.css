@@ -16,16 +16,18 @@
     --fondo-resaltador2:#FADBC8;
 }
 
-.footer
-{
+
+.footer {
     background-color: var(--fondo-negro);
     width: 100%;
-    color:var(--fondo-blanco);
-    display: flex;
-    justify-content: space-around;
+    color: var(--fondo-blanco);
+    
+    bottom: 0;
+    left: 0;
+    right: 0;
     padding: 30px 28px;
-    position: absolute;
 }
+
 footer .copy
 {
     width: 100%;

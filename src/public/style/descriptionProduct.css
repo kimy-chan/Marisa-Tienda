@@ -15,10 +15,7 @@
     --fondo-resaltador:#D09456;
     --fondo-resaltador2:#FADBC8;
 }
-body
-{
-    background-color: var(--fondo-rosa);
-}
+
 .linea
 {
     width: 100%;
@@ -56,8 +53,7 @@ body
     border: 1px solid var(--fondo-resaltador);
     transition: 0.2s;
 }
-.container
-{
+.container-des{
     width: 100%;
     height: 480px;
 }

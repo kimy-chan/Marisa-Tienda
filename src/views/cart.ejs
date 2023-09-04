@@ -13,7 +13,7 @@
 <% if(typeof product != 'undefined' && product.length>0) { %>
 <div class="container mt-6">
     <div class="listado-container">
-        <div class="listado bg-white rounded p-4 d-flex flex-column overflow-auto">
+        <div class="listado">
             <div class="menu">
                 <ul>
                     <li>Producto</li>
@@ -23,6 +23,7 @@
                 </ul>
             </div>
             <% product.forEach(item => { %>
+                
                 <div class="product-card">
                     <div class="product-details card_detail">
                         <img src="<%= item.image %>" alt="Producto" class="product-image" style="max-width: 150px; max-height: 150px;">
@@ -66,5 +67,6 @@
 
 <div class="linea"></div>
 
-    
 
+
+<%- include('./partials/footer') %>
