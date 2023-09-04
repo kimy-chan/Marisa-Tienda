@@ -12,26 +12,51 @@
   <div class="form-row forms">
     <div class="form-group col-md-6 form">
       <label for="nombre">Nombre:</label>
-      <input type="text" class="form-control" id="nombre" name="nombre" >
+      <input type="text" class="form-control" id="nombre" name="nombre" value="<%= val.nombre %>" >
+      <% error.forEach(err => { %>
+        <% if (err.path === 'nombre') { %>
+          <span><%= err.msg %></span>
+        <% } %>
+      <% }); %>
     </div>
     <div class="form-group col-md-6 form">
       <label for="apellidos">Apellidos:</label>
-      <input type="text" class="form-control" id="apellidos" name="apellidos" >
+      <input type="text" class="form-control" id="apellidos" name="apellidos"  value="<%= val.apellidos %>" >
+      <% error.forEach(err => { %>
+        <% if (err.path === 'apellidos') { %>
+          <span><%= err.msg %></span>
+        <% } %>
+      <% }); %>
     </div>
   </div>
       <div class="form-row forms">
         <div class="form-group col-md-6 form">
           <label for="celular">Celular:</label>
-          <input type="text" class="form-control" name="celular" >
+          <input type="text" class="form-control" name="celular" value="<%= val.celular %>" > 
+          <% error.forEach(err => { %>
+            <% if (err.path === 'celular') { %>
+              <span><%= err.msg %></span>
+            <% } %>
+          <% }); %>
         </div>
         <div class="form-group col-md-6 form">
           <label for="apellidos">Ciudad:</label>
-          <input type="text" class="form-control" name="Ciudad" >
+          <input type="text" class="form-control" name="Ciudad"  value="<%= val.Ciudad %>" >
+          <% error.forEach(err => { %>
+            <% if (err.path === 'Ciudad') { %>
+              <span><%= err.msg %></span>
+            <% } %>
+          <% }); %>
         </div>
       </div> 
   <div class="form-group forms">
     <label for="direccion" class="form">Dirección:</label>
-    <input type="text" class="form-control" id="direccion" name="direccion" >
+    <input type="text" class="form-control" id="direccion" name="direccion"  value="<%= val.direccion %>" >
+    <% error.forEach(err => { %>
+      <% if (err.path === 'direccion') { %>
+        <span class="form"><%= err.msg %></span>
+      <% } %>
+    <% }); %>
   </div>
 
   <div class="form-group forms">
@@ -50,11 +75,11 @@
   <div class="form-row forms envios">   
     <div class="form-group col-md-6 form">
       <label for="Recoger">Delivery <br> (Cargo adicional de Bs 10,00)</label>
-      <input class="circulo" type="checkbox" name="Recoger" id="Recoger">
+      <input class="circulo" type="checkbox" <% if (val.recoger !== 'on') { %>checked<% } %> name="entrega" id="Recoger">
     </div>
     <div class="form-group col-md-6 form">
       <label for="Entrega">Recoger <br> en tienda</label>
-    <input class="circulo"type="checkbox" name="Entrega"id="Entrega">
+    <input class="circulo"type="checkbox"  <% if (val.recoger === 'on') { %>checked<% } %>  name="recoger"id="Entrega">
     </div>
   </div>
   <div class="boton">
@@ -65,8 +90,21 @@
 </div>
 
 
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  const checkboxRecoger = document.getElementById("Recoger");
+  const checkboxEntrega = document.getElementById("Entrega");
 
-<!-- Bootstrap JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.5.0/js/bootstrap.min.js"></script>
+  checkboxEntrega.addEventListener('change', () => {
+    if (checkboxEntrega.checked) {
+      checkboxRecoger.checked = false; 
+    }
+  });
+
+  checkboxRecoger.addEventListener('change', () => {
+    if (checkboxRecoger.checked) {
+      checkboxEntrega.checked = false; 
+    }
+  });
+
+
+</script>

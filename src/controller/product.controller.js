@@ -73,6 +73,7 @@ class ProductController{
   let result = [];
   const categories = await ModelCategory.showCategory()
   const product = await ModelProduct.getAllProduct()
+  console.log( product);
   return res.render("productPanel", { showModal:false, error: result,values:'',categories:categories,product:product});
   
  } catch (error) {

@@ -43,8 +43,8 @@ CREATE TABLE Role (
 CREATE TABLE OrderCustomer (
   idOrder INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   state TINYINT NOT NULL DEFAULT 0, -- estado si esta vendio o no
+   stateOrder  TINYINT NOT NULL default 0, -- si es para llevar o recoger
   dateOrderHour DATETIME,
-
   idPerson INT NOT NULL,
   FOREIGN KEY (idPerson) REFERENCES Person(idPerson)
 );
@@ -87,7 +87,7 @@ CREATE TABLE ProductDetail (
   idProductDetail INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   idProduct INT NOT NULL,
   idOrder INT NOT NULL,
-  	amount INT NOT NULL,
+	amount INT NOT NULL,
   total DECIMAL(10, 2),
   FOREIGN KEY (idOrder) REFERENCES OrderCustomer(idOrder),
   FOREIGN KEY (idProduct) REFERENCES Product(idProduct)
@@ -207,3 +207,24 @@ FROM
     Product AS P
 WHERE
     P.outstanding = 1;
+
+
+
+    create view CustomerOrder as 
+ select Person.idPerson,
+ Person.firstName,
+  Person.lastname,
+   Person.motherLastName,
+OrderCustomer.idOrder,
+OrderCustomer.stateOrder,
+OrderCustomer.dateOrderHour,
+Contact.Cell,
+Contact.address,
+Product.nameProduct,
+Product.size,
+productDetail.amount
+ from Person inner join OrderCustomer on Person.idPerson = OrderCustomer.idPerson 
+ inner join Contact on Person.idPerson = Contact.idPerson
+ inner join productDetail on OrderCustomer.idOrder = ProductDetail.idOrder
+ inner join Product on ProductDetail.idProduct = Product.idProduct
+ 

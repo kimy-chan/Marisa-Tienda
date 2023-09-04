@@ -24,9 +24,12 @@ class CartController{
      try {
         if(req.session.idProduct){
          product = await CartAux.getProdcut(req.session.idProduct)
+         console.log(product);
         return res.render("cart",{product:product.productUnique,totalPrice:product.totalPrice})
 
         }
+        return res.render("cart",{product:'',totalPrice:''})
+       
 
      } catch (error) {
         console.log(error);
