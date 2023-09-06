@@ -7,7 +7,7 @@ const productValidator = require("../helpers/product.helper.validator");
 
 const router = express.Router();
 
-router.get("/products-panel", [productValidator()],  productController.getProductAllPanel);
+router.get("/products-panel", [productValidator()], (req,res)=>{ productController.getProductAllPanel(req,res)});
 router.get("/category-panel",  CategoryController.categoryPanel);
 router.get("/administration-panel",AdministrationController.Administration)
 module.exports = router;

@@ -43,12 +43,12 @@ class ModelPedido{
 
     }
 
-    static async getAllOrder(){
+    static async getAllOrder({state}){
         let conn
-        const sqlOrder = "select * from CustomerOrder"
+        const sqlOrder = "SELECT * FROM CustomerOrder WHERE state = ?"
         try {
             conn=  await getConecction()
-            const [order]= await conn.query(sqlOrder)
+            const [order]= await conn.query(sqlOrder,[state])
             return order
             
         } catch (error) {
@@ -58,6 +58,26 @@ class ModelPedido{
             
         }
     }
+
+    static async productEntregado({idOrder,state}){
+        let conn
+        const sqlOrderUdate ="UPDATE OrderCustomer  SET state = ? WHERE idOrder=?"
+        try {
+            conn = await getConecction()
+            await conn.query(sqlOrderUdate,[state,idOrder])
+            return
+        } catch (error) {
+            console.log( error);
+            
+        }finally{
+            if(conn){
+                conn.release()
+            }
+        }
+    }
+
+    
+
 
 
 }

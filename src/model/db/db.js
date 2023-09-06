@@ -8,7 +8,7 @@ const pool = mysql.createPool({
     user:process.env.DB_USER,
     password:process.env.BD_PASSWORD,
     port:process.env.DB_PORT,
-    connectionLimit:10,
+    connectionLimit:20,
     waitForConnections:true
     
 })

@@ -1,23 +1,27 @@
 
 const {validationResult}= require("express-validator"); 
-
-const getConecction= require("../model/db/db")
 const ModelProduct= require("../model/model.products")
 const ModelCategory=require("../model/model.category")
 const cloudinary= require("cloudinary")
 const path= require("path")
 const fs= require("fs");
-const { error } = require("console");
+const { log } = require("console");
+
+
 class ProductController{
 
   constructor(){
+     this.data=[]
+     this.productPanel=[]
+     this.newProdcut=false
     cloudinary.config({
       cloud_name: process.env.CLOUD_NAME,
       api_key: process.env.CLOUD_API_KEY,
       api_secret: process.env.CLOUD_API_SECRET
-    });
-
+    })
+   
   }
+  
     async addProduct(req,res){
     const img = req.files
     let pathImgCloud=[]
@@ -39,27 +43,31 @@ class ProductController{
           pathImgCloud.push(pathCloud.secure_url)
         } 
         await ModelProduct.addPorduct({nombre,descripcion,cantidad,precio,colores,tallas,pathImgCloud, categorias,destacado})
-        return res.send("resivido")
+        return res.redirect("/products-panel")
          
   } catch (error) {
       console.log(error);
 
   }
-}
+  }
 
     
     //---------------------------------------------------
 
 
 
-    
-    
 
+    
     async descriptionProduct(req,res){
-    try {
-    const {idProduduct}= req.params
-    const product= await  ModelProduct.descriptionProduct({idProduduct})
-      return res.render("descriptionProduct",{product:product}) 
+      const {idProduct}= req.params
+
+    try {  
+      
+      if(this.data.length ==0 || this.data[0].idProduct != idProduct){
+      const product= await  ModelProduct.descriptionProduct({idProduct})
+      this.data=[...product]
+      }  
+      return res.render("descriptionProduct",{product:this.data}) 
     } catch (error) {
       console.log(error);
       
@@ -72,15 +80,17 @@ class ProductController{
  try {
   let result = [];
   const categories = await ModelCategory.showCategory()
-  const product = await ModelProduct.getAllProduct()
-  console.log( product);
+
+
+      const product = await ModelProduct.getAllProduct()
+  
   return res.render("productPanel", { showModal:false, error: result,values:'',categories:categories,product:product});
   
  } catch (error) {
   console.log(error);
   
  }
-  }
+    }
 
 }
 

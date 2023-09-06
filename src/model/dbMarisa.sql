@@ -48,6 +48,13 @@ CREATE TABLE OrderCustomer (
   idPerson INT NOT NULL,
   FOREIGN KEY (idPerson) REFERENCES Person(idPerson)
 );
+CREATE TABLE Sales(
+idSales INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+ saleDate DATETIME NOT NULL,
+ idOrder INT NOT NULL, 
+FOREIGN KEY (idOrder) REFERENCES OrderCustomer(idOrder)
+
+);
 
 -- Tabla para las categorías
 CREATE TABLE Category (
@@ -207,17 +214,34 @@ FROM
     Product AS P
 WHERE
     P.outstanding = 1;
+ 
+#inserta los datos de la ventas y la hora  
+DELIMITER //    
+CREATE TRIGGER AfterUpdateState
+AFTER UPDATE ON OrderCustomer
+FOR EACH ROW
+BEGIN
+  IF NEW.state = 1 AND OLD.state != 1 THEN
+    INSERT INTO Sales (saleDate, idOrder)
+    VALUES (NOW(), NEW.idOrder);
+  END IF;
+END;
+//
 
+DELIMITER ;
+    
 
-
-    create view CustomerOrder as 
+ 
+create view CustomerOrder as 
  select Person.idPerson,
  Person.firstName,
   Person.lastname,
    Person.motherLastName,
 OrderCustomer.idOrder,
+OrderCustomer.state,
 OrderCustomer.stateOrder,
-OrderCustomer.dateOrderHour,
+   DATE_FORMAT(dateOrderHour, '%d/%b/%y') AS FechaCompleta,
+    DATE_FORMAT(dateOrderHour, '%H:%i:%s') AS Hora,
 Contact.Cell,
 Contact.address,
 Product.nameProduct,

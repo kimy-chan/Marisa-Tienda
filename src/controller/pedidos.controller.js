@@ -73,14 +73,32 @@ class PedidosController{
       }
 
       static async getAllOrder(req,res){
+        const state= 0
         try {
-           const Order = await ModelPedido.getAllOrder()
-           console.log(Order);
+          
+           const order = await ModelPedido.getAllOrder({state})
+           return res.render("pedidoPanel",{pedido:order})
         } catch (error) {
+          console.log(error);
           
         }
 
       }
+      
+      static async stateOrder(req,res){
+        const {idOrder}= req.params
+        const state = 1
+  try {
+    await ModelPedido.productEntregado({idOrder,state})
+    return res.redirect("/get-order")
+
+  } catch (error) {
+    console.log(error);
+    
+  }
+
+      }
+
 
  
 

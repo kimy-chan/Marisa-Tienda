@@ -6,6 +6,6 @@ const productController = require("../controller/product.controller")
 const router = express.Router();
 
 router.post("/add-product",[  upload.array("imagenes") ,productValidator()], productController.addProduct)
-router.get("/decription/:idProduduct", productController.descriptionProduct)
+router.get("/decription/:idProduct",(req,res)=>{ productController.descriptionProduct(req,res)})
 
 module.exports= router;

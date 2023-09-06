@@ -1,14 +1,15 @@
 const getConecction = require("./db/db");
 class ModelProduct {
-  static async descriptionProduct({ idProduduct }) {
+
+
+  static async descriptionProduct({ idProduct }) {
     let conn;
     try {
       conn = await getConecction();
 
       const sqlQuery =
-        "select * from Product inner join ProductDate on Product.idProduct = ProductDate.idProduct where Product.idProduct=?";
-      const [product] = await conn.query(sqlQuery, [idProduduct]);
-      console.log(product);
+        "select  Product.idProduct, product.nameProduct , Product.description, Product.color, Product.size, Product.price, ProductDate.image  from Product inner join ProductDate on Product.idProduct = ProductDate.idProduct where Product.idProduct=?";
+      const [product] = await conn.query(sqlQuery, [idProduct]);
       return product;
     } catch (error) {
       console.log(error);
