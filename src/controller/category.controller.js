@@ -32,7 +32,7 @@ class CategoryController {
    async categoryPanel(req,res){
     try {
       const categories = await ModelCategory.showCategory()
-      return res.render("categoriasPanel",{categories:categories})
+      return res.render("categoriasPanel",{categories:categories,mensaje:''})
     } catch (error) {
       console.log(error);
       
@@ -58,6 +58,23 @@ class CategoryController {
       console.log(error);
      
     }}
+
+    async deleteCategory(req,res){
+      const {idCategory}=req.params
+      try {
+            const mensajesql=  await  ModelCategory.deleteCategory(idCategory)
+            if(mensajesql){
+              const mensaje ="Hay productos en las categorias"
+                  const categories = await ModelCategory.showCategory()
+                  return res.render("categoriasPanel",{categories:categories,mensaje:mensaje})
+            }
+            return res.redirect("/category-panel")
+      } catch (error) {
+        console.log(error);
+        
+      }
+
+    }
 
 
 

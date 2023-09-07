@@ -1,7 +1,10 @@
+const ModelProduct = require("../model/model.products")
+
 class AdministrationController{
 
-    static Administration(req,res){
-        return res.render("adminstracionPanel")
+     static async  Administration(req,res){
+        const products =await  ModelProduct.getAllProduct()
+        return res.render("adminstracionPanel",{products:products.length})
 
     }
 

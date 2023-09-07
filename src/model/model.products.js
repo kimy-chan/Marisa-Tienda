@@ -13,10 +13,11 @@ class ModelProduct {
       return product;
     } catch (error) {
       console.log(error);
-    }
-    if (conn) {
+    }finally{
+        if (conn) {
       conn.release();
     }
+  }
   }
   static async productDestacado() {
     let conn;
@@ -71,6 +72,10 @@ class ModelProduct {
       console.log(error);
       conn.rollback()
       
+    }finally{
+      if(conn){
+        conn.release()
+      }
     }
 
 
@@ -89,6 +94,10 @@ class ModelProduct {
     } catch (error) {
       console.log(error);
       
+    }finally{
+      if(conn){
+        conn.release()
+      }
     }
    }
 

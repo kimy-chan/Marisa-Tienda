@@ -16,6 +16,10 @@ class ModelSales{
         } catch (error) {
             console.log(error);
             
+        }finally{
+            if(conn){
+                conn.release()
+            }
         }
 
     }

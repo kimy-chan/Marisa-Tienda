@@ -42,6 +42,25 @@ class ModelCategory{
 
     }
 
+    static async deleteCategory(idCategory){
+            let conn
+            const sqlQueryCategoryDelete="DELETE FROM Category WHERE idCategory=?"
+        try {
+                conn = await getConecction() 
+              await conn.query(sqlQueryCategoryDelete,[idCategory])
+             return
+             
+        } catch (error) {
+            return error.code
+            
+        }finally{
+            if(conn){
+                conn.release()
+            }
+        }
+
+    }
+
 
 }
 

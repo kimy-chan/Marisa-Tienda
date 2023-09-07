@@ -1,7 +1,8 @@
 <%- include('./partials/headerPanel') %>
 
+<div class="container">
   <% if (pedido.length > 0) {%>
-    <table id="productosTable" class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered" id="productosTable" >
       <thead>
         <tr>
           <th>Nombres</th>
@@ -32,7 +33,7 @@
           <td><%=item.Cell  %></td>
           <td><%=item.address  %></td>
           <th><%= item.FechaCompleta  %>  <%=item.Hora  %> </th>
-          <th><a href="/vender/<%=item.idOrder  %>" class="btn btn-success">Entregado</a></th>
+          <th><a href="/vender/<%=item.idOrder  %>" class="btn btn-success"><i class="fas fa-truck"></i></a></th>
           </tr>
         <% }) %>
    
@@ -51,8 +52,7 @@
   
   %>
 
-  </div>
-
+</div>
   <!-- Agrega los scripts de jQuery, Bootstrap y DataTables -->
   <script src="/vendor/jquery/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
