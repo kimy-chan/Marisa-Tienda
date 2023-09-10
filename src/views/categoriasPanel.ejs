@@ -39,7 +39,7 @@
               <td><%= item.nameCategory %></td>
               <td><img src="<%= item.image %>" alt="Category" width="50"></td>
               <td> <a  ><i class="fas fa-edit"></i></a>
-            <a onclick="deleteCategory('<%=item.idCategory%>','<%=item.nameCategory%>')"> <i class="fas fa-trash-alt"></i></a></td> </td>
+            <a onclick="deleteCategory('<%=item.idCategory%>','<%=item.nameCategory%>','<%=item.imageId%>')"> <i class="fas fa-trash-alt"></i></a></td> </td>
             </tr>
           <% }); %>
      
@@ -52,9 +52,5 @@
       </div>
     <% } %>
   </div>
-  <script src="/js/deleteCategoria.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+
+<%- include('./partials/footerPanel') %>

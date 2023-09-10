@@ -5,12 +5,12 @@ const getConecction = require("./db/db")
 class ModelCategory{
 
     
-    static async addCategory(nameCategory, image){
+    static async addCategory(nameCategory, image, idImg){
         let conn;
         try {
             conn = await getConecction()
-            const sqlQueryCategory = "INSERT INTO Category(nameCategory,image)values(?,?)"
-            await conn.query(sqlQueryCategory,[nameCategory, image])
+            const sqlQueryCategory = "INSERT INTO Category(nameCategory,image,imageId)values(?,?,?)"
+            await conn.query(sqlQueryCategory,[nameCategory, image,idImg])
             
         } catch (error) {
             console.log(error);

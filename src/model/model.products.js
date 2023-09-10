@@ -57,14 +57,14 @@ class ModelProduct {
   static async addPorduct({nombre,descripcion,cantidad,precio,colores,tallas,pathImgCloud,categorias,destacado}){
     let conn
     const sqlQueryPorduct="INSERT INTO Product(nameProduct,description, amount, price,date,color,size,outstanding, idCategory)VALUES(?,?,?,?,now(),?,?,?,?)"
-    const sqlQueryProductDate="INSERT INTO ProductDate(image, idProduct)values(?,?)"
+    const sqlQueryProductDate="INSERT INTO ProductDate(image,imagenId, idProduct)values(?,?,?)"
     try {
       conn = await getConecction();
       await conn.beginTransaction()
 
       const [product]= await conn.query(sqlQueryPorduct,[nombre,descripcion,cantidad,precio,colores,tallas,destacado,categorias])
       for(let urlImg of pathImgCloud){
-        await conn.query(sqlQueryProductDate,[urlImg,product.insertId])
+         await conn.query(sqlQueryProductDate,[urlImg.urlImg,urlImg.idImg,product.insertId])
       }
       await conn.commit()
       
@@ -99,6 +99,28 @@ class ModelProduct {
         conn.release()
       }
     }
+   }
+   
+   static async deleteProduct({idProduct}){
+
+    const sqlDElete="DELETE FROM Product WHERE idProduct=?"
+    const sqlPorductImg="SELECT imagenId FROM ProductDate WHERE idProduct=? "
+    let conn
+    try {
+        conn = await getConecction()
+           const [imgDate]= await conn.query(sqlPorductImg,[idProduct])
+            await conn.query(sqlDElete,[idProduct])
+        return  imgDate
+      
+    } catch (error) {
+        return error
+      
+    }finally{
+        if(conn){
+            conn.release()
+        }
+    }
+
    }
 
 

@@ -60,6 +60,11 @@ class Server {
     this.app.use(routerPedidos)
     this.app.use(routerSales)
     this.app.use(routerNosotros)
+    this.app.use((req,res)=>{
+      return res.send("pagina no encotrada")
+
+    })
+    
   }
 
   start() {

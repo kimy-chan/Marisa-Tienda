@@ -32,6 +32,7 @@ class CategoryController {
    async categoryPanel(req,res){
     try {
       const categories = await ModelCategory.showCategory()
+      console.log(categories);
       return res.render("categoriasPanel",{categories:categories,mensaje:''})
     } catch (error) {
       console.log(error);
@@ -52,7 +53,7 @@ class CategoryController {
     }
     try {
       const img = await  cloudinary.v2.uploader.upload(image.path)
-      await ModelCategory.addCategory(categoria,img.secure_url)
+      await ModelCategory.addCategory(categoria,img.secure_url,img.public_id)
       return res.redirect("/category-panel")
     } catch (error) {
       console.log(error);
@@ -60,7 +61,7 @@ class CategoryController {
     }}
 
     async deleteCategory(req,res){
-      const {idCategory}=req.params
+      const {idCategory,idImagen}=req.params
       try {
             const mensajesql=  await  ModelCategory.deleteCategory(idCategory)
             if(mensajesql){
@@ -68,6 +69,7 @@ class CategoryController {
                   const categories = await ModelCategory.showCategory()
                   return res.render("categoriasPanel",{categories:categories,mensaje:mensaje})
             }
+            await cloudinary.v2.uploader.destroy(idImagen)
             return res.redirect("/category-panel")
       } catch (error) {
         console.log(error);

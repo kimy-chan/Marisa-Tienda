@@ -1,8 +1,8 @@
-function deleteCategory(idCategory,nameCategory,idImagen){
+function deleteProduct(idProduct,nameProduct){
     
     Swal.fire({
-    title: '¿Borrar Categoria?',
-    text:nameCategory,
+    title: '¿Borrar Producto?',
+    text:nameProduct,
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -11,7 +11,7 @@ function deleteCategory(idCategory,nameCategory,idImagen){
     cancelButtonText: 'Cancelar'
   }).then((result) => {
     if (result.isConfirmed) {
-      window.location = `/delete-category/${idCategory}/${idImagen}`
+      window.location = `/delete-product/${idProduct}`
       
     }
   }).catch((e)=>{
