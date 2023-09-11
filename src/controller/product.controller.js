@@ -5,6 +5,7 @@ const ModelCategory = require("../model/model.category")
 const cloudinary = require("cloudinary")
 const path = require("path")
 const fs = require("fs");
+const { log } = require("console");
 
 
 
@@ -25,7 +26,7 @@ class ProductController {
   async formProdcut(req, res) {
     let values = []
     let error = []
-    const mensaje = req.query.productoAgregado === 'true';
+    const mensaje = req.query.mensaje === 'true';
     const categories = await ModelCategory.showCategory()
     return res.render("formProductPanel", { values, error, categories: categories, productoAgregado: mensaje })
 
@@ -52,7 +53,8 @@ class ProductController {
 
     try {
 
-      const { nombre, cantidad, colores, descripcion, tallas, categorias, precio, destacado } = req.body
+      const { nombre, cantidad, colores, descripcion, tallas, categorias, precio } = req.body
+      const destacado = req.body.destacado === '1' ? 1 : 0;
       for (let imgCloud of img) {
         const pathCloud = await cloudinary.v2.uploader.upload(imgCloud.path)
         let infoImg = {}
@@ -94,20 +96,28 @@ class ProductController {
   //-------panel
 
   async getProductAllPanel(req, res) {
+    const mensaje = req.query.mensaje === 'true';
     try {
       let result = [];
       const product = await ModelProduct.getAllProduct()
-      return res.render("productPanel", { showModal: false, error: result, values: '', product: product });
+      console.log(product);
+      return res.render("productPanel", { showModal: false, error: result, values: '', product: product, mensaje: mensaje });
 
     } catch (error) {
       console.log(error);
 
     }
   }
+
   async deleteProduct(req, res) {
     try {
       const { idProduct } = req.params
       const dataImg = await ModelProduct.deleteProduct({ idProduct })
+      if (dataImg === 1451) {
+        return res.redirect("/products-panel?mensaje=true")
+
+      }
+
       if (dataImg) {
         for (let data of dataImg) {
           await cloudinary.v2.uploader.destroy(data.imagenId)

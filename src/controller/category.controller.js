@@ -26,6 +26,7 @@ class CategoryController {
       return res.render("category", {
         product: product.product,
         category: product.category,
+        categories: product.category
       });
     } catch (error) {
       console.log(error);

@@ -14,8 +14,9 @@ const routerPanel = require("./router/panel.router");
 const routerPedidos = require("./router/Pedidos.router");
 const routerSales = require("./router/sales.router");
 const routerNosotros = require("./router/nosotros.router");
+const routerContacto = require("./router/contact.router");
 const session = require("express-session");
-const { nosotros } = require("./controller/nosotros.controller");
+
 
 
 class Server {
@@ -60,11 +61,12 @@ class Server {
     this.app.use(routerPedidos)
     this.app.use(routerSales)
     this.app.use(routerNosotros)
-    this.app.use((req,res)=>{
+    this.app.use(routerContacto)
+    this.app.use((req, res) => {
       return res.send("pagina no encotrada")
 
     })
-    
+
   }
 
   start() {

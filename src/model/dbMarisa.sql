@@ -46,21 +46,22 @@ CREATE TABLE OrderCustomer (
    stateOrder  TINYINT NOT NULL default 0, -- si es para llevar o recoger
   dateOrderHour DATETIME,
   idPerson INT NOT NULL,
-  FOREIGN KEY (idPerson) REFERENCES Person(idPerson)
+  FOREIGN KEY (idPerson) REFERENCES Person(idPerson) on delete cascade
 );
 CREATE TABLE Sales(
 idSales INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
  saleDate DATETIME NOT NULL,
  idOrder INT NOT NULL, 
-FOREIGN KEY (idOrder) REFERENCES OrderCustomer(idOrder)
+FOREIGN KEY (idOrder) REFERENCES OrderCustomer(idOrder) on delete cascade
 
 );
 
 -- Tabla para las categorías
 CREATE TABLE Category (
   idCategory INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  nameCategory VARCHAR(50),
- image VARCHAR(255)
+  nameCategory VARCHAR(50) unique not null,
+ image VARCHAR(255) not null,
+ imageId varchar(50)not null
 );
 
 -- Tabla para los productos
@@ -73,18 +74,16 @@ CREATE TABLE Product (
   date DATETIME NOT NULL,
   color VARCHAR(20) NULL,
    size VARCHAR(10) NULL,
-  outstanding TINYINT DEFAULT 0,
+  outstanding TINYINT NOT NULL DEFAULT 0,
   idCategory INT NOT NULL,
   FOREIGN KEY (idCategory) REFERENCES Category(idCategory) ON DELETE CASCADE
 );
 CREATE TABLE ProductDate(
  idProductDate  INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+ imagenId varchar(50)not null,
 image VARCHAR(255) NOT NULL,
   idProduct INT NOT NULL,
   FOREIGN KEY (idProduct) REFERENCES Product(idProduct) ON DELETE CASCADE
- 
- 
-
 );
 
 
@@ -97,7 +96,7 @@ CREATE TABLE ProductDetail (
 	amount INT NOT NULL,
   total DECIMAL(10, 2),
   FOREIGN KEY (idOrder) REFERENCES OrderCustomer(idOrder),
-  FOREIGN KEY (idProduct) REFERENCES Product(idProduct)
+  FOREIGN KEY (idProduct) REFERENCES Product(idProduct) 
 );
 
 -- Tabla para la información de la empresa
@@ -180,6 +179,7 @@ SELECT
     P.idProduct,
     P.nameProduct,
      P.size,
+     P.outstanding,
     C.nameCategory,
     P.description,
     P.amount,
@@ -250,5 +250,12 @@ productDetail.amount
  from Person inner join OrderCustomer on Person.idPerson = OrderCustomer.idPerson 
  inner join Contact on Person.idPerson = Contact.idPerson
  inner join productDetail on OrderCustomer.idOrder = ProductDetail.idOrder
- inner join Product on ProductDetail.idProduct = Product.idProduct
+ inner join Product on ProductDetail.idProduct = Product.idProduct;
+ 
+
+
+ 
+ create view SalesProduct as select Person.firstName, Person.lastName, Person.motherLastname,  DATE_FORMAT(Sales.saleDate, '%d/%b/%y') AS FechaCompleta, DATE_FORMAT(Sales.saleDate, '%H:%i:%s') AS Hora, Product.nameProduct,ProductDetail.amount, ProductDetail.total, Product.size    from Person inner join OrderCustomer on Person.idPerson = OrderCustomer.idPerson 
+inner join Sales on OrderCustomer.idOrder = Sales.idOrder inner join ProductDetail on OrderCustomer.idOrder = ProductDetail.idOrder
+inner join Product on ProductDetail.idProduct=Product.idProduct
  

@@ -113,7 +113,10 @@ class ModelProduct {
       return imgDate
 
     } catch (error) {
-      return error
+      if (error.code === 'ER_ROW_IS_REFERENCED_2') {
+        return 1451
+      }
+
 
     } finally {
       if (conn) {

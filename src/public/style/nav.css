@@ -66,60 +66,22 @@
     cursor: pointer;
     text-decoration-color:rgba(255, 255, 255, 0.2); ;
 }
-nav
-{
-    width: 100%;
-    height: 70px;
-    display: flex;
-    justify-content:space-between;
-    align-items: center;
-    background-color: var(--fondo-negro);
-    position:sticky;    padding: 2px 18px;
-}
-nav button
-{
-    width: 60px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index:1 ;
-    color: var(--fondo-blanco);
-}
-nav button i
-{
-    color: var(--fondo-blanco);
-    font-size: 1.5em;
-}
+
+
 nav img
 {
     width: 50px;
     height: auto;
 }
-nav .collapse
-{
-    width: auto;
-    height: 70px;
-    display: flex;
-    justify-content:end;
-    align-items: baseline;
-    padding: 8px 0px;
-    gap: 0px 10px;
-}
+
 nav .collapse .navbar-nav
 {
     width: 50%;
-    height: 60px;
-    display: flex;
     justify-content:space-between;
-    align-items: center;
     padding: 0px 12px;
 }
 
-nav .collapse .navbar-nav li
-{
-    padding: 2px 4px;
-}
+
 nav .collapse .navbar-nav li a
 {
     list-style: none;
@@ -127,17 +89,9 @@ nav .collapse .navbar-nav li a
     color: white;
     font-size: 1.2em;
 }
-/*HOVER NAV-2*/
-nav .collapse .navbar-nav .nav-item1 a:hover
-{
-    transition: 0.5s;
-}
 
-nav .collapse .navbar-nav .nav-item1:hover
-{
-    border-bottom: 3px solid var(--fondo-resaltador);
-    padding: 2px 4px;
-}
+
+
 
 nav .collapse .nav-items
 {
@@ -147,12 +101,7 @@ nav .collapse .nav-items
     justify-content:end;
     align-items: center;
 }
-nav .collapse .nav-item
-{
-    display: flex;
-    justify-content:end;
-    align-items: center;
-}
+
 nav .collapse .nav-item li
 {
     display: flex;
@@ -170,50 +119,14 @@ nav .collapse .nav-item li a i
     text-decoration: none;
     border: none;
 }
-nav .collapse .nav-item li a
-{
-    list-style:none;
-    text-decoration: none;
-    border: none;
-}
-/*HOVER NAV-3*/
-nav .collapse .nav-items .nav-item li i:hover
-{
-    transition: ease all 0.6s;
-    color: var(--fondo-rosa);
-    text-shadow:0 0 6px var(--fondo-blanco);
-    cursor: pointer;
-    text-decoration-color:rgba(255, 255, 255, 0.2);
-}
-.collapse .navbar-nav .nav-item1 .dropdown-menu
-{
-    background-color: var(--fondo-rosa);
-}
-.collapse .navbar-nav .nav-item1 .dropdown-menu li
-{
-    width: 100%;
-    height: 40px;
-}
-.collapse .navbar-nav .nav-item1 .dropdown-menu li a
-{
- color: var(--fondo-negro);
- background-color: var(--fondo-resaltador2);
-}
-
-/*HOVER NAV-4*/
-.collapse .navbar-nav .nav-item1 .dropdown-menu .dropdown-item:hover
-{
-    transition: 0.5s;
-    background-color: var(--fondo-resaltador);
-    color: var(--fondo-blanco);
-}
-
-.nav-items ul .cantidad{
-    margin-top: -20%;
-    float:inline-start;
-    background-color: skyblue;
-
-    color: red;
 
 
+.bg-custom {
+    background-color: black; 
+}
+
+/* Estilo de las letras en el navbar */
+.colorLink {
+    color: #ffffff; /* Cambia #ffffff al color blanco o el color deseado para los enlaces */
+    /* Otros estilos de fuente, como tamaño y familia de fuente, pueden agregarse aquí */
 }
