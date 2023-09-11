@@ -38,7 +38,7 @@
             <tr>
               <td><%= item.nameCategory %></td>
               <td><img src="<%= item.image %>" alt="Category" width="50"></td>
-              <td> <a  ><i class="fas fa-edit"></i></a>
+              <td> <a href="/update-category/<%=item.idCategory  %>" ><i class="fas fa-edit"></i></a>
             <a onclick="deleteCategory('<%=item.idCategory%>','<%=item.nameCategory%>','<%=item.imageId%>')"> <i class="fas fa-trash-alt"></i></a></td> </td>
             </tr>
           <% }); %>

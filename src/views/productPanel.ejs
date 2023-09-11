@@ -11,11 +11,11 @@
       <thead>
         <tr>
           <th>Nombre</th>
-          <th>Descripción</th>
           <th>Cantidad</th>
           <th>Precio</th>
           <th>Color</th>
           <th>Talla</th>
+            <th>Des</th>
           <th>Imagen</th>
           <th>Acciones</th>
         </tr>
@@ -24,13 +24,18 @@
         <% product.forEach(item => { %> 
           <tr>
           <td><%=item.nameProduct  %></td>
-          <td><%=item.description  %></td>
           <td><%=item.amount  %></td>
           <td><%=item.price  %></td>
           <td><%=item.color  %></td>
           <td><%=item.size  %></td>
+        <td>
+        <% if(item.outstanding === null){%>
+             <i class="fas fa-times"></i>
+          <%}else{%><i class="fas fa-check"></i>
+          <%} %>
+        </td>
           <td><img src="<%=item.image%>"  width="50px" alt=""></td>
-          <td><a><i class="fas fa-edit"></i></a>
+          <td><a href="/update-product/<%=item.idProduct %>"><i class="fas fa-edit"></i></a>
             <a onclick="deleteProduct('<%=item.idProduct %>','<%=item.nameProduct %>')"><i class="fas fa-trash-alt"></i></a></td>
           </tr>
         <% }); %>

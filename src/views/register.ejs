@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style/register.css">
   <title>Registrarse</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/css/bootstrap.min.css">
-  <link rel="shotcut icon"  type="img/logo" href="imagenes/img-login/icono fondo negro con blanco.svg">
+  <link rel="shotcut icon" type="img/logo" href="imagenes/img-login/icono fondo negro con blanco.svg">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 
@@ -16,48 +17,54 @@
   -->
   <div class="back">
     <a href="/">
-     <i class="ri-arrow-left-line"></i>
-     Volver</a>
- </div>
- <div class="linea"></div>
+      <i class="ri-arrow-left-line"></i>
+      Volver</a>
+  </div>
+  <div class="linea"></div>
   <div class="container">
     <div class="logo">
-        <img src="./img/dorado.svg" alt="">
+      <img src="./img/dorado.svg" alt="">
     </div>
     <h1>Crea tu cuenta</h1>
     <p>Bienvenid@, accede rápido y fácil.</p>
     <form action="/register" method="POST">
-      <%if(typeof errors != 'undefined') {%>
+      <%if(typeof errors !='undefined' ) {%>
         <div class="form-group">
           <label for="nombre">Nombre</label>
-          <input type="text" name="name"  placeholder="Ingrese su nombre">
+          <input type="text" name="name" placeholder="Ingrese su nombre">
         </div>
         <div class="form-group">
           <label for="apellido">Apellidos</label>
-          <input type="text"  name="lastNames"  placeholder="Ingrese su apellido">
+          <input type="text" name="lastNames" placeholder="Ingrese su apellido">
         </div>
         <div class="form-group">
           <label for="correo">Correo Electrónico</label>
-          <input type="text" name="email"  placeholder="Ingrese su correo electrónico">
+          <input type="text" name="email" placeholder="Ingrese su correo electrónico">
         </div>
         <div class="form-group">
           <label for="contrasena">Contraseña</label>
           <input type="password" name="password" placeholder="Ingrese su contraseña">
 
         </div>
-        <p style="color: black;" > <%=alertMensaje%> <%=errors[0] ? errors[0].msg :'' %> <%=errors[1] ?errors[1].msg:'' %> <%=errors[2] ?errors[2].msg:'' %> </p>
-     
-        
+        <p style="color: black;">
+          <%=alertMensaje%>
+            <%=errors[0] ? errors[0].msg :'' %>
+              <%=errors[1] ?errors[1].msg:'' %>
+                <%=errors[2] ?errors[2].msg:'' %>
+        </p>
+
+
 
         <%}%>
 
-    
 
 
-      <button type="submit" >Regístrarte</button>
+
+          <button type="submit">Regístrarte</button>
     </form>
   </div>
 
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>

@@ -13,11 +13,11 @@ class ModelProduct {
       return product;
     } catch (error) {
       console.log(error);
-    }finally{
-        if (conn) {
-      conn.release();
+    } finally {
+      if (conn) {
+        conn.release();
+      }
     }
-  }
   }
   static async productDestacado() {
     let conn;
@@ -54,26 +54,26 @@ class ModelProduct {
       }
     }
   }
-  static async addPorduct({nombre,descripcion,cantidad,precio,colores,tallas,pathImgCloud,categorias,destacado}){
+  static async addPorduct({ nombre, descripcion, cantidad, precio, colores, tallas, pathImgCloud, categorias, destacado }) {
     let conn
-    const sqlQueryPorduct="INSERT INTO Product(nameProduct,description, amount, price,date,color,size,outstanding, idCategory)VALUES(?,?,?,?,now(),?,?,?,?)"
-    const sqlQueryProductDate="INSERT INTO ProductDate(image,imagenId, idProduct)values(?,?,?)"
+    const sqlQueryPorduct = "INSERT INTO Product(nameProduct,description, amount, price,date,color,size,outstanding, idCategory)VALUES(?,?,?,?,now(),?,?,?,?)"
+    const sqlQueryProductDate = "INSERT INTO ProductDate(image,imagenId, idProduct)values(?,?,?)"
     try {
       conn = await getConecction();
       await conn.beginTransaction()
 
-      const [product]= await conn.query(sqlQueryPorduct,[nombre,descripcion,cantidad,precio,colores,tallas,destacado,categorias])
-      for(let urlImg of pathImgCloud){
-         await conn.query(sqlQueryProductDate,[urlImg.urlImg,urlImg.idImg,product.insertId])
+      const [product] = await conn.query(sqlQueryPorduct, [nombre, descripcion, cantidad, precio, colores, tallas, destacado, categorias])
+      for (let urlImg of pathImgCloud) {
+        await conn.query(sqlQueryProductDate, [urlImg.urlImg, urlImg.idImg, product.insertId])
       }
       await conn.commit()
-      
+
     } catch (error) {
       console.log(error);
       conn.rollback()
-      
-    }finally{
-      if(conn){
+
+    } finally {
+      if (conn) {
         conn.release()
       }
     }
@@ -82,46 +82,136 @@ class ModelProduct {
 
   }
 
-   static async getAllProduct(){
+  static async getAllProduct() {
     let conn;
     const sqlQueryPorductAll = "SELECT * FROM ViewsProduct"
     try {
       conn = await getConecction()
-      const [product]= await conn.query(sqlQueryPorductAll)
-     return product
+      const [product] = await conn.query(sqlQueryPorductAll)
+      return product
 
-      
+
     } catch (error) {
       console.log(error);
-      
-    }finally{
-      if(conn){
+
+    } finally {
+      if (conn) {
         conn.release()
       }
     }
-   }
-   
-   static async deleteProduct({idProduct}){
+  }
 
-    const sqlDElete="DELETE FROM Product WHERE idProduct=?"
-    const sqlPorductImg="SELECT imagenId FROM ProductDate WHERE idProduct=? "
+  static async deleteProduct({ idProduct }) {
+
+    const sqlDElete = "DELETE FROM Product WHERE idProduct=?"
+    const sqlPorductImg = "SELECT imagenId FROM ProductDate WHERE idProduct=? "
     let conn
     try {
-        conn = await getConecction()
-           const [imgDate]= await conn.query(sqlPorductImg,[idProduct])
-            await conn.query(sqlDElete,[idProduct])
-        return  imgDate
-      
+      conn = await getConecction()
+      const [imgDate] = await conn.query(sqlPorductImg, [idProduct])
+      await conn.query(sqlDElete, [idProduct])
+      return imgDate
+
     } catch (error) {
-        return error
-      
-    }finally{
-        if(conn){
-            conn.release()
-        }
+      return error
+
+    } finally {
+      if (conn) {
+        conn.release()
+      }
     }
 
-   }
+  }
+  static async getAllProductId({ idProduct }) {
+    let conn;
+    const sqlQueryPorductAll = "SELECT * FROM Product WHERE idProduct=?"
+    const sqlQueryProductDate = "SELECT * FROM ProductDate WHERE idProduct =?"
+    try {
+      conn = await getConecction()
+      const [product] = await conn.query(sqlQueryPorductAll, [idProduct])
+      const [dataImg] = await conn.query(sqlQueryProductDate, [product[0].idProduct])
+      const data = {
+        productos: product,
+        dataImgPro: dataImg
+      }
+      return data
+
+
+    } catch (error) {
+      console.log(error);
+
+    } finally {
+      if (conn) {
+        conn.release()
+      }
+    }
+  }
+
+  static async updateProduct({ nombre, descripcion, cantidad, precio, colores, tallas, pathImgCloud, categorias, destacado, idProduct }) {
+    let conn
+    const sqlQueryPorduct = "UPDATE  Product SET nameProduct=?,description=?, amount=?, price=?,color=?,size=?,outstanding=?, idCategory=? WHERE idProduct=?"
+
+    try {
+      conn = await getConecction()
+
+
+      await conn.query(sqlQueryPorduct, [nombre, descripcion, cantidad, precio, colores, tallas, destacado, categorias, idProduct])
+      return
+
+    } catch (error) {
+      console.log(error);
+
+    } finally {
+      if (conn) {
+        conn.release()
+      }
+    }
+
+  }
+  static async updateImage({ pathImgCloud, idProduct }) {
+    let conn
+    const sqlQueryProductDate = "UPDATE ProductDate SET image=?,imagenId=? WHERE idProduct=? and idProductDate=?"
+    const sqlProductdata = "SELECT idProductDate FROM ProductDate WHERE idProduct =?"
+    try {
+      conn = await getConecction()
+      const [data] = await conn.query(sqlProductdata, [idProduct])
+      const idImg = data.map(id => id.idProductDate)
+      for (let index = 0; index < pathImgCloud.length; index++) {
+        const image = pathImgCloud[index]
+        const idimages = idImg[index]
+        await conn.query(sqlQueryProductDate, [image.urlImage, image.idImg, idProduct, idimages])
+      }
+      return
+    } catch (error) {
+      console.log(error);
+
+    } finally {
+      if (conn) {
+        conn.release()
+      }
+    }
+
+  }
+
+  static async getImg({ idProduct }) {
+    const sqlPorductImg = "SELECT imagenId FROM ProductDate WHERE idProduct=? "
+    let conn
+    try {
+      conn = await getConecction()
+      const [idCloudinary] = await conn.query(sqlPorductImg, [idProduct])
+      return idCloudinary
+
+    } catch (error) {
+      console.log(error);
+
+    } finally {
+      if (conn) {
+        conn.release()
+      }
+    }
+  }
+
+
 
 
 

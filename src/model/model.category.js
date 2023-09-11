@@ -2,66 +2,124 @@
 const getConecction = require("./db/db")
 
 
-class ModelCategory{
+class ModelCategory {
 
-    
-    static async addCategory(nameCategory, image, idImg){
+
+    static async addCategory(nameCategory, image, idImg) {
         let conn;
         try {
             conn = await getConecction()
             const sqlQueryCategory = "INSERT INTO Category(nameCategory,image,imageId)values(?,?,?)"
-            await conn.query(sqlQueryCategory,[nameCategory, image,idImg])
-            
+            await conn.query(sqlQueryCategory, [nameCategory, image, idImg])
+
         } catch (error) {
             console.log(error);
-            
-        }finally{
-            if(conn){
+
+        } finally {
+            if (conn) {
                 conn.release()
             }
         }
 
     }
 
-    static async showCategory(){
+    static async showCategory() {
         let conn
         try {
-            conn = await getConecction() 
+            conn = await getConecction()
             const sqlQueryCategory = "SELECT * FROM Category"
             const [categories] = await conn.query(sqlQueryCategory)
             return categories
 
         } catch (error) {
-            console.log( error);
-            
-        }finally{
-            if(conn){
+            console.log(error);
+
+        } finally {
+            if (conn) {
                 conn.release()
             }
         }
 
     }
 
-    static async deleteCategory(idCategory){
-            let conn
-            const sqlQueryCategoryDelete="DELETE FROM Category WHERE idCategory=?"
+    static async deleteCategory(idCategory) {
+        let conn
+        const sqlQueryCategoryDelete = "DELETE FROM Category WHERE idCategory=?"
         try {
-                conn = await getConecction() 
-              await conn.query(sqlQueryCategoryDelete,[idCategory])
-             return
-             
+            conn = await getConecction()
+            await conn.query(sqlQueryCategoryDelete, [idCategory])
+            return
+
         } catch (error) {
             return error.code
-            
-        }finally{
-            if(conn){
+
+        } finally {
+            if (conn) {
                 conn.release()
             }
         }
 
     }
+    static async getCategoryId(idCategory) {
+        let conn
+        const sqlQueryCategoryDelete = "SELECT *  FROM Category WHERE idCategory=?"
+        try {
+            conn = await getConecction()
+            const [categoria] = await conn.query(sqlQueryCategoryDelete, [idCategory])
+            return categoria
+
+        } catch (error) {
+            console.log(error);
+
+        } finally {
+            if (conn) {
+                conn.release()
+            }
+        }
+
+    }
+    static async updateCategory({ categoria, idCategory }) {
+        let conn
+        const sqlQueryCategoryDelete = "UPDATE Category SET nameCategory=? WHERE idCategory=?"
+        try {
+            conn = await getConecction()
+            await conn.query(sqlQueryCategoryDelete, [categoria, idCategory])
+            return
+
+
+        } catch (error) {
+            console.log(error);
+
+        } finally {
+            if (conn) {
+                conn.release()
+            }
+        }
+
+    }
+    static async updateCategoryImage({ idCategory, image, idImg }) {
+        let conn
+        const sqlQueryCategoryDelete = "UPDATE Category SET image=?, imageId=? WHERE idCategory=?"
+        try {
+            conn = await getConecction()
+            await conn.query(sqlQueryCategoryDelete, [image, idImg, idCategory])
+            return
+
+        } catch (error) {
+            console.log(error);
+
+        } finally {
+            if (conn) {
+                conn.release()
+            }
+        }
+
+    }
+
+
+
 
 
 }
 
-module.exports= ModelCategory
+module.exports = ModelCategory
