@@ -156,7 +156,7 @@ class ModelProduct {
 
     try {
       conn = await getConecction()
-
+      console.log("update");
 
       await conn.query(sqlQueryPorduct, [nombre, descripcion, cantidad, precio, colores, tallas, destacado, categorias, idProduct])
       return

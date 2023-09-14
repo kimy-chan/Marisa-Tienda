@@ -1,9 +1,11 @@
+const ModelCategory = require("../model/model.category")
 
+class NosotrosController {
 
-class NosotrosController{
-
-    static nosotros(req,res){
-        return res.render("nosotros")
+    static async nosotros(req, res) {
+        ModelCategory
+        const categories = await ModelCategory.showCategory();
+        return res.render("nosotros", { categories: categories })
 
     }
 

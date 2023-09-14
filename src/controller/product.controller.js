@@ -28,7 +28,7 @@ class ProductController {
     let error = []
     const mensaje = req.query.mensaje === 'true';
     const categories = await ModelCategory.showCategory()
-    return res.render("formProductPanel", { values, error, categories: categories, productoAgregado: mensaje })
+    return res.render("formProductPanel", { values, error, categories: categories, productoAgregado: mensaje, categories: categories })
 
   }
 
@@ -81,12 +81,11 @@ class ProductController {
   async descriptionProduct(req, res) {
     const { idProduct } = req.params
     try {
+      const categories = await ModelCategory.showCategory()
 
-      if (this.data.length == 0 || this.data[0].idProduct != idProduct) {
-        const product = await ModelProduct.descriptionProduct({ idProduct })
-        this.data = [...product]
-      }
-      return res.render("descriptionProduct", { product: this.data })
+      const product = await ModelProduct.descriptionProduct({ idProduct })
+
+      return res.render("descriptionProduct", { product: product, categories: categories })
     } catch (error) {
       console.log(error);
 
@@ -190,7 +189,9 @@ class ProductController {
         })
 
       }
-      const { nombre, cantidad, colores, descripcion, tallas, categorias, precio, destacado } = req.body
+      const { nombre, cantidad, colores, descripcion, tallas, categorias, precio } = req.body
+
+      const destacado = req.body === '1' ? 1 : 0
 
       if (img.length > 0) {
         for (let i of img) {

@@ -1,8 +1,9 @@
-
+const ModelCategory = require("../model/model.category")
 class ContactoController {
 
-    static contacto(req, res) {
-        return res.render("contacto")
+    static async contacto(req, res) {
+        const categories = await ModelCategory.showCategory();
+        return res.render("contacto", { categories: categories })
 
     }
 

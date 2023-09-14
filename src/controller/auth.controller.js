@@ -6,14 +6,14 @@ class AuthController {
   static async login(req, res) {
     const result = validationResult(req);
     if (!result.isEmpty()) {
-      return res.render("login", { error: result.array(), alertMsg: "" });
+      return res.render("login", { errors: result.array(), alertMsg: "" });
     }
     try {
       const { email, password } = req.body;
       const dataUser = await ModelAuth.login({ email });
       if (dataUser.length === 0) {
         const mgsCuenta = "La cuenta no existe";
-        return res.render("login", { error: {}, alertMsg: mgsCuenta });
+        return res.render("login", { errors: [], alertMsg: mgsCuenta });
       }
       if (
         email === dataUser[0].email &&
@@ -26,7 +26,7 @@ class AuthController {
         return res.send(token);
       } else {
         const msgPassword = "Contraseña incorrecta";
-        return res.render("login", { error: {}, alertMsg: msgPassword });
+        return res.render("login", { errors: [], alertMsg: msgPassword });
       }
     } catch (error) {
       console.log(error);
@@ -34,7 +34,7 @@ class AuthController {
   }
 
   static formLogin(req, res) {
-    return res.render("login", { error: {}, alertMsg: "" });
+    return res.render("login", { errors: [], alertMsg: "" });
   }
 }
 

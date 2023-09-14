@@ -95,7 +95,7 @@ CREATE TABLE ProductDetail (
   idOrder INT NOT NULL,
 	amount INT NOT NULL,
   total DECIMAL(10, 2),
-  FOREIGN KEY (idOrder) REFERENCES OrderCustomer(idOrder),
+  FOREIGN KEY (idOrder) REFERENCES OrderCustomer(idOrder) on delete cascade,
   FOREIGN KEY (idProduct) REFERENCES Product(idProduct) 
 );
 
@@ -254,8 +254,8 @@ productDetail.amount
  
 
 
- 
- create view SalesProduct as select Person.firstName, Person.lastName, Person.motherLastname,  DATE_FORMAT(Sales.saleDate, '%d/%b/%y') AS FechaCompleta, DATE_FORMAT(Sales.saleDate, '%H:%i:%s') AS Hora, Product.nameProduct,ProductDetail.amount, ProductDetail.total, Product.size    from Person inner join OrderCustomer on Person.idPerson = OrderCustomer.idPerson 
+
+ create view SalesProduct as select Person.idPerson, Person.firstName, Person.lastName, Person.motherLastname,  DATE_FORMAT(Sales.saleDate, '%d/%b/%y') AS FechaCompleta, DATE_FORMAT(Sales.saleDate, '%H:%i:%s') AS Hora, Product.nameProduct,ProductDetail.amount, ProductDetail.total, Product.size    from Person inner join OrderCustomer on Person.idPerson = OrderCustomer.idPerson 
 inner join Sales on OrderCustomer.idOrder = Sales.idOrder inner join ProductDetail on OrderCustomer.idOrder = ProductDetail.idOrder
 inner join Product on ProductDetail.idProduct=Product.idProduct
  

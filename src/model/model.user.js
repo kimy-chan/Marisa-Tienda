@@ -2,6 +2,7 @@ const getConecction = require("./db/db");
 
 class ModelUser {
   static async addUser({ name, lastName, email, newPassword }) {
+    console.log(name, lastName, email, newPassword);
     let conn;
     const sqlQueryPerson =
       "INSERT INTO Person(firstName,lastName,motherLastName,dateRegister)VALUES(?,?,?,now())";
@@ -23,14 +24,35 @@ class ModelUser {
       ]);
       await conn.query(sqlQueryRole, [user.insertId]);
       conn.commit();
+      return 'success'
     } catch (error) {
-      if (error) {
-        conn.rollback();
-        return error;
-      }
+      conn.rollback();
+      return error;
+
+
     } finally {
       conn.release();
     }
+  }
+
+  static async getUser() {
+    let conn
+    const sqlUser = "SELECT * FROM VerifyUser"
+    try {
+      conn = await getConecction();
+      const [user] = await conn.query(sqlUser)
+      return user
+    } catch (error) {
+      console.log(error);
+
+    } finally {
+      if (conn) {
+        conn.release()
+      }
+    }
+
+
+
   }
 }
 

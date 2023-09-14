@@ -1,7 +1,7 @@
 const ModelPedido = require("../model/model.Pedidos");
 const CartAux = require("./auxiliar.controler");
 const { validationResult } = require("express-validator");
-const PediosMsg = require("./pedidos.msg.controller");
+const ModelCategory = require("../model/model.category")
 const e = require("express");
 
 
@@ -11,10 +11,10 @@ class PedidosController {
   static async pedido(req, res) {
     const error = []
     try {
-
+      const categories = await ModelCategory.showCategory();
       if (req.session.idProduct) {
         let product = await CartAux.getProdcut(req.session.idProduct)
-        return res.render("pedidoForm", { products: product.productUnique, val: '', totalPrice: product.totalPrice, error: error })
+        return res.render("pedidoForm", { products: product.productUnique, val: '', totalPrice: product.totalPrice, error: error, categories: categories })
       }
       return res.send("productos vasios")
     } catch (error) {
@@ -38,14 +38,16 @@ class PedidosController {
 
     const lastName = apellidos.split(' ')
     const numeroTienda = '72884186'
-    const prodcutos = "hola"
+    const urlWhatsApp = `https://wa.me/${numeroTienda}`;
     const value = validationResult(req)
     if (!value.isEmpty()) {
       const error = value.array()
       const val = req.body
       if (req.session.idProduct) {
+        const categories = await ModelCategory.showCategory();
         let product = await CartAux.getProdcut(req.session.idProduct)
-        return res.render("pedidoForm", { products: product.productUnique, val: val, totalPrice: product.totalPrice, error })
+        console.log(product);
+        return res.render("pedidoForm", { products: product.productUnique, val: val, totalPrice: product.totalPrice, error, categories: categories })
       }
     }
     try {
@@ -53,11 +55,16 @@ class PedidosController {
 
         let product = await CartAux.getProdcut(req.session.idProduct)
 
+        console.log(product);
+        const result = await ModelPedido.Pedido({ nombre, lastName, celular, Ciudad, direccion, product, orderP })
+        if (result.sqlState == '45000') {
+          return res.send("catidad execiva")
+        } else {
+          return res.redirect(urlWhatsApp);
 
-        await ModelPedido.Pedido({ nombre, lastName, celular, Ciudad, direccion, product, orderP })
 
-        const urlWhatsApp = `https://wa.me/${numeroTienda}`;
-        return res.redirect(urlWhatsApp);
+        }
+
 
 
 
@@ -67,17 +74,24 @@ class PedidosController {
       return res.send("nada ")
     } catch (error) {
       console.log(error);
+      console.log(error);
 
     }
 
   }
 
   static async getAllOrder(req, res) {
+    const mensaje = req.query.mensaje
     const state = 0
+    console.log(mensaje);
     try {
+      if (mensaje) {
+        const order = await ModelPedido.getAllOrder({ state })
+        return res.render("pedidoPanel", { pedido: order, mensaje: mensaje })
 
+      }
       const order = await ModelPedido.getAllOrder({ state })
-      return res.render("pedidoPanel", { pedido: order })
+      return res.render("pedidoPanel", { pedido: order, mensaje: '' })
     } catch (error) {
       console.log(error);
 
@@ -85,12 +99,33 @@ class PedidosController {
 
   }
 
-  static async stateOrder(req, res) {
+  static async stateOrder(req, res) {///actualiza a 1 para mandar a vetas
     const { idOrder } = req.params
     const state = 1
     try {
       await ModelPedido.productEntregado({ idOrder, state })
-      return res.redirect("/get-order")
+
+
+      return res.redirect("/get-order?mensaje=vender")
+
+    } catch (error) {
+      console.log(error);
+
+    }
+
+
+
+  }
+  static async deteleOrder(req, res) {
+
+    const { idPersonOrder } = req.params
+
+    console.log(idPersonOrder);
+    try {
+      await ModelPedido.deletePorductId({ idPersonOrder })
+
+      return res.redirect("/get-order?mensaje=eliminar")
+
 
     } catch (error) {
       console.log(error);
