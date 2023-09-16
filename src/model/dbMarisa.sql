@@ -182,8 +182,9 @@ BEGIN
 END //
 DELIMITER ;
 
+
 #vistas
-create view VerifyUser as select Person.idPerson,Person.firstName, Person.lastName,Person.motherLastName,User.email, User.password, Role.nameRole from Person inner join User on Person.idPerson=User.idPerson inner join Role on User.idUser=Role.idUser;
+create view VerifyUser as select Person.idPerson,User.idUser,Person.firstName, Person.lastName,Person.motherLastName,User.email, User.password, Role.nameRole from Person inner join User on Person.idPerson=User.idPerson inner join Role on User.idUser=Role.idUser;
 CREATE VIEW ViewsProduct AS
 SELECT
     P.idProduct,

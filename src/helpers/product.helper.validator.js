@@ -1,13 +1,18 @@
-const {body}= require("express-validator");
-function productValidator(){
+const { body } = require("express-validator");
+function productValidator() {
     return [
         body("nombre").matches(/^[a-zA-Z\s]+$/),
-        body("descripcion").matches(/^[a-zA-Z\s]+$/),
-        body("imagenes").custom((value,{req})=>{
-            if(!req.files || req.files.length === 0){
+        body("descripcion").custom(value => {
+            if (value && !/^[a-zA-Z0-9\s.,]+$/.test(value)) {
+                throw new Error('Texto inválido: solo se permiten letras, números, puntos, comas y espacios');
+            }
+            return true;
+        }),
+        body("imagenes").custom((value, { req }) => {
+            if (!req.files || req.files.length === 0) {
                 throw new Error("Archivo invalido")
             }
-        
+
             return true
         }),
         body("cantidad").isNumeric(),
@@ -16,4 +21,4 @@ function productValidator(){
         body("colores").matches(/^[a-zA-Z\s]+$/)
     ]
 }
-module.exports=productValidator;
+module.exports = productValidator;

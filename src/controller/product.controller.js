@@ -68,6 +68,13 @@ class ProductController {
     } catch (error) {
       console.log(error);
 
+    } finally {
+      for (let i of img) {
+        if (fs.existsSync(path.join(__dirname + `../../public/upload/${i.filename}`))) {
+          fs.unlinkSync(path.join(__dirname + `../../public/upload/${i.filename}`))
+        }
+      }
+
     }
   }
 

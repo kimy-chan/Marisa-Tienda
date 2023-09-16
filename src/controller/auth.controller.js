@@ -22,8 +22,15 @@ class AuthController {
         const token = jwt.sign(
           { idUser: dataUser[0].idUser },
           process.env.JWT_SECRET
-        );
-        return res.send(token);
+        )
+        res.cookie('jwt', token, {
+          httpOnly: true,
+          sameSite: "strict",
+          maxAge: 60 * 60 * 1000
+        })
+        return res.redirect("/administration-panel")
+
+
       } else {
         const msgPassword = "Contraseña incorrecta";
         return res.render("login", { errors: [], alertMsg: msgPassword });
