@@ -88,13 +88,11 @@ class PedidosController {
       if (mensaje) {
         const order = await ModelPedido.getAllOrder({ state })
         return res.render("pedidoPanel", { pedido: order, mensaje: mensaje })
-
       }
       const order = await ModelPedido.getAllOrder({ state })
       return res.render("pedidoPanel", { pedido: order, mensaje: '' })
     } catch (error) {
       console.log(error);
-
     }
 
   }

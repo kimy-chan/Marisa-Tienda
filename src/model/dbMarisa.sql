@@ -10,6 +10,16 @@ CREATE TABLE Person (
   dateRegister DATETIME NOT NULL
 );
 
+
+CREATE Table Suscriptor(
+idSubcriptor  INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+Email varchar(50),
+textArea varchar(255),
+idPerson INT NOT NULL,
+  FOREIGN KEY (idPerson) REFERENCES Person(idPerson) ON DELETE CASCADE
+);
+
+
 -- Tabla para la información de contacto de las personas
 CREATE TABLE Contact (
   idContact INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -253,7 +263,7 @@ productDetail.amount
  inner join Product on ProductDetail.idProduct = Product.idProduct;
  
 
-
+create view Suscriptos as select Person.idPerson, Person.firstName, Person.lastName, Person.MotherLastName ,Suscriptor.email, Suscriptor.textArea  from  Person  inner join Suscriptor on Person.idPerson=Suscriptor.idPerson;
 
  create view SalesProduct as select Person.idPerson, Person.firstName, Person.lastName, Person.motherLastname,  DATE_FORMAT(Sales.saleDate, '%d/%b/%y') AS FechaCompleta, DATE_FORMAT(Sales.saleDate, '%H:%i:%s') AS Hora, Product.nameProduct,ProductDetail.amount, ProductDetail.total, Product.size    from Person inner join OrderCustomer on Person.idPerson = OrderCustomer.idPerson 
 inner join Sales on OrderCustomer.idOrder = Sales.idOrder inner join ProductDetail on OrderCustomer.idOrder = ProductDetail.idOrder

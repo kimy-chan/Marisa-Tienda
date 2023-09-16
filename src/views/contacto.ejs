@@ -37,24 +37,34 @@
       <div class="titulo">
         <h4>SUSCRÍBETE A NUESTRO BOLETÍN</h4>
       </div>
-      <form>
+      <form id="subscriptionForm" method="post">
         <div class="form-group">
-          <label for="nombre">Nombre completo:</label>
-          <input type="text" class="form-control" id="nombre" name="nombre" required>
+          <label for="nombre">Nombre Completo:</label>
+          <input type="text" class="form-control" id="nombre" name="names">
+          <div id="error-names" class="error-message"></div>
         </div>
         <div class="form-group">
           <label for="correo">Correo electrónico:</label>
-          <input type="email" class="form-control" id="correo" name="correo" required>
+          <input type="email" class="form-control" id="correo" name="email">
+          <div id="error-email" class="error-message"></div>
+
         </div>
         <div class="form-group">
-          <label for="mensaje">Mensaje:</label>
-          <textarea class="form-control" id="mensaje" name="mensaje" rows="4" required></textarea>
+          <label for="mensaje">Mensaje Opcional:</label>
+          <textarea class="form-control" id="mensaje" name="texto" rows="2"></textarea>
+          <div id="error-texto" class="error-message"></div>
+
         </div>
+        <div id="success"></div>
+        <div id="error-messages"></div>
         <div class="boton">
-          <button type="submit" class="btn btn-primary btn-block">ENVIAR</button>
+          <button type="button" onclick="submitForm()">SUSCRÍBETE</button>
         </div>
       </form>
     </div>
+
   </div>
-  <div class="linea"></div>
+  </div>
+  <div class=" linea">
+  </div>
   <%- include('./partials/footer') %>

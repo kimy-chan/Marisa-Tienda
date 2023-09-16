@@ -7,10 +7,11 @@ class SalesController {
 
 
   static async getSales(req, res) {
+    const mensaje = req.query.mensaje
     try {
 
       const sales = await ModelSales.getSales()
-      return res.render("ventasPanel", { venta: sales })
+      return res.render("ventasPanel", { venta: sales, mensaje })
     } catch (error) {
       console.log(error);
 
@@ -19,11 +20,10 @@ class SalesController {
   }
   static async deleteSales(req, res) {
     const { idSales } = req.params
-    console.log(idSales);
+
     try {
       await ModelSales.deleteSales({ idSales })
-      return res.send("venta borrada")
-
+      return res.redirect("/ventas?mensaje=elimanada")
     } catch (error) {
       console.log(error);
 

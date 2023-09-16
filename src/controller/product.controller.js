@@ -191,7 +191,8 @@ class ProductController {
       }
       const { nombre, cantidad, colores, descripcion, tallas, categorias, precio } = req.body
 
-      const destacado = req.body === '1' ? 1 : 0
+      const destacado = req.body.destacado === '1' ? 1 : 0
+      console.log(destacado);
 
       if (img.length > 0) {
         for (let i of img) {

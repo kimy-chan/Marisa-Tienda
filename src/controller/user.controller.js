@@ -1,30 +1,27 @@
 const { validationResult } = require("express-validator");
 const ModelUser = require("../model/model.user")
 const bcrypt = require("bcrypt");
-const { use } = require("../router/auth.router");
-const { error } = require("qrcode-terminal");
 class UserController {
 
     async registerUser(req, res) {
         const result = validationResult(req)
-        const { name, lastNames, email, password } = req.body
-        console.log(email);
+        const { name, lastNames, email, password, role } = req.body
         const lastName = lastNames.split(' ')
         const newPassword = bcrypt.hashSync(password, 10)
+        const valuesBody = req.body
+        console.log(valuesBody);
         if (!result.isEmpty()) {
-            const valuesBody = req.body
-            const alertMensaje = ''
             console.log(result.array());
-            return res.render("register", { errors: result.array(), alertMensaje, valuesBody })
+            return res.render("registroUserPanel", { errors: result.array(), valuesBody, alertMensaje: '' })
         }
         try {
-            const user = await ModelUser.addUser({ name, lastName, email, newPassword })
-            console.log(user);
+            const user = await ModelUser.addUser({ name, lastName, email, newPassword, role })
             if (user.code === 'ER_DUP_ENTRY') {
-                const alertMensaje = "El email ya existe"
-                return res.redirect("/register?alertMensaje=" + encodeURIComponent(alertMensaje))
+                const alertMensaje = "existe"
+                return res.render("registroUserPanel", { errors: [], valuesBody, alertMensaje })
             }
-            return res.redirect("/login")
+            const alertMensaje = "registrado"
+            return res.render("registroUserPanel", { errors: [], valuesBody: '', alertMensaje })
 
         } catch (error) {
             console.log(error);
@@ -34,27 +31,44 @@ class UserController {
 
 
     }
-    register(req, res) {
-        const alertMensaje = req.query.alertMensaje || ''
-        return res.render("register", { errors: [], alertMensaje: alertMensaje, valuesBody: '' })
 
-    }
-
-    async getUserPanel(req, res) {
+    async getUserPanel(req, res) {//trae los usuarios para e panel
+        const mensaje = req.query.mensaje
         try {
+
             const user = await ModelUser.getUser()
-            return res.render("usuarios", { user })
+            return res.render("usuarios", { user, mensaje })
         } catch (error) {
 
         }
 
     }
+    getUserPanelForm(req, res) {//panel para registrar usuarios formulario
+        return res.render("registroUserPanel", { valuesBody: '', errors: [], alertMensaje: '' })
+    }
 
+    async deleteUserPanel(req, res) {//borrar usuario del panel
+        const { idPerson } = req.params
+        try {
+            const delteUser = await ModelUser.deleteUser({ idPerson })
+            if (delteUser.affectedRows == 1) {
+                return res.redirect("/user?mensaje=borrado")
+            }
+            return res.redirect("/user")
+        } catch (error) {
+            console.log(error);
 
+        }
 
-
+    }
 
 }
+
+
+
+
+
+
 
 
 

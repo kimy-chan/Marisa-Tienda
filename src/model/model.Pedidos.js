@@ -27,12 +27,6 @@ class ModelPedido {
             conn.commit()
             return 'success'
 
-
-
-
-
-
-
         } catch (error) {
             conn.rollback()
             return error

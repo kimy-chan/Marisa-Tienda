@@ -1,14 +1,15 @@
 const getConecction = require("./db/db");
 
 class ModelUser {
-  static async addUser({ name, lastName, email, newPassword }) {
+  static async addUser({ name, lastName, email, newPassword, role }) {
+    console.log(role);
     console.log(name, lastName, email, newPassword);
     let conn;
     const sqlQueryPerson =
       "INSERT INTO Person(firstName,lastName,motherLastName,dateRegister)VALUES(?,?,?,now())";
     const sqlQueryUser =
       "INSERT INTO User(email,password,idPerson)VALUES(?,?,?)";
-    const sqlQueryRole = "INSERT INTO role(idUser)VALUES(?)";
+    const sqlQueryRole = "INSERT INTO role(idUser,nameRole)VALUES(?,?)";
     try {
       conn = await getConecction();
       await conn.beginTransaction();
@@ -22,7 +23,7 @@ class ModelUser {
         newPassword,
         person.insertId,
       ]);
-      await conn.query(sqlQueryRole, [user.insertId]);
+      await conn.query(sqlQueryRole, [user.insertId, role]);
       conn.commit();
       return 'success'
     } catch (error) {
@@ -54,6 +55,23 @@ class ModelUser {
 
 
   }
+
+  static async deleteUser({ idPerson }) {
+    let conn
+    const sqlUserDelte = 'DELETE FROM Person WHERE idPerson= ?'
+    try {
+      conn = await getConecction();
+      const [userDete] = await conn.query(sqlUserDelte, [idPerson])
+      return userDete
+    } catch (error) {
+      return error
+    } finally {
+      if (conn) {
+        conn.release()
+      }
+    }
+  }
+
 }
 
 module.exports = ModelUser;
