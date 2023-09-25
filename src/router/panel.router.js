@@ -11,5 +11,5 @@ const router = express.Router();
 
 router.get("/products-panel", [productValidator()], (req, res) => { productController.getProductAllPanel(req, res) });
 router.get("/category-panel", CategoryController.categoryPanel);
-router.get("/administration-panel", [VerifyCookie, rolesUser], AdministrationController.Administration)
+router.get("/administration-panel", AdministrationController.Administration)
 module.exports = router;

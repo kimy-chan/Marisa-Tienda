@@ -58,8 +58,9 @@
         </div>
       </div>
       <div class="form-group forms">
-        <label for="direccion" class="form">Dirección:</label>
-        <input type="text" class="form-control" id="direccion" name="direccion" value="<%= val.direccion %>">
+        <label for="direccion" class="form">Dirección N°:</label>
+        <input type="text" class="form-control" id="direccion" name="direccion" value="<%= val.direccion%>"
+          placeholder="Ejemplo german bush N° 8">
         <% error.forEach(err=> { %>
           <% if (err.path==='direccion' ) { %>
             <span class="form">
@@ -71,14 +72,27 @@
 
       <div class="form-group forms">
         <label for="productos" class="form">Productos:</label>
-        <select name="productos[]" id="productos" class="form-control" multiple disabled>
+        <div class="d-flex flex-row flex-wrap">
           <% products.forEach(item=> { %>
-            <option value="<%= item.idProduct %>">
-              <%= item.nameProduct %>
-                <%= item.cantidad %>
-            </option>
+            <div class="card mb-3 mr-3 border-0" style="max-width: 300px;">
+              <div class="row no-gutters">
+                <div class="col-md-4">
+                  <img src="<%= item.image %>" class="card-img" alt="<%= item.nameProduct %>">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      <%= item.nameProduct %>
+                    </h5>
+                    <p class="card-text">Cantidad: <%= item.cantidad %>
+                        <p class="card-text">Precio: <%= parseFloat(item.price) %>
+                        </p>
+                  </div>
+                </div>
+              </div>
+            </div>
             <% }) %>
-        </select>
+        </div>
       </div>
 
       <div class="sumatoria">

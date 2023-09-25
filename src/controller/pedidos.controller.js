@@ -14,6 +14,7 @@ class PedidosController {
       const categories = await ModelCategory.showCategory();
       if (req.session.idProduct) {
         let product = await CartAux.getProdcut(req.session.idProduct)
+        console.log(product.productUnique);
         return res.render("pedidoForm", { products: product.productUnique, val: '', totalPrice: product.totalPrice, error: error, categories: categories })
       }
       return res.send("productos vasios")
@@ -46,15 +47,12 @@ class PedidosController {
       if (req.session.idProduct) {
         const categories = await ModelCategory.showCategory();
         let product = await CartAux.getProdcut(req.session.idProduct)
-        console.log(product);
         return res.render("pedidoForm", { products: product.productUnique, val: val, totalPrice: product.totalPrice, error, categories: categories })
       }
     }
     try {
       if (req.session.idProduct) {
-
         let product = await CartAux.getProdcut(req.session.idProduct)
-
         console.log(product);
         const result = await ModelPedido.Pedido({ nombre, lastName, celular, Ciudad, direccion, product, orderP })
         if (result.sqlState == '45000') {
@@ -90,6 +88,7 @@ class PedidosController {
         return res.render("pedidoPanel", { pedido: order, mensaje: mensaje })
       }
       const order = await ModelPedido.getAllOrder({ state })
+      console.log(order);
       return res.render("pedidoPanel", { pedido: order, mensaje: '' })
     } catch (error) {
       console.log(error);

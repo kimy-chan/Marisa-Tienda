@@ -1,82 +1,81 @@
 const CartModel = require("../model/model.cart")
-class CartAux{
-  
+class CartAux {
+
   static DeleteObjet(array, clave) { //elimina productos repetidos
-  const objetosVistos = {};
-  return array.filter(objeto => {
-    const valorClave = objeto[clave];
-    if (!objetosVistos[valorClave]) {
-      objetosVistos[valorClave] = true;
-      return true;
+    const objetosVistos = {};
+    return array.filter(objeto => {
+      const valorClave = objeto[clave];
+      if (!objetosVistos[valorClave]) {
+        objetosVistos[valorClave] = true;
+        return true;
+      }
+      return false;
+    });
+  }
+
+  static async searchProduct(product) {
+    let cart = []
+    for (let productId of product) {
+      const product = await CartModel.cardProduct({ productId })
+      cart.push(...product)
+
     }
-    return false;
-  });
-}
+    return cart
+  }
 
-static async searchProduct(product){
-  let cart =[]
-  for(let productId of product){
-    const product =  await CartModel.cardProduct({productId}) 
-    cart.push(...product) 
-  
- }
- return cart
-}
+  static totalPrice(cart) {
+    let precioTotal = 0
+    for (let index = 0; index < cart.length; index++) {
+      precioTotal += parseFloat(cart[index].price)
+    }
+    return precioTotal
 
- static totalPrice(cart){
-  let precioTotal=0
-  for (let index = 0; index <cart.length; index++) {
-    precioTotal += parseFloat(cart[index].price)
-}
-return precioTotal
+  }
 
- }
-
- static catidadProduct(cart){
-  let cantidad = {};
-  cart.forEach(objeto => { // cantidad de cada producto
-    const id = objeto.idProduct;
-    cantidad[id] = (cantidad[id] || 0) + 1;
- })
- return cantidad
-}
+  static catidadProduct(cart) {
+    let cantidad = {};
+    cart.forEach(objeto => { // cantidad de cada producto
+      const id = objeto.idProduct;
+      cantidad[id] = (cantidad[id] || 0) + 1;
+    })
+    return cantidad
+  }
 
 
 
- static async getProdcut(prod){  // obtiene los prodcutos para el carrito
-    const products= []
-    let totalPrice= 0
+  static async getProdcut(prod) {  // obtiene los prodcutos para el carrito
+    const products = []
+    let totalPrice = 0
     let productUnique
-      try {
-        const product = await this.searchProduct(prod)
-        products.push(...product)
+    try {
+      const product = await this.searchProduct(prod)
+      products.push(...product)
       const allPrice = this.totalPrice(products)
-       productUnique= this.DeleteObjet(product,'idProduct')
-       totalPrice = allPrice
-       const cant = this.catidadProduct(products)
-       products.forEach(item => {
+      productUnique = this.DeleteObjet(product, 'idProduct')
+      totalPrice = allPrice
+      const cant = this.catidadProduct(products)
+      products.forEach(item => {
         const idProduct = item.idProduct;
         item.cantidad = cant[idProduct] || 1; // Asignar cantidad o 1 si no existe en cantidad
       });
 
-      const data={productUnique, totalPrice}
+      const data = { productUnique, totalPrice }
       return data
-      
-        
-      } catch (error) {
-        console.log( error);
-        
-      }
+
+
+    } catch (error) {
+      console.log(error);
+
+    }
 
 
 
 
- }
-
+  }
 
 }
 
 
 
 
-module.exports =CartAux
+module.exports = CartAux

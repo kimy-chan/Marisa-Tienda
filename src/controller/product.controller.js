@@ -91,7 +91,7 @@ class ProductController {
       const categories = await ModelCategory.showCategory()
 
       const product = await ModelProduct.descriptionProduct({ idProduct })
-
+      console.log(product);
       return res.render("descriptionProduct", { product: product, categories: categories })
     } catch (error) {
       console.log(error);

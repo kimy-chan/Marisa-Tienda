@@ -257,6 +257,7 @@ Contact.Cell,
 Contact.address,
 Product.nameProduct,
 Product.size,
+Product.color,
 productDetail.amount
  from Person inner join OrderCustomer on Person.idPerson = OrderCustomer.idPerson 
  inner join Contact on Person.idPerson = Contact.idPerson

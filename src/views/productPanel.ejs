@@ -37,9 +37,10 @@
               <td>
                 <%=item.nameProduct %>
               </td>
-              <td>
-                <%=item.amount %>
+              <td style="<%= item.amount === 0 ? 'color: red;' : '' %>"> <!--no tiene nungun error -->
+                <%= item.amount %>
               </td>
+
               <td>
                 <%=item.price %>
               </td>
