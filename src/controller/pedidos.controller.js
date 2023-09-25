@@ -39,7 +39,7 @@ class PedidosController {
 
     const lastName = apellidos.split(' ')
     const numeroTienda = process.env.TELEFONO_TIENDA
-    const urlWhatsApp = `https://wa.me/${numeroTienda}?mensaje="hoala`;//falat
+    const urlWhatsApp = `https://api.whatsapp.com/send?phone=${numeroTienda}&text=Ponte en contacto directo con nosotros?`
     const value = validationResult(req)
     if (!value.isEmpty()) {
       const error = value.array()

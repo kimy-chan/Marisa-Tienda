@@ -87,12 +87,11 @@ class CategoryController {
   }
   async updateCategoryForm(req, res) {
     const { idCategory } = req.params
+    const mensaje = req.query.mensaje
+    console.log(mensaje);
     try {
-
       const categoriasId = await ModelCategory.getCategoryId(idCategory)
-      return res.render("updateCategoria", { categoriasId: categoriasId })
-
-
+      return res.render("updateCategoria", { categoriasId: categoriasId, mensaje })
     } catch (error) {
       console.log(error);
 
@@ -120,7 +119,7 @@ class CategoryController {
 
       }
       await ModelCategory.updateCategory({ categoria, idCategory })
-      return res.send("actulizado")
+      return res.redirect(`/update-category/${idCategory}?mensaje=true`)
 
 
 

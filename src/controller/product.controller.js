@@ -140,11 +140,11 @@ class ProductController {
 
   async formUpdateProdcut(req, res) {
     const { idProduct } = req.params
+    const mensaje = req.query.mensaje
 
     let values = []
     const categoriaP = []
     let dataCategoria = {}
-
 
     try {
       const product = await ModelProduct.getAllProductId({ idProduct })
@@ -161,7 +161,8 @@ class ProductController {
         product: product.productos,
         img: product.dataImgPro, values, error: [],
         categories: categories,
-        categoriaP: categoriaP
+        categoriaP: categoriaP,
+        mensaje
 
 
       })
@@ -213,7 +214,7 @@ class ProductController {
         await ModelProduct.updateImage({ pathImgCloud, idProduct })
       }
       await ModelProduct.updateProduct({ nombre, descripcion, cantidad, precio, colores, tallas, categorias, destacado, idProduct })
-      return res.send("l")
+      return res.redirect(`/update-product/${idProduct}?mensaje=true`)
 
 
     } catch (error) {
