@@ -32,7 +32,9 @@ class ModelPedido {
             return error
 
         } finally {
-            conn.release()
+            if (conn) {
+                conn.release()
+            }
         }
 
     }
@@ -46,6 +48,9 @@ class ModelPedido {
             return order
 
         } catch (error) {
+            console.log(error);
+
+        } finally {
             if (conn) {
                 conn.release()
             }

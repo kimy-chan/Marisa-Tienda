@@ -63,10 +63,6 @@ class PedidosController {
 
         }
 
-
-
-
-
       }
 
       return res.send("nada ")

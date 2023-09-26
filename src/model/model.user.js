@@ -2,8 +2,6 @@ const getConecction = require("./db/db");
 
 class ModelUser {
   static async addUser({ name, lastName, email, newPassword, role }) {
-    console.log(role);
-    console.log(name, lastName, email, newPassword);
     let conn;
     const sqlQueryPerson =
       "INSERT INTO Person(firstName,lastName,motherLastName,dateRegister)VALUES(?,?,?,now())";
@@ -32,7 +30,9 @@ class ModelUser {
 
 
     } finally {
-      conn.release();
+      if (conn) {
+        conn.release()
+      }
     }
   }
 

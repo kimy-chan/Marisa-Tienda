@@ -9,7 +9,8 @@
             <%} %>
 
                 <div class="d-flex justify-content-end mb-3">
-                    <a href="/register" class="btn btn-primary"><i class="fas fa-plus"></i> Agregar Nuevo Usuario</a>
+                    <a href="/register" class="btn" style="background: #D09456; color: white;"><i
+                            class="fas fa-plus"></i> Agregar Nuevo Usuario</a>
                 </div>
 
                 <% if (user.length> 0) {%>
@@ -41,7 +42,7 @@
                                     </td>
                                     <th>
                                         <a onclick="deleteUser('<%=item.idPerson%>', '<%=item.firstName %>')">
-                                            <i class="fas fa-trash-alt"></i>
+                                            <i class="fas fa-trash-alt text-danger"></i>
                                         </a>
                                     </th>
                                 </tr>
