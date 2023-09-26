@@ -1,16 +1,16 @@
-const {body}= require("express-validator");
-function categoryValidator(){
+const { body } = require("express-validator");
+function categoryValidator() {
     return [
-    body("categoria","nombre invalido").matches(/^[a-zA-Z\s]+$/),
-    body("image").custom((value,{req})=>{
-        if(!req.file){
-            throw new Error("archivo invalido")
+        body("categoria", "Categoria invalido").matches(/^[a-zA-Z\s]+$/),
+        body("image").custom((value, { req }) => {
+            if (!req.file) {
+                throw new Error("archivo invalido")
+            }
+            return true
         }
-        return true
-    }
-    
-    )
-]
+
+        )
+    ]
 }
 
 module.exports = categoryValidator

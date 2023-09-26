@@ -4,7 +4,6 @@ const cloudinary = require("cloudinary")
 const path = require("path")
 const fs = require("fs");
 const { validationResult } = require('express-validator');
-const { log } = require("console");
 
 
 class CategoryController {
@@ -36,7 +35,7 @@ class CategoryController {
   async categoryPanel(req, res) {
     try {
       const categories = await ModelCategory.showCategory()
-      return res.render("categoriasPanel", { categories: categories, mensaje: '' })
+      return res.render("categoriasPanel", { categories: categories, mensaje: '', valuesbody: '', error: [] })
     } catch (error) {
       console.log(error);
 
@@ -47,14 +46,13 @@ class CategoryController {
     const result = validationResult(req)
     const { categoria } = req.body
     const image = req.file
-
-
-    if (!result.isEmpty()) {
-      console.log(result);
-      return
-
-    }
     try {
+      if (!result.isEmpty()) {
+        const valuesbody = req.body
+        const categories = await ModelCategory.showCategory()
+        return res.render("categoriasPanel", { categories: categories, mensaje: '', valuesbody, error: result.array() })
+      }
+
       const img = await cloudinary.v2.uploader.upload(image.path)
       await ModelCategory.addCategory(categoria, img.secure_url, img.public_id)
       return res.redirect("/category-panel")
@@ -65,6 +63,7 @@ class CategoryController {
         fs.unlinkSync(path.join(__dirname + `../../public/upload/${image.filename}`))
 
       }
+      console.log("sol el finali");
     }
   }
 
@@ -125,11 +124,13 @@ class CategoryController {
     } catch (error) {
       console.log(error);
 
+    } finally {
+      if (fs.existsSync(path.join(__dirname + `../../public/upload/${imageM.filename}`))) {
+        fs.unlinkSync(path.join(__dirname + `../../public/upload/${imageM.filename}`))
+
+      }
+
     }
-
-
-    console.log("hola");
-
 
 
   }

@@ -4,11 +4,8 @@ const ModelProduct = require("../model/model.products")
 const ModelCategory = require("../model/model.category")
 const cloudinary = require("cloudinary")
 const path = require("path")
+const { promisify } = require('util')
 const fs = require("fs");
-const { log } = require("console");
-
-
-
 
 class ProductController {
 
@@ -38,21 +35,18 @@ class ProductController {
 
 
     const result = validationResult(req)
-    if (!result.isEmpty()) {
-      const values = req.body
-      const categories = await ModelCategory.showCategory()
-      return res.render("formProductPanel",
-        {
-          error: result.array(),
-          values, categories: categories,
-          productoAgregado: false
-
-        })
-    }
-
-
     try {
+      if (!result.isEmpty()) {
+        const values = req.body
+        const categories = await ModelCategory.showCategory()
+        return res.render("formProductPanel",
+          {
+            error: result.array(),
+            values, categories: categories,
+            productoAgregado: false
 
+          })
+      }
       const { nombre, cantidad, colores, descripcion, tallas, categorias, precio } = req.body
       const destacado = req.body.destacado === '1' ? 1 : 0;
       for (let imgCloud of img) {
@@ -67,7 +61,6 @@ class ProductController {
 
     } catch (error) {
       console.log(error);
-
     } finally {
       for (let i of img) {
         if (fs.existsSync(path.join(__dirname + `../../public/upload/${i.filename}`))) {
@@ -89,9 +82,7 @@ class ProductController {
     const { idProduct } = req.params
     try {
       const categories = await ModelCategory.showCategory()
-
       const product = await ModelProduct.descriptionProduct({ idProduct })
-      console.log(product);
       return res.render("descriptionProduct", { product: product, categories: categories })
     } catch (error) {
       console.log(error);
@@ -172,7 +163,7 @@ class ProductController {
 
 
   }
-  async updateProduct(req, res) {
+  async updateProduct(req, res) { // actuliza el producto
     const val = validationResult(req)
     const categoriaP = []
     let pathImgCloud = []
@@ -180,8 +171,8 @@ class ProductController {
     const { idProduct } = req.params
     const img = req.files
     try {
+      const product = await ModelProduct.getAllProductId({ idProduct })
       if (!val.isEmpty()) {
-        const product = await ModelProduct.getAllProductId({ idProduct })
         const categories = await ModelCategory.showCategory()
         for (let categoria of categories) {
           if (categoria.idCategory == product.productos[0].idCategory) {
@@ -198,27 +189,35 @@ class ProductController {
 
       }
       const { nombre, cantidad, colores, descripcion, tallas, categorias, precio } = req.body
-
       const destacado = req.body.destacado === '1' ? 1 : 0
-      console.log(destacado);
-
-      if (img.length > 0) {
-        for (let i of img) {
+      if (img.length > 0) { // añade la imagen nueva
+        let oldImgI = product.dataImgPro.map(imagen => imagen.imagenId)//mapea todo los id de imagenes
+        const newImagePublicIds = []; //id de las imagenes nuevas
+        for (let i of img) {//añade las nuevas images 
           const cloudImg = await cloudinary.v2.uploader.upload(i.path)
           const dataImge = {}
           dataImge.urlImage = cloudImg.secure_url
           dataImge.idImg = cloudImg.public_id
           pathImgCloud.push(dataImge)
-
+          newImagePublicIds.push(cloudImg.public_id)
         }
+        let imgDelete = oldImgI.filter(id => !newImagePublicIds.includes(id))//borrar las imagenes remplazadas
+        await imgDelete.map(id => cloudinary.v2.uploader.destroy(id));//borra los images 
         await ModelProduct.updateImage({ pathImgCloud, idProduct })
       }
       await ModelProduct.updateProduct({ nombre, descripcion, cantidad, precio, colores, tallas, categorias, destacado, idProduct })
       return res.redirect(`/update-product/${idProduct}?mensaje=true`)
 
-
     } catch (error) {
       console.log(error);
+
+    } finally {
+      for (let i of img) {
+        if (fs.existsSync(path.join(__dirname + `../../public/upload/${i.filename}`))) {
+          fs.unlinkSync(path.join(__dirname + `../../public/upload/${i.filename}`))
+        }
+      }
+
 
     }
 

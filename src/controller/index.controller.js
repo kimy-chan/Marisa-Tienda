@@ -1,5 +1,4 @@
 const ModelCategory = require("../model/model.category");
-const ModelProduct = require("../model/model.products");
 const ProductModel = require("../model/model.products");
 
 class IndexController {
@@ -14,7 +13,7 @@ class IndexController {
     }
   }
 
-  cartCantidad(req, res) {
+  cartCantidad(req, res) {// muestra la cantidad del carrito
     let cantidaCart;
     if (Array.isArray(req.session.idProduct)) {
       cantidaCart = req.session.idProduct;
@@ -23,7 +22,11 @@ class IndexController {
     }
     return res.json({ cantidaCart: cantidaCart });
   }
+  portadaIndex(req, res) {
+    return res.render("portada")
+  }
 }
+
 
 const indexController = new IndexController();
 
