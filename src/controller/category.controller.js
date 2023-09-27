@@ -33,9 +33,16 @@ class CategoryController {
   }
 
   async categoryPanel(req, res) {
+    const categoriaMsg = req.query.CategoriAdd //mensaje de categoria añadida
+    const categoriaDeleteMsg = req.query.mensajeDelete //mensaje de categoria borrada
+    const categoriaDuplicada = req.query.CategoriaDuplicada// categoria duplicada
     try {
       const categories = await ModelCategory.showCategory()
-      return res.render("categoriasPanel", { categories: categories, mensaje: '', valuesbody: '', error: [] })
+      return res.render("categoriasPanel", {
+        categories: categories,
+        mensaje: '', valuesbody: '', error: [], categoriaMsg, categoriaDeleteMsg,
+        categoriaDuplicada
+      })
     } catch (error) {
       console.log(error);
 
@@ -50,12 +57,19 @@ class CategoryController {
       if (!result.isEmpty()) {
         const valuesbody = req.body
         const categories = await ModelCategory.showCategory()
-        return res.render("categoriasPanel", { categories: categories, mensaje: '', valuesbody, error: result.array() })
+        return res.render("categoriasPanel", {
+          categories: categories, mensaje: '',
+          valuesbody, error: result.array(), categoriaMsg: '', categoriaDeleteMsg: '',
+          categoriaDuplicada: ''
+        })
       }
 
       const img = await cloudinary.v2.uploader.upload(image.path)
-      await ModelCategory.addCategory(categoria, img.secure_url, img.public_id)
-      return res.redirect("/category-panel")
+      const resultSql = await ModelCategory.addCategory(categoria, img.secure_url, img.public_id)
+      if (resultSql.code === 'ER_DUP_ENTRY') {
+        return res.redirect("/category-panel?CategoriaDuplicada=true")
+      }
+      return res.redirect("/category-panel?CategoriAdd=true")
     } catch (error) {
       console.log(error);
     } finally {
@@ -63,7 +77,6 @@ class CategoryController {
         fs.unlinkSync(path.join(__dirname + `../../public/upload/${image.filename}`))
 
       }
-      console.log("sol el finali");
     }
   }
 
@@ -74,10 +87,14 @@ class CategoryController {
       if (mensajesql) {
         const mensaje = "Hay productos en las categorias"
         const categories = await ModelCategory.showCategory()
-        return res.render("categoriasPanel", { categories: categories, mensaje: mensaje })
+        return res.render("categoriasPanel", {
+          categories: categories, mensaje: mensaje,
+          valuesbody: '', error: [], categoriaMsg: '', categoriaDeleteMsg: '',
+          categoriaDuplicada: ''
+        })
       }
       await cloudinary.v2.uploader.destroy(idImagen)
-      return res.redirect("/category-panel")
+      return res.redirect("/category-panel?mensajeDelete=true")
     } catch (error) {
       console.log(error);
 
@@ -102,18 +119,22 @@ class CategoryController {
     const { categoria } = req.body
     const imageM = req.file
     const val = validationResult(req)
-    if (!val.isEmpty()) {
-      console.log(val.array());
-      const categoriasId = await ModelCategory.getCategoryId(idCategory)
-      return res.render("updateCategoria", { categoriasId: categoriasId })
-    }
     try {
+      const categoriasId = await ModelCategory.getCategoryId(idCategory)
+      if (!val.isEmpty()) {
+
+        return res.render("updateCategoria", { categoriasId: categoriasId })
+      }
       if (typeof imageM === 'object') {
         const imgcloud = await cloudinary.v2.uploader.upload(imageM.path)
-        console.log(imgcloud);
         const image = imgcloud.secure_url
         const idImg = imgcloud.public_id
         await ModelCategory.updateCategoryImage({ idCategory, image, idImg })
+        await categoriasId.map(imagen => cloudinary.v2.uploader.destroy(imagen.imageId))//borra la imagen antigua
+        if (fs.existsSync(path.join(__dirname + `../../public/upload/${imageM.filename}`))) {//borra la imagen del servidor
+          fs.unlinkSync(path.join(__dirname + `../../public/upload/${imageM.filename}`))
+
+        }
 
       }
       await ModelCategory.updateCategory({ categoria, idCategory })
@@ -125,10 +146,7 @@ class CategoryController {
       console.log(error);
 
     } finally {
-      if (fs.existsSync(path.join(__dirname + `../../public/upload/${imageM.filename}`))) {
-        fs.unlinkSync(path.join(__dirname + `../../public/upload/${imageM.filename}`))
 
-      }
 
     }
 

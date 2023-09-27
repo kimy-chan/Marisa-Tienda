@@ -10,11 +10,11 @@ class ModelCategory {
         try {
             conn = await getConecction()
             const sqlQueryCategory = "INSERT INTO Category(nameCategory,image,imageId)values(?,?,?)"
-            await conn.query(sqlQueryCategory, [nameCategory, image, idImg])
+            const [result] = await conn.query(sqlQueryCategory, [nameCategory, image, idImg])
+            return result
 
         } catch (error) {
-            console.log(error);
-
+            return error
         } finally {
             if (conn) {
                 conn.release()

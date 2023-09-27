@@ -213,7 +213,7 @@ class ProductController {
 
     } finally {
       for (let i of img) {
-        if (fs.existsSync(path.join(__dirname + `../../public/upload/${i.filename}`))) {
+        if (fs.existsSync(path.join(__dirname + `../../public/upload/${i.filename}`))) {//borra la imagenes del servidor
           fs.unlinkSync(path.join(__dirname + `../../public/upload/${i.filename}`))
         }
       }
