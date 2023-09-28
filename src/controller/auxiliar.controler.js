@@ -28,7 +28,7 @@ class CartAux {
     for (let index = 0; index < cart.length; index++) {
       precioTotal += parseFloat(cart[index].price)
     }
-    return precioTotal
+    return precioTotal.toFixed(2);
 
   }
 

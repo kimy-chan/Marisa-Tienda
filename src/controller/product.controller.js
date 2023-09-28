@@ -20,16 +20,33 @@ class ProductController {
     })
 
   }
-  async formProdcut(req, res) {
+  async formProduct(req, res) {
+    const nombreUser = req.user.firstName
+    const apellidoUser = req.user.lastName
+    const emailUser = req.user.email
+    const rolUser = req.user.nameRole
     let values = []
     let error = []
     const mensaje = req.query.mensaje === 'true';
     const categories = await ModelCategory.showCategory()
-    return res.render("formProductPanel", { values, error, categories: categories, productoAgregado: mensaje, categories: categories })
+    return res.render("formProductPanel", {
+      values, error,
+      categories: categories,
+      productoAgregado: mensaje,
+      categories: categories,
+      nombreUser,
+      apellidoUser,
+      emailUser,
+      rolUser
+    })
 
   }
 
   async addProduct(req, res) {
+    const nombreUser = req.user.firstName
+    const apellidoUser = req.user.lastName
+    const emailUser = req.user.email
+    const rolUser = req.user.nameRole
     const img = req.files
     let pathImgCloud = []
 
@@ -93,12 +110,24 @@ class ProductController {
   //-------panel
 
   async getProductAllPanel(req, res) {
+    const nombreUser = req.user.firstName
+    const apellidoUser = req.user.lastName
+    const emailUser = req.user.email
+    const rolUser = req.user.nameRole
     const mensaje = req.query.mensaje === 'true';
     try {
       let result = [];
       const product = await ModelProduct.getAllProduct()
       console.log(product);
-      return res.render("productPanel", { showModal: false, error: result, values: '', product: product, mensaje: mensaje });
+      return res.render("productPanel", {
+        error: result, values: '',
+        product: product,
+        mensaje: mensaje,
+        nombreUser,
+        apellidoUser,
+        emailUser,
+        rolUser
+      });
 
     } catch (error) {
       console.log(error);
@@ -130,6 +159,10 @@ class ProductController {
   }
 
   async formUpdateProdcut(req, res) {
+    const nombreUser = req.user.firstName
+    const apellidoUser = req.user.lastName
+    const emailUser = req.user.email
+    const rolUser = req.user.nameRole
     const { idProduct } = req.params
     const mensaje = req.query.mensaje
 
@@ -153,7 +186,11 @@ class ProductController {
         img: product.dataImgPro, values, error: [],
         categories: categories,
         categoriaP: categoriaP,
-        mensaje
+        mensaje,
+        nombreUser,
+        apellidoUser,
+        emailUser,
+        rolUser
 
 
       })

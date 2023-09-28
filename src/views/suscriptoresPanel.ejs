@@ -1,4 +1,4 @@
-<%- include('./partials/headerPanel') %>
+<%- include('./partials/headerPanel',{ nombreUser, emailUser, apellidoUser, rolUser}) %>
 
     <div class="container">
         <% if(mensaje){%>
@@ -35,7 +35,7 @@
                                     </td>
                                     <th>
                                         <a onclick="deleteUser('<%=item.idPerson%>', '<%=item.firstName %>')">
-                                            <i class="fas fa-trash-alt"></i>
+                                            <i class="fas fa-trash-alt text-danger"></i>
                                         </a>
                                     </th>
                                 </tr>

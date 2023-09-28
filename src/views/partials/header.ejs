@@ -35,16 +35,16 @@
     </div>
   </div>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-custom">
+  <nav class="navbar navbar-expand-lg  bg-custom">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
       aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-      <a class="navbar-brand" href="/"><img src="/img/iconoM.svg" alt="LOGO"></a>
+      <a class="navbar-brand" href="/index"><img src="/img/iconoM.svg" alt="LOGO"></a>
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <li class="nav-item active">
-          <a class="nav-link  text-white" href="/index">Inicio <span class="sr-only">(current)</span></a>
+          <a class="nav-link  text-white" href="/index">Inicio <span class="sr-only"></span></a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle  text-white" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -77,11 +77,11 @@
       <div class="nav-items">
         <ul class="nav-item">
           <li>
-            <a href="/cart"><i class="ri-shopping-cart-line"></i></a>
+            <a href="/cart" class="cart-icon">
+              <i class="ri-shopping-cart-line"></i>
+              <span class="cantidad" id="cantidadCarrito"></span> <!-- Ejemplo de cantidad -->
+            </a>
           </li>
-        </ul>
-        <ul>
-          <span class="cantidad" id="cantidadCarrito"></span>
         </ul>
       </div>
     </div>

@@ -9,13 +9,13 @@ async function VerifyCookie(req, res, next) {
         const tokenDecode = jwt.verify(cookie, process.env.JWT_SECRET)
         const [user] = await ModelAuth.VerificaUsuarioRol(tokenDecode.idUser)
         if (!user) {
-            return res.redirect("/")
+            return res.redirect("/login")
         }
         req.user = user
         return next()
 
     }
-    return res.redirect("/")
+    return res.redirect("/login")
 
 
 

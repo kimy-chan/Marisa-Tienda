@@ -1,67 +1,72 @@
-<%- include('./partials/headerPanel') %>
+<%- include('./partials/headerPanel',{ nombreUser, emailUser, apellidoUser, rolUser}) %>
+  <% if(mensaje){%>
+    <div class="alert alert-success" role="alert">
+      Venta elimada
+    </div>
 
-  <div class="container">
-    <% if(mensaje){%>
-      <div class="alert alert-success" role="alert">
-        Venta elimada
+    <%} %>
+
+      <div class="container">
+        <div class="table-responsive">
+          <% if (venta.length> 0) {%>
+            <table id="productosTable" class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>Nombres</th>
+                  <th>Producto</th>
+                  <th>Talla</th>
+                  <th>Cantidad</th>
+                  <th>Total</th>
+                  <th>Fecha y hora de venta</th>
+                  <th>Eliminar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% venta.forEach(item=> { %>
+                  <tr>
+                    <td>
+                      <%=item.firstName %>
+                        <%= item.motherLastName%>
+                    </td>
+                    <td>
+                      <%=item.nameProduct %>
+                    </td>
+                    <td>
+                      <%=item.size %>
+                    </td>
+                    <td>
+                      <%=item.amount %>
+                    </td>
+                    <td>
+                      <%=item.total %>
+                    </td>
+                    <td>
+                      <%=item.FechaCompleta%> - <%=item.Hora%>
+                    </td>
+                    <th>
+                      <% if(rolUser==='admin' ){%>
+                        <a onclick="deleteSales('<%= item.idPerson%>','<%=item.nameProduct%>')"><i
+                            class="fas fa-trash-alt text-danger"></i></a>
+                        <%}%>
+
+                    </th>
+
+
+                  </tr>
+                  <% }) %>
+
+
+
+              </tbody>
+            </table>
+
+
+            <%}else{%>
+              <span>Pedidos no disponibles</span>
+
+              <% } %>
+        </div>
+
       </div>
 
-      <%} %>
-        <% if (venta.length> 0) {%>
-          <table id="productosTable" class="table table-striped table-bordered">
-            <thead>
-              <tr>
-                <th>Nombres</th>
-                <th>Producto</th>
-                <th>Talla</th>
-                <th>Cantidad</th>
-                <th>Total</th>
-                <th>Fecha y hora de venta</th>
-                <th>Eliminar</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% venta.forEach(item=> { %>
-                <tr>
-                  <td>
-                    <%=item.firstName %>
-                      <%= item.motherLastName%>
-                  </td>
-                  <td>
-                    <%=item.nameProduct %>
-                  </td>
-                  <td>
-                    <%=item.size %>
-                  </td>
-                  <td>
-                    <%=item.amount %>
-                  </td>
-                  <td>
-                    <%=item.total %>
-                  </td>
-                  <td>
-                    <%=item.FechaCompleta%> - <%=item.Hora%>
-                  </td>
-                  <th>
-                    <a onclick="deleteSales('<%= item.idPerson%>','<%=item.nameProduct%>')"><i
-                        class="fas fa-trash-alt text-danger"></i></a>
-                  </th>
-
-
-                </tr>
-                <% }) %>
-
-
-
-            </tbody>
-          </table>
-
-
-          <%}else{%>
-            <span>Pedidos no disponibles</span>
-
-            <% } %>
-
-  </div>
-
-  <%- include('./partials/footerPanel') %>
+      <%- include('./partials/footerPanel') %>

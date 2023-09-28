@@ -125,8 +125,35 @@ nav .collapse .nav-item li a i
     background-color: black; 
 }
 
-/* Estilo de las letras en el navbar */
+
 .colorLink {
-    color: #ffffff; /* Cambia #ffffff al color blanco o el color deseado para los enlaces */
-    /* Otros estilos de fuente, como tamaño y familia de fuente, pueden agregarse aquí */
+    color: #ffffff; 
+}
+
+
+
+/* css del icono del carrito*/
+.nav-items {
+    display: flex;
+    align-items: center;
+}
+
+.cart-icon {
+    position: relative;
+    display: inline-block;
+}
+
+.cantidad {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 3px 8px;
+    font-size: 12px;
+}
+
+.navbar-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }

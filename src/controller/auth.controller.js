@@ -43,6 +43,12 @@ class AuthController {
   static formLogin(req, res) {
     return res.render("login", { errors: [], alertMsg: "" });
   }
+
+  static logout(req, res) {
+    res.clearCookie('jwt')
+    return res.redirect("/login")
+
+  }
 }
 
 module.exports = AuthController;

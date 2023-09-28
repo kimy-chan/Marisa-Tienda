@@ -108,7 +108,6 @@ CREATE TABLE ProductDetail (
   FOREIGN KEY (idOrder) REFERENCES OrderCustomer(idOrder) on delete cascade,
   FOREIGN KEY (idProduct) REFERENCES Product(idProduct) 
 );
-
 -- Tabla para la información de la empresa
 CREATE TABLE InformationCompany (
   idInformationCompany INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -242,7 +241,7 @@ END;
 DELIMITER ;
     
 
- 
+
 create view CustomerOrder as 
  select Person.idPerson,
  Person.firstName,
@@ -258,7 +257,8 @@ Contact.address,
 Product.nameProduct,
 Product.size,
 Product.color,
-productDetail.amount
+productDetail.amount,
+productDetail.total
  from Person inner join OrderCustomer on Person.idPerson = OrderCustomer.idPerson 
  inner join Contact on Person.idPerson = Contact.idPerson
  inner join productDetail on OrderCustomer.idOrder = ProductDetail.idOrder

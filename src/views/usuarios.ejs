@@ -1,4 +1,4 @@
-<%- include('./partials/headerPanel') %>
+<%- include('./partials/headerPanel',{ nombreUser, emailUser, apellidoUser, rolUser}) %>
 
     <div class="container">
         <% if(mensaje){%>
@@ -7,56 +7,65 @@
             </div>
 
             <%} %>
+                <% if(rolUser==='admin' ){%>
+                    <div class="d-flex justify-content-end mb-3">
+                        <a href="/register" class="btn" style="background: #D09456; color: white;"><i
+                                class="fas fa-plus"></i> Agregar Nuevo
+                            Usuario</a>
+                    </div>
 
-                <div class="d-flex justify-content-end mb-3">
-                    <a href="/register" class="btn" style="background: #D09456; color: white;"><i
-                            class="fas fa-plus"></i> Agregar Nuevo Usuario</a>
-                </div>
-
-                <% if (user.length> 0) {%>
-                    <table class="table table-striped table-bordered" id="productosTable">
-                        <thead>
-                            <tr>
-                                <th>Nombres</th>
-                                <th>Apellidos</th>
-                                <th>Email</th>
-                                <th>Rol</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% user.forEach(item=> { %>
-                                <tr>
-                                    <td>
-                                        <%=item.firstName %>
-                                    </td>
-                                    <td>
-                                        <%=item.lastName %>
-                                            <%=item.motherLastName %>
-                                    </td>
-                                    <td>
-                                        <%=item.email %>
-                                    </td>
-                                    <td>
-                                        <%=item.nameRole %>
-                                    </td>
-                                    <th>
-                                        <a onclick="deleteUser('<%=item.idPerson%>', '<%=item.firstName %>')">
-                                            <i class="fas fa-trash-alt text-danger"></i>
-                                        </a>
-                                    </th>
-                                </tr>
-                                <% }) %>
+                    <%} %>
 
 
+                        <% if (user.length> 0) {%>
+                            <table class="table table-striped table-bordered" id="productosTable">
+                                <thead>
+                                    <tr>
+                                        <th>Nombres</th>
+                                        <th>Apellidos</th>
+                                        <th>Email</th>
+                                        <th>Rol</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% user.forEach(item=> { %>
+                                        <tr>
+                                            <td>
+                                                <%=item.firstName %>
+                                            </td>
+                                            <td>
+                                                <%=item.lastName %>
+                                                    <%=item.motherLastName %>
+                                            </td>
+                                            <td>
+                                                <%=item.email %>
+                                            </td>
+                                            <td>
+                                                <%=item.nameRole %>
+                                            </td>
+                                            <th>
+                                                <% if(rolUser==='admin' ){%>
 
-                        </tbody>
-                    </table>
+                                                    <a
+                                                        onclick="deleteUser('<%=item.idPerson%>', '<%=item.firstName %>')">
+                                                        <i class="fas fa-trash-alt text-danger"></i>
+                                                    </a>
+
+                                                    <%}%>
+                                            </th>
+                                        </tr>
+                                        <% }) %>
 
 
-                    <%}else{%>
-                        <span>Usuarios no disponibles</span>
 
-                        <% } %>
+                                </tbody>
+                            </table>
 
-                            <%- include('./partials/footerPanel') %>
+
+                            <%}else{%>
+                                <span>Usuarios no disponibles</span>
+
+                                <% } %>
+
+                                    <%- include('./partials/footerPanel') %>

@@ -9,7 +9,7 @@ const rolesUser = require("../middleware/roles.middleware")
 
 const router = express.Router();
 
-router.get("/products-panel", [productValidator()], (req, res) => { productController.getProductAllPanel(req, res) });
-router.get("/category-panel", CategoryController.categoryPanel);
-router.get("/administration-panel", AdministrationController.Administration)
+router.get("/products-panel", [VerifyCookie, rolesUser, productValidator()], (req, res) => { productController.getProductAllPanel(req, res) });
+router.get("/category-panel", [VerifyCookie, rolesUser], CategoryController.categoryPanel);
+router.get("/administration-panel", [VerifyCookie, rolesUser], AdministrationController.Administration)
 module.exports = router;

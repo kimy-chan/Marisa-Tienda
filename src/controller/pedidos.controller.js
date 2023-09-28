@@ -75,17 +75,36 @@ class PedidosController {
   }
 
   static async getAllOrder(req, res) {
+    const nombreUser = req.user.firstName
+    const apellidoUser = req.user.lastName
+    const emailUser = req.user.email
+    const rolUser = req.user.nameRole
     const mensaje = req.query.mensaje
     const state = 0
     console.log(mensaje);
     try {
       if (mensaje) {
         const order = await ModelPedido.getAllOrder({ state })
-        return res.render("pedidoPanel", { pedido: order, mensaje: mensaje })
+        return res.render("pedidoPanel", {
+          pedido: order,
+          mensaje: mensaje,
+          nombreUser,
+          apellidoUser,
+          emailUser,
+          rolUser
+
+        })
       }
       const order = await ModelPedido.getAllOrder({ state })
       console.log(order);
-      return res.render("pedidoPanel", { pedido: order, mensaje: '' })
+      return res.render("pedidoPanel", {
+        pedido: order,
+        mensaje: '',
+        nombreUser,
+        apellidoUser,
+        emailUser,
+        rolUser
+      })
     } catch (error) {
       console.log(error);
     }

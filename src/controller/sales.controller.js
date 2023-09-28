@@ -8,10 +8,21 @@ class SalesController {
 
   static async getSales(req, res) {
     const mensaje = req.query.mensaje
+    const nombreUser = req.user.firstName
+    const apellidoUser = req.user.lastName
+    const emailUser = req.user.email
+    const rolUser = req.user.nameRole
     try {
 
       const sales = await ModelSales.getSales()
-      return res.render("ventasPanel", { venta: sales, mensaje })
+      return res.render("ventasPanel", {
+        venta: sales,
+        mensaje,
+        nombreUser,
+        apellidoUser,
+        emailUser,
+        rolUser
+      })
     } catch (error) {
       console.log(error);
 

@@ -23,10 +23,21 @@ class SuscriptorController {
     }
 
     static async getSuscriptores(req, res) {
+        const nombreUser = req.user.firstName
+        const apellidoUser = req.user.lastName
+        const emailUser = req.user.email
+        const rolUser = req.user.nameRole
 
         try {
             const suscriptores = await ModelSuscripcion.getSuscriptores()
-            return res.render("suscriptoresPanel", { mensaje: '', user: suscriptores })
+            return res.render("suscriptoresPanel", {
+                mensaje: '',
+                user: suscriptores,
+                nombreUser,
+                apellidoUser,
+                emailUser,
+                rolUser
+            })
 
         } catch (error) {
 

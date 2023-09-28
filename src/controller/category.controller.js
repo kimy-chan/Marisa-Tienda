@@ -18,7 +18,7 @@ class CategoryController {
 
 
 
-  async showProduct(req, res) {
+  async showProduct(req, res) {// muestra las categorias en las paginas del clientes
     try {
       let { nameProduct } = req.params;
       const product = await ModelProduct.getProductCategory({ nameProduct });
@@ -33,6 +33,10 @@ class CategoryController {
   }
 
   async categoryPanel(req, res) {
+    const nombreUser = req.user.firstName
+    const apellidoUser = req.user.lastName
+    const emailUser = req.user.email
+    const rolUser = req.user.nameRole
     const categoriaMsg = req.query.CategoriAdd //mensaje de categoria añadida
     const categoriaDeleteMsg = req.query.mensajeDelete //mensaje de categoria borrada
     const categoriaDuplicada = req.query.CategoriaDuplicada// categoria duplicada
@@ -41,7 +45,13 @@ class CategoryController {
       return res.render("categoriasPanel", {
         categories: categories,
         mensaje: '', valuesbody: '', error: [], categoriaMsg, categoriaDeleteMsg,
-        categoriaDuplicada
+        categoriaDuplicada,
+        nombreUser,
+        apellidoUser,
+        emailUser,
+        rolUser
+
+
       })
     } catch (error) {
       console.log(error);
@@ -81,6 +91,10 @@ class CategoryController {
   }
 
   async deleteCategory(req, res) {
+    const nombreUser = req.user.firstName
+    const apellidoUser = req.user.lastName
+    const emailUser = req.user.email
+    const rolUser = req.user.nameRole
     const { idCategory, idImagen } = req.params
     try {
       const mensajesql = await ModelCategory.deleteCategory(idCategory)
@@ -90,7 +104,11 @@ class CategoryController {
         return res.render("categoriasPanel", {
           categories: categories, mensaje: mensaje,
           valuesbody: '', error: [], categoriaMsg: '', categoriaDeleteMsg: '',
-          categoriaDuplicada: ''
+          categoriaDuplicada: '',
+          nombreUser,
+          apellidoUser,
+          emailUser,
+          rolUser
         })
       }
       await cloudinary.v2.uploader.destroy(idImagen)
@@ -102,11 +120,22 @@ class CategoryController {
 
   }
   async updateCategoryForm(req, res) {
+    const nombreUser = req.user.firstName
+    const apellidoUser = req.user.lastName
+    const emailUser = req.user.email
+    const rolUser = req.user.nameRole
     const { idCategory } = req.params
     const mensaje = req.query.mensaje
     try {
       const categoriasId = await ModelCategory.getCategoryId(idCategory)
-      return res.render("updateCategoria", { categoriasId: categoriasId, mensaje })
+      return res.render("updateCategoria", {
+        categoriasId: categoriasId,
+        mensaje,
+        nombreUser,
+        apellidoUser,
+        emailUser,
+        rolUser
+      })
     } catch (error) {
       console.log(error);
 

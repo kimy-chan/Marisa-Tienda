@@ -7,6 +7,10 @@ const ModelUser = require("../model/model.user")
 class AdministrationController {
 
     static async Administration(req, res) {
+        const nombreUser = req.user.firstName
+        const apellidoUser = req.user.lastName
+        const emailUser = req.user.email
+        const rolUser = req.user.nameRole
         //  const infoUser = req.user muestra la informacion de los roles
         const state = 0 //estado 0 para los pedidos
         const products = await ModelProduct.getAllProduct()
@@ -19,8 +23,11 @@ class AdministrationController {
             products: products.length, categories: categories.length,
             sales: sales.length,
             order: order.length,
-            user: user.length
-
+            user: user.length,
+            nombreUser,
+            emailUser,
+            apellidoUser,
+            rolUser
         })
 
     }
