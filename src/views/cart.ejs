@@ -47,7 +47,9 @@
                             </div>
                             <div class="product-details card_detail">
                                 <input value="<%= item.cantidad %>" type="number" class="form-control">
-                                <a href="/add-cart/<%=item.idProduct  %>"> <i class="ri-add-line"></i></a>
+                                <a href="/add-cart/<%=item.idProduct  %>" style="text-decoration: none;"> <i
+                                        class="ri-add-line"
+                                        style="font-weight: bold;color: black; font-size: 18px;"></i></a>
                             </div>
                             <div class="product-details card_detail">
                                 <div id="precioTotal" class="product-price">BS <%= item.price %>

@@ -1,12 +1,16 @@
 <%- include('./partials/headerPanel',{ nombreUser, emailUser, apellidoUser, rolUser}) %>
+
+    <div class="container text-center">
+        <h3>Actualizar Categoría</h3>
+    </div>
+    <br>
     <form id="categoriaForm" action="/update-category/<%= categoriasId[0].idCategory %>" method="post"
         enctype="multipart/form-data">
         <div class="container">
-            <h2>Actualizar Categoría</h2>
             <% if(mensaje){%>
                 <div class="alert alert-success" role="alert">
 
-                    Categoria actulizada
+                    Categoria actualizada
                 </div>
 
                 <%} %>

@@ -1,5 +1,7 @@
 <%- include('./partials/headerPanel',{ nombreUser, emailUser, apellidoUser, rolUser}) %>
-
+    <div class="container text-center">
+        <h3>Añadir Administrador</h3>
+    </div>
     <div class="container">
         <% if(alertMensaje==='existe' ){%>
             <div class="alert alert-danger" role="alert">
@@ -8,7 +10,7 @@
 
             <%}else if(alertMensaje==='registrado' ){%>
                 <div class="alert  alert-success" role="alert">
-                    <p>Usuario registrado</p>
+                    <p>Administrador registrado</p>
                 </div>
 
                 <%} %>

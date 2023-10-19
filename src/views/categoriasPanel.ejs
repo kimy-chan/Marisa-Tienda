@@ -1,5 +1,6 @@
 <%- include('./partials/headerPanel',{ nombreUser, emailUser, apellidoUser, rolUser}) %>
   <div class="container mt-5">
+
     <%if(mensaje) {%>
       <div class="alert alert-danger" role="alert">
         <%=mensaje%>
@@ -22,7 +23,8 @@
                   </div>
                   <% } %>
 
-                    <h2>Añadir Categoría</h2>
+
+                    <br>
                     <form id="categoriaForm" action="/add-category" method="post" enctype="multipart/form-data">
                       <div class="form-row">
                         <div class="form-group col-md-4">
@@ -47,7 +49,11 @@
                       </div>
                     </form>
 
-                    <h2>Tabla de Categorías</h2>
+                    <div class="container text-center">
+                      <h3>Categorias</h3>
+                    </div>
+                    <br>
+
                     <% if (categories.length> 0) { %>
                       <div class="table-responsive">
                         <table class="table table-striped table-bordered">

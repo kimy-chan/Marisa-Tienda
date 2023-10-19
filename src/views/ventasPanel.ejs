@@ -1,4 +1,10 @@
 <%- include('./partials/headerPanel',{ nombreUser, emailUser, apellidoUser, rolUser}) %>
+
+  <div class="container text-center">
+    <h3>Ventas</h3>
+  </div>
+  <br>
+  <br>
   <% if(mensaje){%>
     <div class="alert alert-success" role="alert">
       Venta elimada
@@ -62,7 +68,7 @@
 
 
             <%}else{%>
-              <span>Pedidos no disponibles</span>
+              <span>Ventas no disponibles</span>
 
               <% } %>
         </div>

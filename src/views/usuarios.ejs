@@ -1,17 +1,20 @@
 <%- include('./partials/headerPanel',{ nombreUser, emailUser, apellidoUser, rolUser}) %>
+    <div class="container text-center ">
+        <h3>Administradores</h3>
+    </div>
 
     <div class="container">
         <% if(mensaje){%>
             <div class="alert alert-success" role="alert">
-                Usuario elimando
+                Admin eliminado
             </div>
 
             <%} %>
                 <% if(rolUser==='admin' ){%>
                     <div class="d-flex justify-content-end mb-3">
                         <a href="/register" class="btn" style="background: #D09456; color: white;"><i
-                                class="fas fa-plus"></i> Agregar Nuevo
-                            Usuario</a>
+                                class="fas fa-plus"></i> Agregar
+                            Admin</a>
                     </div>
 
                     <%} %>
@@ -64,7 +67,7 @@
 
 
                             <%}else{%>
-                                <span>Usuarios no disponibles</span>
+                                <span>Administradores no disponibles</span>
 
                                 <% } %>
 
