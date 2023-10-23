@@ -3,6 +3,7 @@ const ModelCategory = require("../model/model.category")
 const ModelProduct = require("../model/model.products")
 const ModelSales = require("../model/model.sales")
 const ModelUser = require("../model/model.user")
+const ModelSuscripcion = require("../model/modelSuscripcion")
 
 class AdministrationController {
 
@@ -17,13 +18,14 @@ class AdministrationController {
         const categories = await ModelCategory.showCategory()
         const sales = await ModelSales.getSales()
         const order = await ModelPedido.getAllOrder({ state })
-
+        const suscriptores = await ModelSuscripcion.getSuscriptores()
         const user = await ModelUser.getUser()
         return res.render("adminstracionPanel", {
             products: products.length, categories: categories.length,
             sales: sales.length,
             order: order.length,
             user: user.length,
+            suscriptores: suscriptores.length,
             nombreUser,
             emailUser,
             apellidoUser,

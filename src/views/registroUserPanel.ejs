@@ -5,7 +5,7 @@
     <div class="container">
         <% if(alertMensaje==='existe' ){%>
             <div class="alert alert-danger" role="alert">
-                <p>El email ya existe</p>
+                <p>La cuenta ya se encuentra registrada</p>
             </div>
 
             <%}else if(alertMensaje==='registrado' ){%>
@@ -67,7 +67,15 @@
                                         <label for="contrasena">Contraseña</label>
                                         <input type="password" class="form-control" name="password"
                                             placeholder="Ingrese su contraseña">
+                                        <% errors.forEach(err=> { %>
+                                            <% if (err.path==='password' ) { %>
+                                                <span>
+                                                    <%= err.msg %>
+                                                </span>
+                                                <% } %>
+                                                    <% }); %>
                                     </div>
+
                                 </div>
 
                                 <div class="form-group">

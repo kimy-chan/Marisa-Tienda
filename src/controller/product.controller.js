@@ -6,6 +6,7 @@ const cloudinary = require("cloudinary")
 const path = require("path")
 const { promisify } = require('util')
 const fs = require("fs");
+const { error } = require("console");
 
 class ProductController {
 
@@ -60,7 +61,11 @@ class ProductController {
           {
             error: result.array(),
             values, categories: categories,
-            productoAgregado: false
+            productoAgregado: false,
+            nombreUser,
+            apellidoUser,
+            emailUser,
+            rolUser
 
           })
       }
@@ -201,6 +206,10 @@ class ProductController {
 
   }
   async updateProduct(req, res) { // actuliza el producto
+    const nombreUser = req.user.firstName
+    const apellidoUser = req.user.lastName
+    const emailUser = req.user.email
+    const rolUser = req.user.nameRole
     const val = validationResult(req)
     const categoriaP = []
     let pathImgCloud = []
@@ -210,6 +219,7 @@ class ProductController {
     try {
       const product = await ModelProduct.getAllProductId({ idProduct })
       if (!val.isEmpty()) {
+        console.log(val);
         const categories = await ModelCategory.showCategory()
         for (let categoria of categories) {
           if (categoria.idCategory == product.productos[0].idCategory) {
@@ -221,7 +231,7 @@ class ProductController {
         }
         return res.render("formProductPanelUpdate", {
           error: val.array(), product: product.productos, img: product.dataImgPro,
-          categories, categoriaP
+          categories, categoriaP, nombreUser, apellidoUser, emailUser, rolUser, mensaje: ''
         })
 
       }

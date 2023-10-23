@@ -14,29 +14,21 @@
     --fondo-rosa:#FBEBD2;
     --fondo-resaltador:#D09456;
 }
-.body
-{
-    background-color: var(--fondo-rosa);
-    width: 100%;
-}
-nav
-{
-    position: fixed;
-}
 
-.body .map iframe
+
+.map iframe
 {
     width: 100%;
     height: 450px;
     object-fit: cover;
     margin-top: 0px;
 }
-.body .caja-datos
+.caja-datos
 {
     background-color: var(--fondo-blanco);
     padding: 0px;
 }
-.body .caja-datos .datos
+.caja-datos .datos
 {
     display: flex;
     justify-content: space-between;
@@ -45,23 +37,23 @@ nav
     width: 100%;
     padding: 20px 30px;
 }
-.body .caja-datos .datos .mapgoogle
+.caja-datos .datos .mapgoogle
 {
     width: 20%;
     height: auto;
 }
-.body .caja-datos .datos .celular
+.caja-datos .datos .celular
 {
     width: 20%;
     height: auto;
 }
-.body .caja-datos .datos .gmail
+.caja-datos .datos .gmail
 {
     width: 20%;
     height: auto;
 }
 
-.body .caja-datos .datos i
+.caja-datos .datos i
 {
     font-size: 1.5em;
     color: var(--fondo-resaltador);
@@ -70,7 +62,7 @@ nav
 @media (max-width:740px)
 {
 
-.body .caja-datos .datos
+.caja-datos .datos
 {
     display: flex;
     justify-content:center;
@@ -80,34 +72,34 @@ nav
     width: 100%;
     padding: 20px 30px;
 }
-.body .caja-datos .datos .mapgoogle
+.caja-datos .datos .mapgoogle
 {
     width: 100%;
     height: auto;
 }
-.body .caja-datos .datos .celular
+.caja-datos .datos .celular
 {
     width: 100%;
     height: auto;
 }
-.body .caja-datos .datos .gmail
+.caja-datos .datos .gmail
 {
     width: 100%;
     height: auto;
 }
 }
-.body .caja-datos .datos div
+.caja-datos .datos div
 {
     width: 25%;
     display: flex;
 }
-.body .caja-datos .datos div div
+.caja-datos .datos div div
 {
     width: 100%;
     display: flex;
     flex-direction: column;
 }
-.body .caja-datos .datos h4
+.caja-datos .datos h4
 {
     color: var(--fondo-resaltador);
     font-weight: bold;
@@ -117,7 +109,7 @@ nav
     height: 60px;
 }
 
-.body .caja-boletin
+.caja-boletin
 {
     width: 100%;
     display: flex;
@@ -125,7 +117,7 @@ nav
     align-items: center;
     flex-direction:column;
 }
-.body .caja-boletin .titulo
+.caja-boletin .titulo
 {
     width: 100%;
     color: var(--fondo-resaltador);
@@ -133,19 +125,19 @@ nav
     justify-content: center;
     align-items: center;
 }
-.body .caja-boletin .titulo h4
+.caja-boletin .titulo h4
 {
     font-weight: bold;
     font-size: 1.5em;
 }
-.body .caja-boletin form
+.caja-boletin form
 {
     background-color: var(--fondo-blanco);
     width: 90%;
     height: 400px;
     padding: 26px 26px;
 }
-.body .caja-boletin form label
+.caja-boletin form label
 {
     color: var(--fondo-resaltador);
     font-weight: bold;

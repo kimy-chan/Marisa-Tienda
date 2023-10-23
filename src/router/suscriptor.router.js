@@ -10,5 +10,7 @@ const router = express.Router();
 router.post("/suscribirse", [suscriptorValidator()], SuscriptorController.addSuscriptor)
 router.get("/suscriptores", [VerifyCookie, rolesUser], SuscriptorController.getSuscriptores)
 
+router.get("/delete-suscriptor/:idPerson", [VerifyCookie, rolesUser], SuscriptorController.deleteSuscriptorPanel)
+
 
 module.exports = router;

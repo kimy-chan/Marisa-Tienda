@@ -47,6 +47,24 @@ class ModelSuscripcion {
 
     }
 
+    static async deleteSuscriptor({ idPerson }) {
+        let conn
+        try {
+            conn = await getConecction()
+            const deleteSuscriptor = "DELETE FROM Person where idPerson=?"
+            const resultDelete = await conn.query(deleteSuscriptor, [idPerson])
+            return resultDelete
+        } catch (error) {
+            return error
+
+        } finally {
+            if (conn) {
+                conn.release()
+            }
+        }
+
+    }
+
 }
 
 module.exports = ModelSuscripcion

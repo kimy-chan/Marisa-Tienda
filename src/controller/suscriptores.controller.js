@@ -27,11 +27,13 @@ class SuscriptorController {
         const apellidoUser = req.user.lastName
         const emailUser = req.user.email
         const rolUser = req.user.nameRole
+        const mensaje = req.query.mensaje
 
         try {
             const suscriptores = await ModelSuscripcion.getSuscriptores()
+            console.log(suscriptores);
             return res.render("suscriptoresPanel", {
-                mensaje: '',
+                mensaje: mensaje,
                 user: suscriptores,
                 nombreUser,
                 apellidoUser,
@@ -40,8 +42,26 @@ class SuscriptorController {
             })
 
         } catch (error) {
+            console.log(error);
 
         }
+    }
+
+
+    static async deleteSuscriptorPanel(req, res) {//borrar suscriptores
+        const { idPerson } = req.params
+        try {
+            console.log(idPerson);
+            const [resultDelete] = await ModelSuscripcion.deleteSuscriptor({ idPerson })
+            if (resultDelete.affectedRows === 1) {
+                return res.redirect("/suscriptores?mensaje=success")
+            }
+            return res.redirect("/suscriptores?mensaje=error")
+        } catch (error) {
+            console.log(error);
+
+        }
+
     }
 
 }

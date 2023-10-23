@@ -14,11 +14,11 @@ class PedidosController {
       const categories = await ModelCategory.showCategory();
       if (req.session.idProduct) {
         let product = await CartAux.getProdcut(req.session.idProduct)
-        console.log(product.productUnique);
         return res.render("pedidoForm", { products: product.productUnique, val: '', totalPrice: product.totalPrice, error: error, categories: categories })
       }
-      return res.send("productos vasios")
+      return res.redirect("/cart")
     } catch (error) {
+      console.log(error);
 
     }
 
@@ -39,7 +39,7 @@ class PedidosController {
 
     const lastName = apellidos.split(' ')
     const numeroTienda = process.env.TELEFONO_TIENDA
-    const urlWhatsApp = `https://api.whatsapp.com/send?phone=${numeroTienda}&text=Ponte en contacto directo con nosotros?`
+
     const value = validationResult(req)
     if (!value.isEmpty()) {
       const error = value.array()
@@ -53,19 +53,28 @@ class PedidosController {
     try {
       if (req.session.idProduct) {
         let product = await CartAux.getProdcut(req.session.idProduct)
-        console.log(product);
         const result = await ModelPedido.Pedido({ nombre, lastName, celular, Ciudad, direccion, product, orderP })
         if (result.sqlState == '45000') {
-          return res.send("catidad execiva")
+          return res.redirect("/cart")
         } else {
-          return res.redirect(urlWhatsApp);
+          let urlWhatsApp = `https://api.whatsapp.com/send?phone=${numeroTienda}&text=Hola soy
+          ${nombre}\n mi celular es ${celular}\n ciudad ${Ciudad},\n direccion ${direccion} \n realizo el pedido del los productos:
+           \n Total:${product.totalPrice} \n`
+
+          for (let produc of product.productUnique) {
+            console.log(produc);
+            urlWhatsApp += `Producto: ${produc.nameProduct}\n Talla: ${produc.size} \n Cantidad: ${produc.cantidad} \n Precio:${produc.price}`;
+          }
+
+          urlWhatsApp = urlWhatsApp.replace("%0A", "\n")
+          return res.redirect(encodeURI(urlWhatsApp));
 
 
         }
 
       }
 
-      return res.send("nada ")
+      return res.redirect("/cart")
     } catch (error) {
       console.log(error);
       console.log(error);
