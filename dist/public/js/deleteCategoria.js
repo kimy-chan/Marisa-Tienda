@@ -1,0 +1,1 @@
+function deleteCategory(o,t,n){Swal.fire({title:"¿Borrar Categoria?",text:t,icon:"warning",showCancelButton:!0,confirmButtonColor:"#3085d6",cancelButtonColor:"#d33",confirmButtonText:"Confirmar",cancelButtonText:"Cancelar"}).then((t=>{t.isConfirmed&&(window.location=`/delete-category/${o}/${n}`)})).catch((o=>{console.log(o)}))}

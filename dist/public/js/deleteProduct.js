@@ -1,0 +1,1 @@
+function deleteProduct(o,t){Swal.fire({title:"¿Borrar Producto?",text:t,icon:"warning",showCancelButton:!0,confirmButtonColor:"#3085d6",cancelButtonColor:"#d33",confirmButtonText:"Confirmar",cancelButtonText:"Cancelar"}).then((t=>{t.isConfirmed&&(window.location=`/delete-product/${o}`)})).catch((o=>{console.log(o)}))}

@@ -1,0 +1,1 @@
+function deleteUser(o,n){console.log(o),Swal.fire({title:"¿Borrar Usuario?",text:n,icon:"warning",showCancelButton:!0,confirmButtonColor:"#3085d6",cancelButtonColor:"#d33",confirmButtonText:"Confirmar",cancelButtonText:"Cancelar"}).then((n=>{n.isConfirmed&&(window.location=`/register-delete/${o}`)})).catch((o=>{console.log(o)}))}

@@ -1,0 +1,1 @@
+function deleteSuscriptor(o,t){console.log(o),Swal.fire({title:"¿Borrar suscriptor?",text:t,icon:"warning",showCancelButton:!0,confirmButtonColor:"#3085d6",cancelButtonColor:"#d33",confirmButtonText:"Confirmar",cancelButtonText:"Cancelar"}).then((t=>{t.isConfirmed&&(window.location=`/delete-suscriptor/${o}`)})).catch((o=>{console.log(o)}))}
