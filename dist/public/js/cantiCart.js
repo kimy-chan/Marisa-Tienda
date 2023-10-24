@@ -1,1 +1,0 @@
-document.addEventListener("DOMContentLoaded",(()=>{var t=document.getElementById("cantidadCarrito");async function a(){try{a=(await axios.get("/cant-cart")).data.cantidaCart,t.textContent=a.length}catch(t){console.log(t)}var a}console.log(t),a(),setInterval(a,2e3)}));

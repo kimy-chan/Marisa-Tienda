@@ -123,6 +123,7 @@ class ProductController {
     try {
       let result = [];
       const product = await ModelProduct.getAllProduct()
+
       console.log(product);
       return res.render("productPanel", {
         error: result, values: '',

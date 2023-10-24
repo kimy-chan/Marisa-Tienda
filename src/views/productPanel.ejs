@@ -24,7 +24,7 @@
     </div>
     <div class="table-responsive">
       <% if (product.length> 0) {%>
-        <table id="productosTable" class="table table-striped table-bordered">
+        <table id="productosT" class="table table-striped table-bordered">
           <thead>
             <tr>
               <th>Nombre</th>
@@ -32,7 +32,9 @@
               <th>Precio</th>
               <th>Color</th>
               <th>Talla</th>
-              <th>Des</th>
+              <th>Categoria</th>
+              <th>Destacado</th>
+
               <th>Imagen</th>
               <th>Acciones</th>
             </tr>
@@ -57,11 +59,15 @@
                   <%=item.size %>
                 </td>
                 <td>
+                  <%= item.nameCategory %>
+                </td>
+                <td>
                   <% if(item.outstanding===0){%>
                     <i class="fas fa-times"></i>
                     <%}else{%><i class="fas fa-check"></i>
                       <%} %>
                 </td>
+
                 <td><img src="<%=item.image%>" width="50px" alt=""></td>
                 <td><a href="/update-product/<%=item.idProduct %>"><i class="fas fa-edit"
                       style="color: #D09456;"></i></a>

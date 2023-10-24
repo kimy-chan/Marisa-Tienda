@@ -12,7 +12,7 @@
       <div class="form-row forms">
         <div class="form-group col-md-6 form">
           <label for="nombre">Nombre:</label>
-          <input type="text" class="form-control" id="nombre" name="nombre" value="<%= val.nombre %>">
+          <input type="text" class="form-control" id="nombre" name="nombre" value="<%= val.nombre %>" required>
           <% error.forEach(err=> { %>
             <% if (err.path==='nombre' ) { %>
               <span>
@@ -23,7 +23,7 @@
         </div>
         <div class="form-group col-md-6 form">
           <label for="apellidos">Apellidos:</label>
-          <input type="text" class="form-control" id="apellidos" name="apellidos" value="<%= val.apellidos %>">
+          <input type="text" class="form-control" id="apellidos" name="apellidos" value="<%= val.apellidos %>" required>
           <% error.forEach(err=> { %>
             <% if (err.path==='apellidos' ) { %>
               <span>
@@ -36,7 +36,7 @@
       <div class="form-row forms">
         <div class="form-group col-md-6 form">
           <label for="celular">Celular:</label>
-          <input type="text" class="form-control" name="celular" value="<%= val.celular %>">
+          <input type="text" class="form-control" name="celular" value="<%= val.celular %>" required>
           <% error.forEach(err=> { %>
             <% if (err.path==='celular' ) { %>
               <span>
@@ -47,7 +47,7 @@
         </div>
         <div class="form-group col-md-6 form">
           <label for="apellidos">Ciudad:</label>
-          <input type="text" class="form-control" name="Ciudad" value="<%= val.Ciudad %>">
+          <input type="text" class="form-control" name="Ciudad" value="<%= val.Ciudad %>" required>
           <% error.forEach(err=> { %>
             <% if (err.path==='Ciudad' ) { %>
               <span>
@@ -60,7 +60,7 @@
       <div class="form-group forms">
         <label for="direccion" class="form">Dirección N°:</label>
         <input type="text" class="form-control" id="direccion" name="direccion" value="<%= val.direccion%>"
-          placeholder="Ejemplo german bush N° 8">
+          placeholder="Ejemplo german bush N° 8" required>
         <% error.forEach(err=> { %>
           <% if (err.path==='direccion' ) { %>
             <span class="form">

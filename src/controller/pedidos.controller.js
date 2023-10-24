@@ -90,7 +90,7 @@ class PedidosController {
     const rolUser = req.user.nameRole
     const mensaje = req.query.mensaje
     const state = 0
-    console.log(mensaje);
+
     try {
       if (mensaje) {
         const order = await ModelPedido.getAllOrder({ state })
@@ -105,7 +105,7 @@ class PedidosController {
         })
       }
       const order = await ModelPedido.getAllOrder({ state })
-      console.log(order);
+
       return res.render("pedidoPanel", {
         pedido: order,
         mensaje: '',

@@ -26,7 +26,7 @@
             <div class="mb-3 col-12 col-md-6">
                 <label for="email" class="form-label"><i class="ri-mail-fill"></i></label>
                 <p> </p>
-                <input type="email" class="form-control" name="email" placeholder="Ingresa tu email">
+                <input type="email" class="form-control" name="email" placeholder="Ingresa tu email" required>
             </div>
             <% errors.forEach(err=> { %>
                 <% if (err.path==='email' ) { %>
@@ -39,7 +39,7 @@
                             <div class="mb-3 col-12 col-md-6">
                                 <label for="password" class="form-label"><i class="ri-lock-2-fill"></i></label>
                                 <input type="password" class="form-control" name="password"
-                                    placeholder="Ingresa tu contraseña">
+                                    placeholder="Ingresa tu contraseña" required>
                             </div>
                             <% errors.forEach(err=> { %>
                                 <% if (err.path==='password' ) { %>
