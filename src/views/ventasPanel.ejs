@@ -5,12 +5,12 @@
   </div>
   <br>
   <br>
+
   <% if(mensaje){%>
     <div class="alert alert-success" role="alert">
       Venta eliminada
     </div>
     <% } %>
-      <button id="generarPDF">Generar PDF Personalizado</button>
       <div class="container">
         <div class="table-responsive">
           <% if (venta.length> 0) { %>
@@ -20,6 +20,7 @@
                   <th>Nombres</th>
                   <th>Producto</th>
                   <th>Talla</th>
+                  <th>Color</th>
                   <th>Cantidad</th>
                   <th>Total</th>
                   <th>Fecha y hora de venta</th>
@@ -41,6 +42,9 @@
                       <%= item.size %>
                     </td>
                     <td>
+                      <%=item.color %>
+                    </td>
+                    <td>
                       <%= item.amount %>
                     </td>
                     <td>
@@ -60,13 +64,13 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <th></th>
-                  <th>hola/th>
-                  <th>bb</th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
+                  <th id="footerColumn1"></th>
+                  <th id="footerColumn2"></th>
+                  <th id="footerColumn3"></th>
+                  <th id="footerColumn4"></th>
+                  <th id="footerColumn5"></th>
+                  <th id="footerColumn6"></th>
+
                 </tr>
               </tfoot>
             </table>
@@ -102,7 +106,6 @@
 
 
       <script>
-
         var tablaVentas = $('#tablaVentas').DataTable({
           responsive: true,
           dom: 'Bfrtip',
@@ -111,44 +114,44 @@
             {
               extend: 'excelHtml5',
               exportOptions: {
-                columns: [0, 1, 2, 3, 4, 5]
+                columns: [0, 1, 2, 3, 4, 5, 6]
               }
             },
             {
               extend: 'pdfHtml5',
               exportOptions: {
-                columns: [0, 1, 2, 3, 4, 5]
+                columns: [0, 1, 2, 3, 4, 5, 6]
+              },
+              customize: function (doc) {
+                var columna4 = $('#footerColumn5').text();
+                var columna5 = $('#footerColumn6').text();
+                var filaPieTabla = ['', '', '', '', '', columna4, columna5];
+                doc.content[1].table.body.push(filaPieTabla);
               }
             },
             'colvis',
-
           ],
 
 
 
           "footerCallback": function (row, data, start, end, display) {
             var api = this.api();
-            var totalColumna3 = api.column(3, { page: 'current' }).data().reduce(function (a, b) {
+            var totalColumna3 = api.column(4, { page: 'current' }).data().reduce(function (a, b) {
               return parseFloat(a) + parseFloat(b);
             }, 0);
-            var totalColumna4 = api.column(4, { page: 'current' }).data().reduce(function (a, b) {
+            var totalColumna4 = api.column(5, { page: 'current' }).data().reduce(function (a, b) {
               return parseFloat(a) + parseFloat(b);
             }, 0);
             var total = totalColumna4;
             var formattedTotal = "BS." + total.toFixed(2);
-            $(api.column(4).footer()).html('Total: ' + formattedTotal);
-            $(api.column(3).footer()).html('Ventas: ' + totalColumna3);
+            $(api.column(5).footer()).html('Total: ' + formattedTotal);
+            $(api.column(4).footer()).html('Ventas: ' + totalColumna3);
           },
         });
 
-        $(document).ready(function () {
-          $('#generarPDF').on('click', function () {
-            const doc = new jsPDF();
-            const tableContent = $('#tablaVentas').html();
-            doc.fromHTML(tableContent, 15, 15);
-            doc.save('tabla_personalizada.pdf');
-          })
-        })
+        $('#generarPDF').on('click', function () {
+          tablaVentas.button(1).trigger(); // Dispara la exportación a PDF
+        });
 
       </script>
       </body>
