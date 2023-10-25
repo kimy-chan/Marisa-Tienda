@@ -1,5 +1,7 @@
 const { validationResult } = require("express-validator");
 const ModelSuscripcion = require("../model/modelSuscripcion")
+const emailsend = require("../helpers/email.helper");
+
 
 class SuscriptorController {
 
@@ -59,6 +61,28 @@ class SuscriptorController {
                 return res.redirect("/suscriptores?mensaje=success")
             }
             return res.redirect("/suscriptores?mensaje=error")
+        } catch (error) {
+            console.log(error);
+
+        }
+
+    }
+
+
+    static async sendEmail(req, res) {
+        const { email, data } = req.body
+        const mailOptions = {
+            from: process.envEMAILEMPRESA,
+            to: email,
+            subject: 'Novedades',
+            text: data
+        };
+
+        try {
+            const info = await emailsend.sendMail(mailOptions);
+
+            return res.send(info.response)
+
         } catch (error) {
             console.log(error);
 

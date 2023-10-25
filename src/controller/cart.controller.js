@@ -1,5 +1,5 @@
 
-const CartAux = require("./auxiliar.controler")
+const CartAux = require("../helpers/helperAuxiliarCart")
 const ModelCategory = require("../model/model.category")
 
 class CartController {

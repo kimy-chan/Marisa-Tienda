@@ -1,5 +1,5 @@
 const ModelPedido = require("../model/model.Pedidos");
-const CartAux = require("./auxiliar.controler");
+const CartAux = require("../helpers/helperAuxiliarCart");
 const { validationResult } = require("express-validator");
 const ModelCategory = require("../model/model.category")
 
@@ -8,7 +8,6 @@ class PedidosController {
 
   static async pedido(req, res) {
     const title = "Realizar Pedido"
-
     const error = []
     try {
       const categories = await ModelCategory.showCategory();

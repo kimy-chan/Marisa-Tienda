@@ -105,11 +105,12 @@ class ProductController {
 
 
   async descriptionProduct(req, res) {
+    const title = "Descripcion"
     const { idProduct } = req.params
     try {
       const categories = await ModelCategory.showCategory()
       const product = await ModelProduct.descriptionProduct({ idProduct })
-      return res.render("descriptionProduct", { product: product, categories: categories })
+      return res.render("descriptionProduct", { product: product, categories: categories, title })
     } catch (error) {
       console.log(error);
 
@@ -125,6 +126,7 @@ class ProductController {
     const emailUser = req.user.email
     const rolUser = req.user.nameRole
     const mensaje = req.query.mensaje === 'true';
+    const mensajeDelete = req.query.mensaje;
     try {
       let result = [];
       const product = await ModelProduct.getAllProduct()
@@ -138,7 +140,8 @@ class ProductController {
         apellidoUser,
         emailUser,
         rolUser,
-        title
+        title,
+        mensajeDelete
       });
 
     } catch (error) {
@@ -161,7 +164,7 @@ class ProductController {
           await cloudinary.v2.uploader.destroy(data.imagenId)
         }
       }
-      return res.redirect("/products-panel")
+      return res.redirect("/products-panel?mensaje=delete")
     } catch (error) {
       console.log(error);
 

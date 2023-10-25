@@ -78,7 +78,7 @@ CREATE TABLE Category (
 CREATE TABLE Product (
   idProduct INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   nameProduct VARCHAR(100) NOT NULL,
-  description VARCHAR(255) NOT NULL,
+  description LONGTEXT NOT NULL,
   amount INT CHECK (amount >= 0),
   price DECIMAL(10, 2) NOT NULL,
   date DATETIME NOT NULL,

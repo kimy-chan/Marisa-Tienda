@@ -3,7 +3,7 @@ function productValidator() {
     return [
         body("nombre").matches(/^[a-zA-Z\s]+$/),
         body("descripcion").custom(value => {
-            if (value && !/^[a-zA-Z0-9\s.,]+$/.test(value)) {
+            if (value && !/^[a-zA-Z0-9\s.,áéíóúÁÉÍÓÚñÑ]+$/.test(value)) {
                 throw new Error('Texto inválido: solo se permiten letras, números, puntos, comas y espacios');
             }
             return true;
