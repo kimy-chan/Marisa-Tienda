@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 class UserController {
 
     async registerUser(req, res) {
+        const title = "Añadir administradores"
         const nombreUser = req.user.firstName
         const apellidoUser = req.user.lastName
         const emailUser = req.user.email
@@ -21,7 +22,8 @@ class UserController {
                 nombreUser,
                 apellidoUser,
                 emailUser,
-                rolUser
+                rolUser,
+                title
             })
         }
         try {
@@ -33,7 +35,8 @@ class UserController {
                     nombreUser,
                     apellidoUser,
                     emailUser,
-                    rolUser
+                    rolUser,
+                    title
                 })
             }
             const alertMensaje = "registrado"
@@ -42,7 +45,8 @@ class UserController {
                 nombreUser,
                 apellidoUser,
                 emailUser,
-                rolUser
+                rolUser,
+                title
             })
 
         } catch (error) {
@@ -55,6 +59,7 @@ class UserController {
     }
 
     async getUserPanel(req, res) {//trae los usuarios para e panel
+        const title = "Administradores"
         const nombreUser = req.user.firstName
         const apellidoUser = req.user.lastName
         const emailUser = req.user.email
@@ -69,7 +74,8 @@ class UserController {
                 nombreUser,
                 apellidoUser,
                 emailUser,
-                rolUser
+                rolUser,
+                title
             })
         } catch (error) {
 
@@ -77,6 +83,7 @@ class UserController {
 
     }
     getUserPanelForm(req, res) {//panel para registrar usuarios formulario
+        const title = "Añadir Administradores"
         const nombreUser = req.user.firstName
         const apellidoUser = req.user.lastName
         const emailUser = req.user.email
@@ -87,6 +94,7 @@ class UserController {
             apellidoUser,
             emailUser,
             rolUser,
+            title
 
         })
     }

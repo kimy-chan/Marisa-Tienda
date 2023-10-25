@@ -4,9 +4,9 @@ const ModelProduct = require("../model/model.products")
 const ModelCategory = require("../model/model.category")
 const cloudinary = require("cloudinary")
 const path = require("path")
-const { promisify } = require('util')
+
 const fs = require("fs");
-const { error } = require("console");
+
 
 class ProductController {
 
@@ -22,6 +22,7 @@ class ProductController {
 
   }
   async formProduct(req, res) {
+    const title = 'Añadir producto'
     const nombreUser = req.user.firstName
     const apellidoUser = req.user.lastName
     const emailUser = req.user.email
@@ -38,12 +39,14 @@ class ProductController {
       nombreUser,
       apellidoUser,
       emailUser,
-      rolUser
+      rolUser,
+      title
     })
 
   }
 
   async addProduct(req, res) {
+    const title = 'Añadir producto'
     const nombreUser = req.user.firstName
     const apellidoUser = req.user.lastName
     const emailUser = req.user.email
@@ -65,7 +68,8 @@ class ProductController {
             nombreUser,
             apellidoUser,
             emailUser,
-            rolUser
+            rolUser,
+            title
 
           })
       }
@@ -115,6 +119,7 @@ class ProductController {
   //-------panel
 
   async getProductAllPanel(req, res) {
+    const title = 'Productos'
     const nombreUser = req.user.firstName
     const apellidoUser = req.user.lastName
     const emailUser = req.user.email
@@ -132,7 +137,8 @@ class ProductController {
         nombreUser,
         apellidoUser,
         emailUser,
-        rolUser
+        rolUser,
+        title
       });
 
     } catch (error) {
@@ -165,6 +171,7 @@ class ProductController {
   }
 
   async formUpdateProdcut(req, res) {
+    const title = 'Actualizar producto'
     const nombreUser = req.user.firstName
     const apellidoUser = req.user.lastName
     const emailUser = req.user.email
@@ -196,7 +203,8 @@ class ProductController {
         nombreUser,
         apellidoUser,
         emailUser,
-        rolUser
+        rolUser,
+        title
 
 
       })
@@ -207,6 +215,7 @@ class ProductController {
 
   }
   async updateProduct(req, res) { // actuliza el producto
+    const title = 'Actualizar producto'
     const nombreUser = req.user.firstName
     const apellidoUser = req.user.lastName
     const emailUser = req.user.email
@@ -232,7 +241,8 @@ class ProductController {
         }
         return res.render("formProductPanelUpdate", {
           error: val.array(), product: product.productos, img: product.dataImgPro,
-          categories, categoriaP, nombreUser, apellidoUser, emailUser, rolUser, mensaje: ''
+          categories, categoriaP, nombreUser, apellidoUser, emailUser, rolUser, mensaje: '',
+          title
         })
 
       }

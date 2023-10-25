@@ -23,6 +23,7 @@ class SuscriptorController {
     }
 
     static async getSuscriptores(req, res) {
+        const title = 'Suscriptores'
         const nombreUser = req.user.firstName
         const apellidoUser = req.user.lastName
         const emailUser = req.user.email
@@ -38,7 +39,8 @@ class SuscriptorController {
                 nombreUser,
                 apellidoUser,
                 emailUser,
-                rolUser
+                rolUser,
+                title
             })
 
         } catch (error) {

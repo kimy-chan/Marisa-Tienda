@@ -43,13 +43,13 @@
 <script>
   $(document).ready(function () {
     $('#productosT').DataTable({
-      dom: 'Bfrtip',
+      dom: 'lBfrtip',
       buttons: [
 
         {
           extend: 'excelHtml5',
           exportOptions: {
-            columns: ':visible'
+            columns: [0, 1, 2, 3, 4, 5]
           }
         },
         {

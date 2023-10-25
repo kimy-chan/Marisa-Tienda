@@ -2,12 +2,14 @@ const ModelCategory = require("../model/model.category");
 const ProductModel = require("../model/model.products");
 
 class IndexController {
+
   async index(req, res) {
+    const title = "Inicio"
     try {
       const product = await ProductModel.productDestacado();
       const categories = await ModelCategory.showCategory();
 
-      return res.render("index", { product: product, categories: categories });
+      return res.render("index", { product: product, categories: categories, title });
     } catch (error) {
       console.log(error);
     }
@@ -22,7 +24,9 @@ class IndexController {
     }
     return res.json({ cantidaCart: cantidaCart });
   }
+
   portadaIndex(req, res) {
+
     return res.render("portada")
   }
 }

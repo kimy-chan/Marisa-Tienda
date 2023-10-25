@@ -2,19 +2,19 @@ const ModelPedido = require("../model/model.Pedidos");
 const CartAux = require("./auxiliar.controler");
 const { validationResult } = require("express-validator");
 const ModelCategory = require("../model/model.category")
-const e = require("express");
-
 
 class PedidosController {
 
 
   static async pedido(req, res) {
+    const title = "Realizar Pedido"
+
     const error = []
     try {
       const categories = await ModelCategory.showCategory();
       if (req.session.idProduct) {
         let product = await CartAux.getProdcut(req.session.idProduct)
-        return res.render("pedidoForm", { products: product.productUnique, val: '', totalPrice: product.totalPrice, error: error, categories: categories })
+        return res.render("pedidoForm", { title, products: product.productUnique, val: '', totalPrice: product.totalPrice, error: error, categories: categories })
       }
       return res.redirect("/cart")
     } catch (error) {
@@ -27,6 +27,7 @@ class PedidosController {
 
 
   static async pedidoFinal(req, res) {
+    const title = "Realizar Pedido"
     const { nombre, apellidos, celular, Ciudad, direccion } = req.body
     const recoger = req.body.recoger === 'on' ? 0 : 0;
     const entrega = req.body.entrega === 'on' ? 1 : 0;
@@ -47,7 +48,7 @@ class PedidosController {
       if (req.session.idProduct) {
         const categories = await ModelCategory.showCategory();
         let product = await CartAux.getProdcut(req.session.idProduct)
-        return res.render("pedidoForm", { products: product.productUnique, val: val, totalPrice: product.totalPrice, error, categories: categories })
+        return res.render("pedidoForm", { title, products: product.productUnique, val: val, totalPrice: product.totalPrice, error, categories: categories })
       }
     }
     try {
@@ -62,7 +63,6 @@ class PedidosController {
            \n Total:${product.totalPrice} \n`
 
           for (let produc of product.productUnique) {
-            console.log(produc);
             urlWhatsApp += `Producto: ${produc.nameProduct}\n Talla: ${produc.size} \n Cantidad: ${produc.cantidad} \n Precio:${produc.price}`;
           }
 
@@ -74,9 +74,8 @@ class PedidosController {
 
       }
 
-      return res.redirect("/cart")
+      return res.redirect("/cart", { title: "Carrito" })
     } catch (error) {
-      console.log(error);
       console.log(error);
 
     }
@@ -84,6 +83,7 @@ class PedidosController {
   }
 
   static async getAllOrder(req, res) {
+    const title = "Pedidos"
     const nombreUser = req.user.firstName
     const apellidoUser = req.user.lastName
     const emailUser = req.user.email
@@ -100,7 +100,8 @@ class PedidosController {
           nombreUser,
           apellidoUser,
           emailUser,
-          rolUser
+          rolUser,
+          title
 
         })
       }
@@ -112,7 +113,8 @@ class PedidosController {
         nombreUser,
         apellidoUser,
         emailUser,
-        rolUser
+        rolUser,
+        title
       })
     } catch (error) {
       console.log(error);

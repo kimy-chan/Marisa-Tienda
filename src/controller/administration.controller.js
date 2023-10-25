@@ -8,6 +8,7 @@ const ModelSuscripcion = require("../model/modelSuscripcion")
 class AdministrationController {
 
     static async Administration(req, res) {
+        const title = "Dashboard"
         const nombreUser = req.user.firstName
         const apellidoUser = req.user.lastName
         const emailUser = req.user.email
@@ -29,7 +30,8 @@ class AdministrationController {
             nombreUser,
             emailUser,
             apellidoUser,
-            rolUser
+            rolUser,
+            title
         })
 
     }

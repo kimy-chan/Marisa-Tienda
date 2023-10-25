@@ -17,7 +17,7 @@ class CartController {
 
 
     async cart(req, res) {
-
+        const title = "Carrito"
         let product
         let cantidadMaximaNameProduct
         const maximoProduct = []
@@ -34,10 +34,10 @@ class CartController {
                         maximoProduct.push(cantidadMaximaNameProduct)
                     }
                 }
-                return res.render("cart", { product: product.productUnique, totalPrice: product.totalPrice, categories: categories, maximoProduct })
+                return res.render("cart", { product: product.productUnique, totalPrice: product.totalPrice, title, categories: categories, maximoProduct })
 
             }
-            return res.render("cart", { product: '', totalPrice: '', categories: categories })
+            return res.render("cart", { product: '', totalPrice: '', categories: categories, title })
 
 
         } catch (error) {

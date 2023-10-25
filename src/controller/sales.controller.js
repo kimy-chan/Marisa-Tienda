@@ -7,6 +7,7 @@ class SalesController {
 
 
   static async getSales(req, res) {
+    const title = "Ventas"
     const mensaje = req.query.mensaje
     const nombreUser = req.user.firstName
     const apellidoUser = req.user.lastName
@@ -22,7 +23,8 @@ class SalesController {
         nombreUser,
         apellidoUser,
         emailUser,
-        rolUser
+        rolUser,
+        title
       })
     } catch (error) {
       console.log(error);
@@ -32,7 +34,6 @@ class SalesController {
   }
   static async deleteSales(req, res) {
     const { idSales } = req.params
-
     try {
       await ModelSales.deleteSales({ idSales })
       return res.redirect("/ventas?mensaje=elimanada")

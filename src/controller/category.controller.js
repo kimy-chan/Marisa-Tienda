@@ -7,6 +7,9 @@ const { validationResult } = require('express-validator');
 
 
 class CategoryController {
+
+
+
   constructor() {
     cloudinary.config({
       cloud_name: process.env.CLOUD_NAME,
@@ -19,13 +22,15 @@ class CategoryController {
 
 
   async showProduct(req, res) {// muestra las categorias en las paginas del clientes
+    const title = "Productos"
     try {
       let { nameProduct } = req.params;
       const product = await ModelProduct.getProductCategory({ nameProduct });
       return res.render("category", {
         product: product.product,
         category: product.category,
-        categories: product.category
+        categories: product.category,
+        title
       });
     } catch (error) {
       console.log(error);
@@ -33,6 +38,7 @@ class CategoryController {
   }
 
   async categoryPanel(req, res) {
+    const title = 'Categorias'
     const nombreUser = req.user.firstName
     const apellidoUser = req.user.lastName
     const emailUser = req.user.email
@@ -49,7 +55,9 @@ class CategoryController {
         nombreUser,
         apellidoUser,
         emailUser,
-        rolUser
+        rolUser,
+        title
+
 
 
       })
@@ -60,6 +68,7 @@ class CategoryController {
   }
 
   async addCategory(req, res) {
+    const title = 'Categorias'
     const result = validationResult(req)
     const { categoria } = req.body
     const image = req.file
@@ -70,7 +79,8 @@ class CategoryController {
         return res.render("categoriasPanel", {
           categories: categories, mensaje: '',
           valuesbody, error: result.array(), categoriaMsg: '', categoriaDeleteMsg: '',
-          categoriaDuplicada: ''
+          categoriaDuplicada: '',
+          title
         })
       }
 
@@ -91,6 +101,7 @@ class CategoryController {
   }
 
   async deleteCategory(req, res) {
+    const title = 'Categorias'
     const nombreUser = req.user.firstName
     const apellidoUser = req.user.lastName
     const emailUser = req.user.email
@@ -108,7 +119,8 @@ class CategoryController {
           nombreUser,
           apellidoUser,
           emailUser,
-          rolUser
+          rolUser,
+          title
         })
       }
       await cloudinary.v2.uploader.destroy(idImagen)
@@ -120,6 +132,7 @@ class CategoryController {
 
   }
   async updateCategoryForm(req, res) {
+    const title = 'Actulizar categoria'
     const nombreUser = req.user.firstName
     const apellidoUser = req.user.lastName
     const emailUser = req.user.email
@@ -134,7 +147,8 @@ class CategoryController {
         nombreUser,
         apellidoUser,
         emailUser,
-        rolUser
+        rolUser,
+        title
       })
     } catch (error) {
       console.log(error);
@@ -174,11 +188,7 @@ class CategoryController {
     } catch (error) {
       console.log(error);
 
-    } finally {
-
-
     }
-
 
   }
 
