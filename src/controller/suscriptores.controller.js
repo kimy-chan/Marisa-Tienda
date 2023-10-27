@@ -25,6 +25,7 @@ class SuscriptorController {
     }
 
     static async getSuscriptores(req, res) {
+        const mensage = req.query.mensage
         const title = 'Suscriptores'
         const nombreUser = req.user.firstName
         const apellidoUser = req.user.lastName
@@ -42,7 +43,8 @@ class SuscriptorController {
                 apellidoUser,
                 emailUser,
                 rolUser,
-                title
+                title,
+                mensage
             })
 
         } catch (error) {
@@ -80,8 +82,12 @@ class SuscriptorController {
 
         try {
             const info = await emailsend.sendMail(mailOptions);
+            if (info.response) {
+                return res.redirect("/suscriptores?mensage=success")
 
-            return res.send(info.response)
+            }
+            return res.redirect("/suscriptores")
+
 
         } catch (error) {
             console.log(error);
