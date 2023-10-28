@@ -85,7 +85,7 @@
                       <%= item.nameProduct %>
                     </h5>
                     <p class="card-text">Cantidad: <%= item.cantidad %>
-                        <p class="card-text">Precio: <%= parseFloat(item.price) %>
+                        <p class="card-text">Precio: <%= parseFloat(item.price).toFixed(2) %>
                         </p>
                   </div>
                 </div>
@@ -97,6 +97,7 @@
 
       <div class="sumatoria">
         <div class="form">
+
           <p class="total">TOTAL: <%=totalPrice %>
           </p>
         </div>

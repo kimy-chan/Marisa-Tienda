@@ -3,7 +3,7 @@ const ProductModel = require("../model/model.products");
 
 class IndexController {
 
-  async index(req, res) {
+  async index(req, res) {//muestra toda la plantilla de inicio
     const title = "Inicio"
     try {
       const product = await ProductModel.productDestacado();
@@ -25,9 +25,39 @@ class IndexController {
     return res.json({ cantidaCart: cantidaCart });
   }
 
-  portadaIndex(req, res) {
-
+  portadaIndex(req, res) {//portda 
     return res.render("portada")
+  }
+
+
+
+  //---------------------------------------------------------------
+  //FOOTER INFORMACION
+  async infoMetodoPago(req, res) {//informacion de los metodos de pago
+    const title = "Metodos de pago"
+    try {
+      const categories = await ModelCategory.showCategory();
+      return res.render("infoMetodoPago", { title, categories });
+    } catch (error) {
+      console.log(error);
+    }
+
+
+
+
+  }
+
+  async PreguntasFrecuentes(re, res) {
+    const title = "Preguntas Frecuentes"
+    try {
+      const categories = await ModelCategory.showCategory();
+      return res.render("PreguntasFrecuentes", { title, categories });
+
+    } catch (error) {
+      console.log(error);
+
+    }
+
   }
 }
 

@@ -28,7 +28,7 @@
                                 <img src="<%= item.image %>" alt="Producto" class="product-image"
                                     style="max-width: 150px; max-height: 150px;">
                             </div>
-                            <div class="product-details card_detail">
+                            <div class="product-details card_detail ">
 
                                 <% if(item.size) {%>
                                     <p>Talla: <%= item.size %>
@@ -36,7 +36,7 @@
                                     </p>
                                     <p>Color: <%= item.color %>
                                     </p>
-                                    <p>Cantidad Disponible: <%= item.amount %>
+                                    <p>Disponible: <%= item.amount %>
                                     </p>
                                     <div class="product-actions">
                                         <a href="/cart/<%= item.idProduct %>"><i
@@ -50,7 +50,12 @@
                                         style="font-weight: bold;color: black; font-size: 18px;"></i></a>
                             </div>
                             <div class="product-details card_detail">
-                                <div id="precioTotal" class="product-price">BS <%= item.price %>
+                                <div id="precioTotal" class="product-price">Bs <%= item.price %>
+
+                                </div>
+
+                                <div class="product-price">Total Bs <%= parseFloat(item.cantidad *
+                                        item.price).toFixed(2) %>
                                 </div>
                             </div>
                         </div>

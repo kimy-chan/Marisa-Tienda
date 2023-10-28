@@ -13,26 +13,34 @@ class CartAux {
     });
   }
 
-  static async searchProduct(product) {
+  static async searchProduct(product) {//busca
+
     let cart = []
-    for (let productId of product) {
-      const product = await CartModel.cardProduct({ productId })
-      cart.push(...product)
+    for (let productId of product) {//extrae el id de cada producto para la cunsula de la pase de datos
+      const productDatabse = await CartModel.cardProduct({ productId })
+
+      cart.push(...productDatabse)
 
     }
+    console.log(cart);
     return cart
   }
 
   static totalPrice(cart) {
-    let precioTotal = 0
+    console.log("total price");
+
+    let total = 0
+
+
     for (let index = 0; index < cart.length; index++) {
-      precioTotal += parseFloat(cart[index].price)
+
+      total += parseFloat(cart[index].price)
     }
-    return precioTotal.toFixed(2);
+    return total.toFixed(2);
 
   }
 
-  static catidadProduct(cart) {
+  static cantidadProduct(cart) {//suma la cantidad de cada producto
     let cantidad = {};
     cart.forEach(objeto => { // cantidad de cada producto
       const id = objeto.idProduct;
@@ -40,6 +48,7 @@ class CartAux {
     })
     return cantidad
   }
+
 
 
 
@@ -53,7 +62,8 @@ class CartAux {
       const allPrice = this.totalPrice(products)
       productUnique = this.DeleteObjet(product, 'idProduct')
       totalPrice = allPrice
-      const cant = this.catidadProduct(products)
+      const cant = this.cantidadProduct(products)
+
       products.forEach(item => {
         const idProduct = item.idProduct;
         item.cantidad = cant[idProduct] || 1; // Asignar cantidad o 1 si no existe en cantidad

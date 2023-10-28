@@ -3,9 +3,11 @@ const ModelAuth = require("../model/model.auth");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 class AuthController {
+
   static async login(req, res) {
-    const result = validationResult(req);
-    if (!result.isEmpty()) {
+    const result = validationResult(req);//muestra todos los errores de los resultados
+
+    if (!result.isEmpty()) {//verifica si existe o no errores
       return res.render("login", { errors: result.array(), alertMsg: "" });
     }
     try {

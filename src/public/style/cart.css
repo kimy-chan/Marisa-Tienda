@@ -108,7 +108,7 @@
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    list-style: none;
+    
 }
 .listado .menu ul li
 {
@@ -144,7 +144,6 @@
 }
 .card_detail img
 {
-    
     width: 100%;
     height: auto;
 }
@@ -155,11 +154,8 @@
     display: flex;
     justify-content: center;
 }
-.listado .product-card .card_detail .product-actions
-{
-    gap: 0px 30px;
-}
-.card_detail .product-actions a
+
+.product-actions a
 {
     color: var(--fondo-resaltador);
     list-style: none;

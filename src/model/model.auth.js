@@ -1,6 +1,5 @@
 const getConecction = require("./db/db")
 class ModelAuth {
-
     static async login({ email }) {
         let conn;
         try {

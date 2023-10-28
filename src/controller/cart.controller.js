@@ -23,9 +23,11 @@ class CartController {
         const maximoProduct = []
         try {
             const categories = await ModelCategory.showCategory();
+            ;
             if (req.session.idProduct) {
-                product = await CartAux.getProdcut(req.session.idProduct)
+                product = await CartAux.getProdcut(req.session.idProduct)//funciones del carrito de compras
                 for (let cantidadP of product.productUnique) {
+
                     if (cantidadP.cantidad > cantidadP.amount) {
                         cantidadMaximaNameProduct = {
                             prodcut: cantidadP.nameProduct,
