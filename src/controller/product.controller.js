@@ -86,7 +86,7 @@ class ProductController {
       return res.redirect("/add-product?mensaje=true")
 
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
     } finally {
       for (let i of img) {
         if (fs.existsSync(path.join(__dirname + `../../public/upload/${i.filename}`))) {
@@ -112,7 +112,7 @@ class ProductController {
       const product = await ModelProduct.descriptionProduct({ idProduct })
       return res.render("descriptionProduct", { product: product, categories: categories, title })
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
 
     }
   }
@@ -143,7 +143,7 @@ class ProductController {
       });
 
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
 
     }
   }
@@ -164,7 +164,7 @@ class ProductController {
       }
       return res.redirect("/products-panel?mensaje=delete")
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
 
     }
 
@@ -205,11 +205,13 @@ class ProductController {
         apellidoUser,
         emailUser,
         rolUser,
-        title
+        title,
+        fileError: ''
 
 
       })
     } catch (error) {
+      return res.status(500).send("Error interno del servidor");
 
     }
 
@@ -229,8 +231,10 @@ class ProductController {
     const img = req.files
     try {
       const product = await ModelProduct.getAllProductId({ idProduct })
-      if (!val.isEmpty()) {
-        console.log(val);
+
+
+      if (req.fileError || !val.isEmpty()) {
+        console.log(req.fileError);
         const categories = await ModelCategory.showCategory()
         for (let categoria of categories) {
           if (categoria.idCategory == product.productos[0].idCategory) {
@@ -243,7 +247,8 @@ class ProductController {
         return res.render("formProductPanelUpdate", {
           error: val.array(), product: product.productos, img: product.dataImgPro,
           categories, categoriaP, nombreUser, apellidoUser, emailUser, rolUser, mensaje: '',
-          title
+          title,
+          fileError: req.fileError
         })
 
       }
@@ -268,8 +273,7 @@ class ProductController {
       return res.redirect(`/update-product/${idProduct}?mensaje=true`)
 
     } catch (error) {
-      console.log(error);
-
+      return res.status(500).send("Error interno del servidor" + error);
     } finally {
       for (let i of img) {
         if (fs.existsSync(path.join(__dirname + `../../public/upload/${i.filename}`))) {//borra la imagenes del servidor

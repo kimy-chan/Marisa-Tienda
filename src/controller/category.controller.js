@@ -4,6 +4,10 @@ const cloudinary = require("cloudinary")
 const path = require("path")
 const fs = require("fs");
 const { validationResult } = require('express-validator');
+const upload = require("../middleware/upload.img.middleware");
+const multer = require("multer");
+const { log } = require("console");
+
 
 
 class CategoryController {
@@ -33,7 +37,8 @@ class CategoryController {
         title
       });
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor", error);
+
     }
   }
 
@@ -58,29 +63,39 @@ class CategoryController {
         rolUser,
         title
 
-
-
       })
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor", error);
+
 
     }
   }
 
   async addCategory(req, res) {
+    const nombreUser = req.user.firstName
+    const apellidoUser = req.user.lastName
+    const emailUser = req.user.email
+    const rolUser = req.user.nameRole
     const title = 'Categorias'
     const result = validationResult(req)
+
     const { categoria } = req.body
     const image = req.file
+
     try {
       if (!result.isEmpty()) {
+        console.log(result);
         const valuesbody = req.body
         const categories = await ModelCategory.showCategory()
         return res.render("categoriasPanel", {
           categories: categories, mensaje: '',
           valuesbody, error: result.array(), categoriaMsg: '', categoriaDeleteMsg: '',
           categoriaDuplicada: '',
-          title
+          title,
+          nombreUser,
+          rolUser,
+          apellidoUser,
+          emailUser
         })
       }
 
@@ -91,12 +106,17 @@ class CategoryController {
       }
       return res.redirect("/category-panel?CategoriAdd=true")
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor", error);
     } finally {
-      if (fs.existsSync(path.join(__dirname + `../../public/upload/${image.filename}`))) {
-        fs.unlinkSync(path.join(__dirname + `../../public/upload/${image.filename}`))
+      if (image) {
+        if (fs.existsSync(path.join(__dirname + `../../public/upload/${image.filename}`))) {
+          fs.unlinkSync(path.join(__dirname + `../../public/upload/${image.filename}`))
+
+        }
 
       }
+
+
     }
   }
 
@@ -126,7 +146,7 @@ class CategoryController {
       await cloudinary.v2.uploader.destroy(idImagen)
       return res.redirect("/category-panel?mensajeDelete=true")
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
 
     }
 
@@ -148,25 +168,59 @@ class CategoryController {
         apellidoUser,
         emailUser,
         rolUser,
-        title
+        title,
+        error: [],
+        fileError: ''
       })
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
 
     }
 
 
   }
   async updateCategory(req, res) {
+    const uplo = upload.single('image')
+    const title = 'Actulizar categoria'
+    const nombreUser = req.user.firstName
+    const apellidoUser = req.user.lastName
+    const emailUser = req.user.email
+    const rolUser = req.user.nameRole
     const { idCategory } = req.params
     const { categoria } = req.body
     const imageM = req.file
     const val = validationResult(req)
+
     try {
       const categoriasId = await ModelCategory.getCategoryId(idCategory)
+
+      if (req.fileError) {
+        return res.render("updateCategoria", {
+          categoriasId: categoriasId,
+          title,
+          nombreUser,
+          apellidoUser,
+          emailUser,
+          rolUser,
+          mensaje: '',
+          error: [],
+          fileError: req.fileError
+        })
+
+      }
+
       if (!val.isEmpty()) {
 
-        return res.render("updateCategoria", { categoriasId: categoriasId })
+        return res.render("updateCategoria", {
+          categoriasId: categoriasId,
+          title,
+          nombreUser,
+          apellidoUser,
+          emailUser,
+          rolUser,
+          mensaje: '',
+          error: val.array()
+        })
       }
       if (typeof imageM === 'object') {
         const imgcloud = await cloudinary.v2.uploader.upload(imageM.path)
@@ -186,7 +240,8 @@ class CategoryController {
 
 
     } catch (error) {
-      console.log(error);
+
+      return res.status(500).send("Error interno del servidor");
 
     }
 

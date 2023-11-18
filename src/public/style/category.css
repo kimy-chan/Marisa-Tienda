@@ -17,37 +17,7 @@ body
 {
     background-color: var(--fondo-rosa);
 }
-.back
-{
-    width: 80px;
-    height: auto;
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    margin:12px 18px ;
-    padding: 3px 3px;
-    cursor: pointer;
-    animation: fundido 2s linear forwards, movimiento 6s linear infinite;
-    animation-delay: 1s;
-}
-.back a
-{
-    color: var(--fondo-resaltador);
-    font-size: 0.9em;
-    text-decoration: none;
-    list-style: none;
-}
-.back i
-{
-    color: var(--fondo-resaltador);
-    font-size: 1em;
-}
-.back:hover
-{
-    color: var(--fondo-resaltador);
-    border: 1px solid var(--fondo-resaltador);
-    transition: 0.2s;
-}
+
 .linea
 {
     margin-bottom: 80px;
@@ -108,6 +78,8 @@ body
     padding-left: 8%;
     padding-right: 8%
 }
+
+
 .container-fluid .row .card
 {
     background-color: var(--fondo-blanco);
@@ -120,6 +92,7 @@ body
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     border: none;
 }
+
 .container-fluid .row .card img
 {
     width:260px;
@@ -134,7 +107,7 @@ body
     transition: 0.5s;
     
 }
-.container-fluid .row .card .card-body
+.card .card-body
 {
     width:260px;
     height:auto;
@@ -161,7 +134,9 @@ body
     justify-content: center;
     align-items: center;
     gap: 12px;
+
 }
+
 .container-fluid .row .card .card-body .boton
 {
     display: flex;

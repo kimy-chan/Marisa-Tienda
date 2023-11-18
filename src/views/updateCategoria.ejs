@@ -21,7 +21,16 @@
                                 <label for="nombreCategoria">Nombre de la Categoría</label>
                                 <input type="text" value="<%= categoriasId[0].nameCategory  %>" class="form-control"
                                     name="categoria" required>
+                                <% error.forEach(err=> { %>
+                                    <% if (err.path==='categoria' ) { %>
+                                        <span>
+                                            <%= err.msg %>
+                                        </span>
+                                        <% } %>
+                                            <% }); %>
+
                             </div>
+
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -30,7 +39,18 @@
                                     <input type="file" class="custom-file-input" id="fotoCategoria" name="images"
                                         accept="image/*">
                                     <label class="custom-file-label" for="fotoCategoria">Seleccionar archivo...</label>
+
                                 </div>
+                                <span>
+                                    <%= fileError %>
+                                </span>
+                                <% error.forEach(err=> { %>
+                                    <% if (err.path==='image' ) { %>
+                                        <span>
+                                            <%= err.msg %>
+                                        </span>
+                                        <% } %>
+                                            <% }); %>
                             </div>
                         </div>
                     </div>

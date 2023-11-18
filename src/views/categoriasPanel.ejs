@@ -42,6 +42,13 @@
                         <div class="form-group col-md-4">
                           <label for="fotoCategoria">Foto de la Categoría</label>
                           <input type="file" class="form-control-file" name="images" accept="image/*" required>
+                          <% error.forEach(err=> { %>
+                            <% if (err.path==='image' ) { %>
+                              <span>
+                                <%= err.msg %>
+                              </span>
+                              <% } %>
+                                <% }); %>
                         </div>
                         <div class="form-group col-md-4">
                           <button class="btn" style="background: #D09456; color: white;">Agregar Categoría</button>
