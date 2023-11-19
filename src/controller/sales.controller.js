@@ -16,7 +16,6 @@ class SalesController {
     try {
 
       const sales = await ModelSales.getSales()
-      console.log(sales);
       return res.render("ventasPanel", {
         venta: sales,
         mensaje,

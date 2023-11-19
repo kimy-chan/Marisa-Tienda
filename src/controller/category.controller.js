@@ -4,7 +4,7 @@ const cloudinary = require("cloudinary")
 const path = require("path")
 const fs = require("fs");
 const { validationResult } = require('express-validator');
-const upload = require("../middleware/upload.img.middleware");
+
 
 
 
@@ -179,7 +179,6 @@ class CategoryController {
 
   }
   async updateCategory(req, res) {
-    const uplo = upload.single('image')
     const title = 'Actulizar categoria'
     const nombreUser = req.user.firstName
     const apellidoUser = req.user.lastName

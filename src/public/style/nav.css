@@ -74,15 +74,15 @@ nav img
     height: auto;
 }
 
-nav .collapse .navbar-nav
+.navbar-nav
 {
     width: 50%;
     justify-content:space-between;
-    padding: 0px 12px;
+  
 }
 
 
-nav .collapse .navbar-nav li a
+ .navbar-nav li a
 {
     list-style: none;
     text-decoration: none;
@@ -111,13 +111,13 @@ nav .collapse .nav-item li
     list-style:none;
     text-decoration: none;
 }
-nav .collapse .nav-item li a i
+.nav-item li a i
 {
     font-size: 1.3em;
     color: var(--fondo-blanco);
     list-style:none;
     text-decoration: none;
-    border: none;
+
 }
 
 

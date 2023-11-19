@@ -4,7 +4,7 @@ class ModelAuth {
         let conn;
         try {
             conn = await getConecction()
-            const query = "select * from VerifyUser where email=?"
+            const query = "SELECT * FROM VerifyUser where email=?"
             const [result] = await conn.query(query, [email]);
             return result
         } catch (error) {
@@ -21,7 +21,7 @@ class ModelAuth {
         let conn;
         try {
             conn = await getConecction()
-            const query = "select * from VerifyUser where idUser=?"
+            const query = "SELECT * FROM VerifyUser where idUser=?"
             const [result] = await conn.query(query, [idUser]);
             return result
         } catch (error) {
