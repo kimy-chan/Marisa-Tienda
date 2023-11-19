@@ -43,10 +43,10 @@ body
     width: 100%;
     height: 70px;
 }
-.container-fluid .category .productos:first-child
+/*.container-fluid .category .productos:first-child
 {
     border-bottom: 2px solid var(--fondo-resaltador);
-}
+}*/
 .container-fluid .category .productos
 {
     height: 25px;

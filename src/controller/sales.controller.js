@@ -27,7 +27,7 @@ class SalesController {
         title
       })
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
 
     }
 
@@ -38,7 +38,7 @@ class SalesController {
       await ModelSales.deleteSales({ idSales })
       return res.redirect("/ventas?mensaje=elimanada")
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
 
     }
 

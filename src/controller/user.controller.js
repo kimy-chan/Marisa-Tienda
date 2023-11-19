@@ -14,9 +14,8 @@ class UserController {
         const lastName = lastNames.split(' ')
         const newPassword = bcrypt.hashSync(password, 10)
         const valuesBody = req.body
-        console.log(valuesBody);
+
         if (!result.isEmpty()) {
-            console.log(result.array());
             return res.render("registroUserPanel", {
                 errors: result.array(), valuesBody, alertMensaje: '',
                 nombreUser,
@@ -50,8 +49,7 @@ class UserController {
             })
 
         } catch (error) {
-            console.log(error);
-
+            return res.status(500).send("Error interno del servidor");
         }
 
 
@@ -78,6 +76,7 @@ class UserController {
                 title
             })
         } catch (error) {
+            return res.status(500).send("Error interno del servidor");
 
         }
 
@@ -108,7 +107,7 @@ class UserController {
             }
             return res.redirect("/user")
         } catch (error) {
-            console.log(error);
+            return res.status(500).send("Error interno del servidor");
 
         }
 

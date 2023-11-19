@@ -17,7 +17,7 @@ class PedidosController {
       }
       return res.redirect("/cart")
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
 
     }
 
@@ -75,7 +75,7 @@ class PedidosController {
 
       return res.redirect("/cart", { title: "Carrito" })
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
 
     }
 
@@ -116,7 +116,7 @@ class PedidosController {
         title
       })
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
     }
 
   }
@@ -126,13 +126,9 @@ class PedidosController {
     const state = 1
     try {
       await ModelPedido.productEntregado({ idOrder, state })
-
-
       return res.redirect("/get-order?mensaje=vender")
-
     } catch (error) {
-      console.log(error);
-
+      return res.status(500).send("Error interno del servidor");
     }
 
 
@@ -141,8 +137,6 @@ class PedidosController {
   static async deteleOrder(req, res) {
 
     const { idPersonOrder } = req.params
-
-    console.log(idPersonOrder);
     try {
       await ModelPedido.deletePorductId({ idPersonOrder })
 
@@ -150,7 +144,7 @@ class PedidosController {
 
 
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
 
     }
 

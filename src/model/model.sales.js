@@ -14,7 +14,7 @@ class ModelSales {
 
 
         } catch (error) {
-            console.log(error);
+            return res.status(500).send("Error interno del servidor");
 
         } finally {
             if (conn) {
@@ -36,7 +36,7 @@ class ModelSales {
 
 
         } catch (error) {
-            console.log(error);
+            return res.status(500).send("Error interno del servidor");
 
         } finally {
             if (conn) {

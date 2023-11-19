@@ -12,7 +12,7 @@ class ModelProduct {
       const [product] = await conn.query(sqlQuery, [idProduct]);
       return product;
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
     } finally {
       if (conn) {
         conn.release();
@@ -28,7 +28,7 @@ class ModelProduct {
       const [product] = await conn.query(sqlQuery);
       return product;
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
     } finally {
       if (conn) {
         conn.release();
@@ -47,7 +47,7 @@ class ModelProduct {
       const data = { category: category, product: product };
       return data;
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
     } finally {
       if (conn) {
         conn.release();
@@ -69,8 +69,9 @@ class ModelProduct {
       await conn.commit()
 
     } catch (error) {
-      console.log(error);
+
       conn.rollback()
+      return res.status(500).send("Error interno del servidor");
 
     } finally {
       if (conn) {
@@ -92,7 +93,7 @@ class ModelProduct {
 
 
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
 
     } finally {
       if (conn) {
@@ -141,7 +142,7 @@ class ModelProduct {
 
 
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
 
     } finally {
       if (conn) {
@@ -156,13 +157,12 @@ class ModelProduct {
 
     try {
       conn = await getConecction()
-      console.log("update");
 
       await conn.query(sqlQueryPorduct, [nombre, descripcion, cantidad, precio, colores, tallas, destacado, categorias, idProduct])
       return
 
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
 
     } finally {
       if (conn) {
@@ -186,8 +186,7 @@ class ModelProduct {
       }
       return
     } catch (error) {
-      console.log(error);
-
+      return res.status(500).send("Error interno del servidor");
     } finally {
       if (conn) {
         conn.release()
@@ -205,7 +204,7 @@ class ModelProduct {
       return idCloudinary
 
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
 
     } finally {
       if (conn) {

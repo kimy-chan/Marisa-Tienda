@@ -5,8 +5,7 @@ const path = require("path")
 const fs = require("fs");
 const { validationResult } = require('express-validator');
 const upload = require("../middleware/upload.img.middleware");
-const multer = require("multer");
-const { log } = require("console");
+
 
 
 

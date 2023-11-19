@@ -8,7 +8,7 @@ class ModelAuth {
             const [result] = await conn.query(query, [email]);
             return result
         } catch (error) {
-            console.log(error);
+            return res.status(500).send("Error interno del servidor");
 
         } finally {
             if (conn) {
@@ -25,7 +25,7 @@ class ModelAuth {
             const [result] = await conn.query(query, [idUser]);
             return result
         } catch (error) {
-            console.log(error);
+            return res.status(500).send("Error interno del servidor");
 
         } finally {
             if (conn) {

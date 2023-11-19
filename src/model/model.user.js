@@ -44,7 +44,7 @@ class ModelUser {
       const [user] = await conn.query(sqlUser)
       return user
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
 
     } finally {
       if (conn) {

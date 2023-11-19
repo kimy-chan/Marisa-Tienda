@@ -4,7 +4,7 @@ class ModelPedido {
 
 
     static async Pedido({ nombre, lastName, celular, Ciudad, direccion, product, orderP }) {
-        console.log(orderP);
+
         let conn
         const sqlPerson = "INSERT INTO Person(firstName, lastName, motherLastName,  dateRegister)VALUES(?,?,?,now())"
         const sqlContac = "INSERT INTO Contact(cell, city, address, idPerson) values(?,?,?,?)"
@@ -13,7 +13,6 @@ class ModelPedido {
         try {
             conn = await getConecction()
             await conn.beginTransaction()
-            console.log("sola la base de datos");
 
             const [person] = await conn.query(sqlPerson, [nombre, lastName[0], lastName[1]])
             await conn.query(sqlContac, [celular, Ciudad, direccion, person.insertId])
@@ -48,7 +47,7 @@ class ModelPedido {
             return order
 
         } catch (error) {
-            console.log(error);
+            return res.status(500).send("Error interno del servidor");
 
         } finally {
             if (conn) {
@@ -66,7 +65,7 @@ class ModelPedido {
             await conn.query(sqlOrderUdate, [state, idOrder])
             return
         } catch (error) {
-            console.log(error);
+            return res.status(500).send("Error interno del servidor");
 
         } finally {
             if (conn) {
@@ -83,7 +82,7 @@ class ModelPedido {
             await conn.query(sqlQueryPerOrde, [idPersonOrder])
             return
         } catch (error) {
-            console.log(error);
+            return res.status(500).send("Error interno del servidor");
 
         } finally {
             if (conn) {

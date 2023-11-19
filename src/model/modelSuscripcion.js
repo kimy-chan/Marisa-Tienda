@@ -5,7 +5,6 @@ class ModelSuscripcion {
 
     static async addSuscripcion({ nombresCompletos, email, texto }) {
         let conn
-        console.log(nombresCompletos[0]);
         const sqlPerson = "INSERT INTO Person(firstName,lastName ,motherLastName, dateRegister)values(?,?,?,now())"
         const sqlSuscripcion = "INSERT INTO Suscriptor(Email, textArea, idPerson)Values(?,?,?)"
         try {
@@ -37,7 +36,7 @@ class ModelSuscripcion {
             return suscriptores
 
         } catch (error) {
-            console.log(error);
+            return res.status(500).send("Error interno del servidor");
 
         } finally {
             if (conn) {

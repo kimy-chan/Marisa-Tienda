@@ -38,7 +38,7 @@ class AuthController {
         return res.render("login", { errors: [], alertMsg: msgPassword });
       }
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
     }
   }
 

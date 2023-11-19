@@ -22,26 +22,31 @@ class ProductController {
 
   }
   async formProduct(req, res) {
-    const title = 'Añadir producto'
-    const nombreUser = req.user.firstName
-    const apellidoUser = req.user.lastName
-    const emailUser = req.user.email
-    const rolUser = req.user.nameRole
-    let values = []
-    let error = []
-    const mensaje = req.query.mensaje === 'true';
-    const categories = await ModelCategory.showCategory()
-    return res.render("formProductPanel", {
-      values, error,
-      categories: categories,
-      productoAgregado: mensaje,
-      categories: categories,
-      nombreUser,
-      apellidoUser,
-      emailUser,
-      rolUser,
-      title
-    })
+    try {
+      const title = 'Añadir producto'
+      const nombreUser = req.user.firstName
+      const apellidoUser = req.user.lastName
+      const emailUser = req.user.email
+      const rolUser = req.user.nameRole
+      let values = []
+      let error = []
+      const mensaje = req.query.mensaje === 'true';
+      const categories = await ModelCategory.showCategory()
+      return res.render("formProductPanel", {
+        values, error,
+        categories: categories,
+        productoAgregado: mensaje,
+        categories: categories,
+        nombreUser,
+        apellidoUser,
+        emailUser,
+        rolUser,
+        title
+      })
+    } catch (error) {
+      return res.status(500).send("Error interno del servidor");
+
+    }
 
   }
 
@@ -234,7 +239,6 @@ class ProductController {
 
 
       if (req.fileError || !val.isEmpty()) {
-        console.log(req.fileError);
         const categories = await ModelCategory.showCategory()
         for (let categoria of categories) {
           if (categoria.idCategory == product.productos[0].idCategory) {

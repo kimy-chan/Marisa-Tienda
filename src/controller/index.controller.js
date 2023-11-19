@@ -11,7 +11,7 @@ class IndexController {
 
       return res.render("index", { product: product, categories: categories, title });
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
     }
   }
 
@@ -39,7 +39,7 @@ class IndexController {
       const categories = await ModelCategory.showCategory();
       return res.render("infoMetodoPago", { title, categories });
     } catch (error) {
-      console.log(error);
+      return res.status(500).send("Error interno del servidor");
     }
 
 
@@ -54,8 +54,7 @@ class IndexController {
       return res.render("PreguntasFrecuentes", { title, categories });
 
     } catch (error) {
-      console.log(error);
-
+      return res.status(500).send("Error interno del servidor");
     }
 
   }

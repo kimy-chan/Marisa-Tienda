@@ -32,7 +32,7 @@ class ModelCategory {
             return categories
 
         } catch (error) {
-            console.log(error);
+            return res.status(500).send("Error interno del servidor");
 
         } finally {
             if (conn) {
@@ -69,7 +69,7 @@ class ModelCategory {
             return categoria
 
         } catch (error) {
-            console.log(error);
+            return res.status(500).send("Error interno del servidor");
 
         } finally {
             if (conn) {
@@ -88,7 +88,7 @@ class ModelCategory {
 
 
         } catch (error) {
-            console.log(error);
+            return res.status(500).send("Error interno del servidor");
 
         } finally {
             if (conn) {
@@ -106,7 +106,7 @@ class ModelCategory {
             return
 
         } catch (error) {
-            console.log(error);
+            return res.status(500).send("Error interno del servidor");
 
         } finally {
             if (conn) {
