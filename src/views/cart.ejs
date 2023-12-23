@@ -44,7 +44,9 @@
                                     </div>
                             </div>
                             <div class="product-details card_detail">
-                                <input value="<%= item.cantidad %>" type="number" class="form-control">
+                                <div class="cantidad-caja">
+                                    <%= item.cantidad %>
+                                </div>
                                 <a href="/add-cart/<%=item.idProduct  %>" style="text-decoration: none;"> <i
                                         class="ri-add-line"
                                         style="font-weight: bold;color: black; font-size: 18px;"></i></a>
@@ -68,8 +70,7 @@
                                 </p>
                             </div>
                             <div class="boton">
-                                <a href="/pedido"
-                                     class="btn <%=maximoProduct.length > 0? 'disabled':'' %>">Comprar</a>
+                                <a href="/pedido" class="btn <%=maximoProduct.length > 0? 'disabled':'' %>">Comprar</a>
                             </div>
                             <br>
 

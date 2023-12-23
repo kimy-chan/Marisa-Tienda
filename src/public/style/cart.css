@@ -147,13 +147,6 @@
     width: 100%;
     height: auto;
 }
-.listado .product-card .card_detail input 
-{
-    width: 60px;
-    border: 2px solid var(--fondo-resaltador);
-    display: flex;
-    justify-content: center;
-}
 
 .product-actions a
 {
@@ -183,7 +176,12 @@
     color:white;
 }
 
+.cantidad-caja{
+  width: 50px;
+  text-align: center;
+    border: 2px solid var(--fondo-resaltador);
 
+}
 
 
 

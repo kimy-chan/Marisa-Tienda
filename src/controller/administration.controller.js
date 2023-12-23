@@ -6,7 +6,6 @@ const ModelUser = require("../model/model.user")
 const ModelSuscripcion = require("../model/modelSuscripcion")
 
 class AdministrationController {
-
     static async Administration(req, res) {
         try {
             const title = "Dashboard"

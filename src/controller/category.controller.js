@@ -83,7 +83,6 @@ class CategoryController {
 
     try {
       if (!result.isEmpty()) {
-        console.log(result);
         const valuesbody = req.body
         const categories = await ModelCategory.showCategory()
         return res.render("categoriasPanel", {
